@@ -1,6 +1,8 @@
 { config, pkgs, ... }:
 
 {
+  imports = [ ./hardware-configuration.nix ];
+
   boot = {
     blacklistedKernelModules = [ ];
     kernelPackages = pkgs.linuxPackages_latest;
