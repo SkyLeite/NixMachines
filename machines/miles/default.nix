@@ -106,6 +106,7 @@ in {
     xsel
     zip
     python38
+    hello
   ];
 
   fonts = {
