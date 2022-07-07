@@ -1,7 +1,7 @@
 { config, pkgs, attrs, ... }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [ ./hardware-configuration.nix ../../services/webhook.nix ];
 
   boot = {
     blacklistedKernelModules = [ ];
@@ -37,6 +37,11 @@
     };
 
     sshd.enable = true;
+
+    webhook = {
+      port = 5000;
+      webhooks = [ ];
+    };
   };
 
   programs.ssh.startAgent = true;
