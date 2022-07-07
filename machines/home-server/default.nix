@@ -41,7 +41,10 @@
     webhook = {
       enable = true;
       port = 5000;
-      webhooks = [ ];
+      webhooks = [{
+        id = "github";
+        execute-command = "echo hi";
+      }];
     };
   };
 
