@@ -41,6 +41,7 @@
     webhook = {
       enable = true;
       port = 5000;
+      verbose = true;
 
       webhooks = [{
         id = "github-rebuild";
