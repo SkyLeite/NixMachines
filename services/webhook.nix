@@ -18,7 +18,7 @@ in {
         '';
       };
 
-      ip = {
+      ip = mkOption {
         type = types.str;
         default = "0.0.0.0";
         description = ''
@@ -26,7 +26,7 @@ in {
         '';
       };
 
-      port = {
+      port = mkOption {
         type = types.int;
         default = 9000;
         description = ''
@@ -34,7 +34,7 @@ in {
         '';
       };
 
-      webhooks = {
+      webhooks = mkOption {
         type = types.listOf types.attrsOf types.anything;
         default = [ ];
         description = ''
