@@ -39,6 +39,7 @@
     sshd.enable = true;
 
     webhook = {
+      enable = true;
       port = 5000;
       webhooks = [ ];
     };
