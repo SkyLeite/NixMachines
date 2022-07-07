@@ -59,7 +59,9 @@ in {
     in {
       wantedBy = [ "multi-user.target" ];
       serviceConfig.ExecStart =
-        "${pkgs.webhook}/bin/webhook -hooks ${hooksJson} -ip ${cfg.ip} -port ${cfg.port}";
+        "${pkgs.webhook}/bin/webhook -hooks ${hooksJson} -ip ${cfg.ip} -port ${
+          toString cfg.port
+        }";
     };
   };
 }
