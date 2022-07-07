@@ -35,7 +35,7 @@ in {
       };
 
       webhooks = mkOption {
-        type = types.listOf anything;
+        type = types.listOf types.anything;
         default = [ ];
         description = ''
           A list of hooks
