@@ -1,2 +1,2 @@
 vm:
-	nixos-rebuild --flake '.#home-server' build-vm
+	nixos-rebuild --flake '.#miles' build-vm
