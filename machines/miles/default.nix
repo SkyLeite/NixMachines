@@ -40,6 +40,7 @@ in {
     sshd.enable = true;
 
     logind.lidSwitch = "ignore";
+    logind.lidSwitchDocked = "ignore";
 
     webhook = {
       enable = true;
