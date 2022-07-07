@@ -125,8 +125,11 @@
     package = pkgs.nixUnstable;
 
     settings = {
-      substituters =
-        [ "https://nix-community.cachix.org" "http://cache.nixos.org" ];
+      substituters = [
+        "https://aseipp-nix-cache.global.ssl.fastly.net"
+        "https://nix-community.cachix.org"
+        "http://cache.nixos.org"
+      ];
 
       trusted-substituters = [ "http://cache.nixos.org" ];
 
