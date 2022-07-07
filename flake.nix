@@ -1,7 +1,7 @@
 {
   description = "Sky's NixOS machines";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
   inputs.home-manager.url = "github:nix-community/home-manager";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
