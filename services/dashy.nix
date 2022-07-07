@@ -44,7 +44,6 @@ in {
         Restart = "always";
         ExecStart = ''
           ${pkgs.docker}/bin/docker run \
-            -p 8080:80 \
             --rm \
             --name=dashy \
             --network=host \
