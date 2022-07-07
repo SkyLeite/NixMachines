@@ -54,14 +54,28 @@ in {
           name = "after";
         }];
         trigger-rule = {
-          match = {
-            type = "value";
-            value = "refs/heads/main";
-            parameter = {
-              source = "payload";
-              name = "ref";
-            };
-          };
+          and = [
+            {
+              match = {
+                type = "value";
+                value = "refs/heads/main";
+                parameter = {
+                  source = "payload";
+                  name = "ref";
+                };
+              };
+            }
+            {
+              match = {
+                type = "value";
+                value = "511297545";
+                parameter = {
+                  source = "payload";
+                  name = "repository.id";
+                };
+              };
+            }
+          ];
         };
       }];
     };
