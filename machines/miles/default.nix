@@ -131,6 +131,7 @@ in {
     zip
     python38
     hello
+    build-machine
   ];
 
   fonts = {
