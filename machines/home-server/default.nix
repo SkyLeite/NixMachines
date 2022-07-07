@@ -22,20 +22,12 @@
       allowedTCPPorts = [ ];
       allowedUDPPorts = [ ];
     };
-    hostName = "aya";
+    hostName = "miles";
     networkmanager.enable = true;
   };
 
   # Select internationalisation properties.
   i18n = { defaultLocale = "en_US.UTF-8"; };
-
-  # nVidia driver
-  hardware.opengl.driSupport32Bit = true;
-  hardware.bluetooth.enable = true;
-  hardware.pulseaudio = {
-    enable = true;
-    package = pkgs.pulseaudioFull;
-  };
 
   services = {
     openssh = {
@@ -64,40 +56,26 @@
   };
 
   nixpkgs.system = "x86_64-linux";
-  nixpkgs.config = {
-    virtualbox.enableExtensionPack = true;
-    pulseaudio = true;
-    allowUnfree = true;
-  };
+  nixpkgs.config = { allowUnfree = true; };
 
   environment.systemPackages = with pkgs; [
-    cacert
     cloc
     elfutils
-    emacs
     file
-    firefox-devedition-bin
     git
     glib
-    glxinfo
     gnupg
     gnutls
     htop
     jq
-    mpv
-    mupdf
     networkmanager
-    nitrogen
     nmap
     openssl
     p7zip
     pavucontrol
-    rxvt_unicode
-    scrot
     sxiv
     unzip
     wget
-    xscreensaver
     xsel
     zip
     attrs.pagekite.defaultPackage.x86_64-linux
