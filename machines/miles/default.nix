@@ -24,8 +24,8 @@ in {
   networking = {
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 5000 ];
-      allowedUDPPorts = [ 5000 ];
+      allowedTCPPorts = [ 5000 8080 ];
+      allowedUDPPorts = [ 5000 8080 ];
     };
     nameservers = [ "8.8.8.8" "8.8.4.4" ];
     hostName = "miles";
