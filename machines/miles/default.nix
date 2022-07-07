@@ -46,8 +46,7 @@ in {
 
       webhooks = [{
         id = "github-rebuild";
-        execute-command =
-          "${attrs.build-machine.packages.x86_64-linux.build-machine}/bin/build-machine";
+        execute-command = "${build-machine}/bin/build-machine";
         pass-arguments-to-command = [{
           source = "payload";
           name = "after";
