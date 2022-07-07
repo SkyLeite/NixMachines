@@ -1,0 +1,3 @@
+* Roadmap
+** DONE Extract rebuild command to shell so we can call nixos-rebuild with the appropriate arguments
+** TODO Add secret to github webhook delivery
