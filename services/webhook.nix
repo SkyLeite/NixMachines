@@ -64,13 +64,10 @@ in {
       hooksJson = format.generate "hooks.json" cfg.webhooks;
     in {
       wantedBy = [ "multi-user.target" ];
-      serviceConfig.ExecStart = ''
-        ${pkgs.webhook}/bin/webhook
-          -hooks ${hooksJson}
-          -ip ${cfg.ip}
-          -port ${toString cfg.port}
-          ${if cfg.verbose == true then "-verbose" else ""}
-      '';
+      serviceConfig.ExecStart =
+        "${pkgs.webhook}/bin/webhook -hooks ${hooksJson} -ip ${cfg.ip} -port ${
+          toString cfg.port
+        } ${if cfg.verbose == true then "-verbose" else ""}";
     };
   };
 }
