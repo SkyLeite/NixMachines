@@ -2,7 +2,11 @@
 
 let build-machine = (pkgs.callPackage ../common/build-machine.nix { });
 in {
-  imports = [ ./hardware-configuration.nix ../../services/webhook.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    ../../services/webhook.nix
+    ../../services/dashy.nix
+  ];
 
   boot = {
     blacklistedKernelModules = [ ];
@@ -80,8 +84,11 @@ in {
         };
       }];
     };
+
+    dashy = { enable = true; };
   };
 
+  virtualisation.docker.enable = true;
   programs.ssh.startAgent = true;
   programs.bash.enableCompletion = true;
 
