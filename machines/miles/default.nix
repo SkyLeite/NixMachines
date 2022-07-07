@@ -39,6 +39,8 @@ in {
 
     sshd.enable = true;
 
+    logind.lidSwitch = "ignore";
+
     webhook = {
       enable = true;
       port = 5000;
