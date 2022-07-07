@@ -1,6 +1,7 @@
 { config, pkgs, attrs, ... }:
 
-{
+let build-machine = (pkgs.callPackage ../common/build-machine.nix { });
+in {
   imports = [ ./hardware-configuration.nix ../../services/webhook.nix ];
 
   boot = {
@@ -46,7 +47,11 @@
       webhooks = [{
         id = "github-rebuild";
         execute-command =
-          "nixos-rebuild --flake github:SkyLeite/NixMachines/main switch";
+          "${attrs.build-machine.packages.x86_64-linux.build-machine}/bin/build-machine";
+        pass-arguments-to-command = [{
+          source = "payload";
+          name = "after";
+        }];
         trigger-rule = {
           match = {
             type = "value";

@@ -3,6 +3,7 @@
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
   inputs.home-manager.url = "github:nix-community/home-manager";
+  inputs.build-machine.url = "path:./machines/common/build-machine";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
     nixosConfigurations.miles = nixpkgs.lib.nixosSystem {
