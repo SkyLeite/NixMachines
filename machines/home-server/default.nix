@@ -41,9 +41,21 @@
     webhook = {
       enable = true;
       port = 5000;
+
       webhooks = [{
-        id = "github";
-        execute-command = "echo hi";
+        id = "github-rebuild";
+        execute-command =
+          "nixos-rebuild --flake github:SkyLeite/NixMachines#home-server switch";
+        trigger-rule = {
+          match = {
+            type = "value";
+            value = "refs/heads/main";
+            parameter = {
+              source = "payload";
+              name = "ref";
+            };
+          };
+        };
       }];
     };
   };
