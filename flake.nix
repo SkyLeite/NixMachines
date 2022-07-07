@@ -5,10 +5,10 @@
   inputs.home-manager.url = "github:nix-community/home-manager";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
-    nixosConfigurations.home-server = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.miles = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit attrs; };
-      modules = [ ./machines/home-server/default.nix ];
+      modules = [ ./machines/miles/default.nix ];
     };
   };
 }

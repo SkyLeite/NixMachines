@@ -45,7 +45,7 @@
       webhooks = [{
         id = "github-rebuild";
         execute-command =
-          "nixos-rebuild --flake github:SkyLeite/NixMachines#home-server switch";
+          "nixos-rebuild --flake github:SkyLeite/NixMachines/main switch";
         trigger-rule = {
           match = {
             type = "value";
