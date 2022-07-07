@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, attrs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -100,6 +100,7 @@
     xscreensaver
     xsel
     zip
+    attrs.pagekite.defaultPackage.x86_64-linux
   ];
 
   fonts = {

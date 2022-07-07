@@ -37,11 +37,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1657141799,
-        "narHash": "sha256-RdKHkwbjqiHcLdV2NE5ZkVIrKJvzMf9qs0Zk3dPqV+8=",
+        "lastModified": 1657158114,
+        "narHash": "sha256-1B8qm5QxY8KcDWSkn6cU98LWOz1HF0TfTGz2sp0rOs4=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "86d0daf81934a219ec218226bc846bbeb34a15f3",
+        "rev": "b6ee1531e3895c4952d300f84768d0a2b6c52d28",
         "type": "github"
       },
       "original": {
@@ -50,10 +50,54 @@
         "type": "github"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1657158114,
+        "narHash": "sha256-1B8qm5QxY8KcDWSkn6cU98LWOz1HF0TfTGz2sp0rOs4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b6ee1531e3895c4952d300f84768d0a2b6c52d28",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "pagekite": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3",
+        "pagekite": "pagekite_2"
+      },
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-gc9mRwGr+wYPOJmu5eNrFDmKwp4cbmmSqj4UyiXuyQU=",
+        "path": "./packages/pagekite",
+        "type": "path"
+      },
+      "original": {
+        "path": "./packages/pagekite",
+        "type": "path"
+      }
+    },
+    "pagekite_2": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-sdX4Qfgu24nALfKsW4CmZlYGpshCpvaLvM7T4/yloBE=",
+        "type": "file",
+        "url": "https://pagekite.net/pk/pagekite.py"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://pagekite.net/pk/pagekite.py"
+      }
+    },
     "root": {
       "inputs": {
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "pagekite": "pagekite"
       }
     },
     "utils": {
