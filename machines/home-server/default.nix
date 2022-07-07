@@ -80,7 +80,6 @@
     xsel
     zip
     python38
-    attrs.pagekite.defaultPackage.x86_64-linux
   ];
 
   fonts = {
