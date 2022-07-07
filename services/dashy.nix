@@ -43,14 +43,14 @@ in {
         TimeoutStopSec = 120;
         Restart = "always";
         ExecStart = ''
-          ${pkgs.docker}/bin/docker run -d \
-             --rm \
-             --name dashy \
-             --restart=always \
-             --network=host \
-             -p 8080:80 \
-             -v ${config}:/app/public/conf.yml \
-             lissy93/dashy:latest'';
+          ${pkgs.docker}/bin/docker run \
+            -p 8080:80 \
+            --rm \
+            --name=dashy \
+            --network=host \
+            -v ${config}:/app/public/conf.yml \
+            lissy93/dashy:latest
+        '';
       };
     };
   };
