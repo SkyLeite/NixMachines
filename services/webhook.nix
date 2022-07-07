@@ -64,6 +64,8 @@ in {
       hooksJson = format.generate "hooks.json" cfg.webhooks;
     in {
       wantedBy = [ "multi-user.target" ];
+      stopIfChanged = false;
+      restartIfChanged = true;
       serviceConfig = {
         Restart = "always";
         RestartSec = 5;
