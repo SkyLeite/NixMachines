@@ -22,6 +22,7 @@
       allowedTCPPorts = [ ];
       allowedUDPPorts = [ ];
     };
+    nameservers = [ "8.8.8.8" "8.8.4.4" ];
     hostName = "miles";
     networkmanager.enable = true;
   };
@@ -78,6 +79,7 @@
     wget
     xsel
     zip
+    python38
     attrs.pagekite.defaultPackage.x86_64-linux
   ];
 
