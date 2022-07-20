@@ -22,11 +22,7 @@ in {
   };
 
   networking = {
-    firewall = {
-      enable = true;
-      allowedTCPPorts = [ 5000 80 ];
-      allowedUDPPorts = [ 5000 80 ];
-    };
+    firewall = { enable = true; };
     nameservers = [ "8.8.8.8" "8.8.4.4" ];
     hostName = "miles";
     networkmanager.enable = true;

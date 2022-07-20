@@ -53,4 +53,6 @@ in {
       };
     };
   };
+
+  networking = { firewall = { allowedTCPPorts = [ 5000 ]; }; };
 }
