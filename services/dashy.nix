@@ -25,7 +25,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking = { firewall = { allowedTCPPorts = [ 5000 ]; }; };
+    networking = { firewall = { allowedTCPPorts = [ 80 ]; }; };
 
     systemd.services.dashy = let
       format = pkgs.formats.yaml { };
