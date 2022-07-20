@@ -115,7 +115,11 @@ in {
             {
               title = "Sky's blog";
               description = "The architect's findings";
+              icon = "fas fa-book";
               url = "https://leite.dev";
+              target = "newtab";
+              tags = [ "blog" ];
+              provider = "Netlify";
             }
           ];
         }];
