@@ -57,6 +57,7 @@ in {
     # add system users
     # write config files, just as an example here:
 
+    networking = { firewall = { allowedTCPPorts = [ cfg.webhooks.port ]; }; };
     environment.systemPackages = [ pkgs.webhook ];
 
     systemd.services.webhook = let
