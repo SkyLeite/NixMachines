@@ -96,7 +96,31 @@ in {
       }];
     };
 
-    dashy = { enable = true; };
+    dashy = {
+      enable = true;
+      config = {
+        pageInfo = { title = "Miles"; };
+
+        sections = [{
+          name = "Information";
+          icon = "far fa-rocket";
+          items = [
+            {
+              title = "My configuration <3";
+              description = "The nix definition for this machine";
+              icon = "fab fa-github";
+              url =
+                "https://github.com/SkyLeite/NixMachines/blob/main/machines/miles/default.nix";
+            }
+            {
+              title = "Sky's blog";
+              description = "The architect's findings";
+              url = "https://leite.dev";
+            }
+          ];
+        }];
+      };
+    };
   };
 
   virtualisation.docker.enable = true;
