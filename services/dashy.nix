@@ -10,7 +10,7 @@ in {
         type = types.bool;
         default = false;
         description = ''
-          Whether to enable webhooks.
+          Whether to enable Dashy
         '';
       };
 
@@ -18,7 +18,7 @@ in {
         type = types.anything;
         default = { };
         description = ''
-          A list of hooks
+          Dashy's configuration
         '';
       };
     };
