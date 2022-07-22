@@ -141,7 +141,6 @@ in {
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "curses";
-    enableSSHSupport = true;
   };
 
   time.timeZone = "Americas/Sao_Paulo";
