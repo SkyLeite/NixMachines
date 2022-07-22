@@ -186,6 +186,7 @@ in {
     build-machine
     pass
     pinentry-curses
+    vim
   ];
 
   fonts = {
