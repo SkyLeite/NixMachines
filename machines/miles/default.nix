@@ -6,6 +6,7 @@ in {
     ./hardware-configuration.nix
     ../../services/webhook.nix
     ../../services/dashy.nix
+    ../../services/n8n.nix
     ../../modules/chaos-service.nix
   ];
 
@@ -102,6 +103,8 @@ in {
         };
       }];
     };
+
+    n8n.enable = true;
 
     dashy = {
       enable = true;
