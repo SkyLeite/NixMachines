@@ -27,7 +27,7 @@ in {
     systemd.services.n8n = {
       wantedBy = [ "multi-user.target" ];
       stopIfChanged = false;
-      restartIfChanged = true;
+      reloadTriggers = [ ];
       after = [ "docker.service" "docker.socket" ];
       requires = [ "docker.service" "docker.socket" ];
       preStop = "${pkgs.docker}/bin/docker stop n8n";
