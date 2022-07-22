@@ -40,7 +40,8 @@ in {
   services = {
     openssh = {
       enable = true;
-      passwordAuthentication = true;
+      passwordAuthentication = false;
+      permitRootLogin = "no";
     };
 
     sshd.enable = true;
@@ -155,6 +156,11 @@ in {
     extraGroups = [ "wheel" "audio" "video" "networkmanager" "docker" ];
     useDefaultShell = true;
     initialPassword = "1234";
+
+    openssh.authorizedKeys.keys = [
+      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDfkyZMEd5Ok4HABkH0kmUgDvGdTc70Cl5JK+Kr9JmjzW5Ds8C3lr09/x4NkQ58xfhWjZ82/6pBWwT95xU6LQDGyEQJMiWNq27DcMitPTiQ7+7QgosBeRAudo+yS7DDd8aRKEyesjXTI7PvG+gGiNcs/C5qGe5kClflx/7XHSy5TXKH2GJMcEFe2RDZ+ZUwxPhRY7N96PPZv7LVzmOR41SZVQLxJlG2h07b7mv5ndXHHEBJC4WAdbcM0CTqHNlu4OwqjZ643/l7WtfSorPAudsGcrvxGkHVtYt23uE4PCMMwfXVpdkgyOc8ZFTRFzPpoO1qjDnt5YyYUjB6xwSdOOVAeukUeQPQQytMK5/f+entPM9ARZQI19J4gF8jL6MpVVP5+GefExmFT1tbSmaCJtpT+5nKZEqBMK5ak8n+iBRFdFj0Q1p6gSBR9hgHKwAQzmafClzed0lhsgDlQPKy2HthMzhlT2fnRg5UkR+Wvzr9Xtag8t2I9ucODnH032e7JwU= sky@home"
+    ];
+  };
   };
 
   nixpkgs.system = "x86_64-linux";
