@@ -37,14 +37,14 @@ in {
 
   config = let
     serviceToVirtualHost = (name: value:
-      lib.nameValuePair ("http://"
-        + (if name != "root" then name + "." + cfg.baseUrl else cfg.baseUrl)) ({
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:${toString value.port}
-            header Access-Control-Allow-Origin *
+      lib.nameValuePair
+      (if name != "root" then name + "." + cfg.baseUrl else cfg.baseUrl) ({
+        extraConfig = ''
+          reverse_proxy 127.0.0.1:${toString value.port}
+          header Access-Control-Allow-Origin *
 
-          '' + value.caddyOptions;
-        }));
+        '' + value.caddyOptions;
+      }));
 
     enabledServices =
       lib.filterAttrs (name: value: value.enable == true) cfg.services;
