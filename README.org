@@ -2,5 +2,5 @@
 ** DONE Extract rebuild command to shell so we can call nixos-rebuild with the appropriate arguments
 ** DONE Add secret to github webhook delivery
 Webhook only matches on Github's IPs now
-** TODO Setup zerolab.app domain with TLS
+** DONE Setup zerolab.app domain with TLS
 ** TODO Automatically add services to dashy in chaos module
