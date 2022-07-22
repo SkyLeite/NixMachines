@@ -4,6 +4,8 @@ with lib;
 
 let cfg = config.services.dashy;
 in {
+  imports = [ ../modules/chaos-service.nix ];
+
   options = {
     services.dashy = {
       enable = mkOption {
@@ -25,7 +27,10 @@ in {
   };
 
   config = mkIf cfg.enable {
-    networking = { firewall = { allowedTCPPorts = [ 80 ]; }; };
+    chaos.services.root = {
+      enable = true;
+      port = 8080;
+    };
 
     systemd.services.dashy = let
       format = pkgs.formats.yaml { };
@@ -48,7 +53,7 @@ in {
           ${pkgs.docker}/bin/docker run \
             --rm \
             --name=dashy \
-            --network=host \
+            -p 8080:80 \
             -v ${config}:/app/public/conf.yml \
             lissy93/dashy:latest
         '';

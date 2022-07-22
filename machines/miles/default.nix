@@ -6,6 +6,7 @@ in {
     ./hardware-configuration.nix
     ../../services/webhook.nix
     ../../services/dashy.nix
+    ../../modules/chaos-service.nix
   ];
 
   boot = {
@@ -30,6 +31,11 @@ in {
 
   # Select internationalisation properties.
   i18n = { defaultLocale = "en_US.UTF-8"; };
+
+  chaos = {
+    enable = true;
+    baseUrl = "localhost";
+  };
 
   services = {
     openssh = {
