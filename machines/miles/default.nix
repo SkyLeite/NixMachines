@@ -104,7 +104,7 @@ in {
       }];
     };
 
-    n8n.enable = true;
+    wrappedN8n.enable = true;
 
     dashy = {
       enable = true;
