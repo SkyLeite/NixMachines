@@ -188,6 +188,7 @@ in {
     pinentry-curses
     vim
     emacs
+    hello
   ];
 
   fonts = {
