@@ -43,8 +43,7 @@ in {
             --rm \
             --name=n8n \
             --network=host \
-            -e DOMAIN_NAME=${config.chaos.baseUrl} \
-            -e SUBDOMAIN=n8n \
+            -e WEBHOOK_URL=n8n.${config.chaos.baseUrl} \
             -v /srv/n8n/config:/home/node/.n8n \
             n8nio/n8n:latest
         '';
