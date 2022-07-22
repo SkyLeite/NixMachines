@@ -137,6 +137,13 @@ in {
   programs.ssh.startAgent = true;
   programs.bash.enableCompletion = true;
 
+  services.pcscd.enable = true;
+  programs.gnupg.agent = {
+    enable = true;
+    pinentryFlavor = "curses";
+    enableSSHSupport = true;
+  };
+
   time.timeZone = "Americas/Sao_Paulo";
 
   # Users
@@ -160,7 +167,6 @@ in {
     file
     git
     glib
-    gnupg
     gnutls
     htop
     jq
@@ -177,6 +183,8 @@ in {
     python38
     hello
     build-machine
+    pass
+    pinentry-curses
   ];
 
   fonts = {
