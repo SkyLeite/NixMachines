@@ -189,6 +189,7 @@ in {
     vim
     emacs
     hello
+    curl
   ];
 
   fonts = {
