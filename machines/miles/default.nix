@@ -34,7 +34,7 @@ in {
 
   chaos = {
     enable = true;
-    baseUrl = "localhost";
+    baseUrl = "zerolab.app";
   };
 
   services = {
