@@ -169,7 +169,6 @@ in {
   nixpkgs.config = { allowUnfree = true; };
 
   environment.systemPackages = with pkgs; [
-    cloc
     elfutils
     file
     git
@@ -180,15 +179,10 @@ in {
     networkmanager
     nmap
     openssl
-    p7zip
     pavucontrol
-    sxiv
-    unzip
     wget
     xsel
-    zip
     python38
-    hello
     build-machine
     pass
     pinentry-curses
