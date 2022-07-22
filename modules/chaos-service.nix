@@ -57,10 +57,6 @@ in {
       enable = true;
       email = "sky@leite.dev";
 
-      globalConfig = ''
-        auto_https disable_redirects
-      '';
-
       virtualHosts = virtualHosts;
     };
   };
