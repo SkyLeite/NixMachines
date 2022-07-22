@@ -2,7 +2,7 @@
 
 with lib;
 
-let cfg = config.services.n8n;
+let cfg = config.services.wrappedN8n;
 in {
   imports = [ ../modules/chaos-service.nix ];
 
