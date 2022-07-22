@@ -1,7 +1,7 @@
 {
   description = "Sky's NixOS machines";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-22.05";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
   inputs.home-manager.url = "github:nix-community/home-manager";
   inputs.build-machine.url = "path:./machines/common/build-machine";
 
