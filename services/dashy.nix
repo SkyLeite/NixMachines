@@ -4,8 +4,6 @@ with lib;
 
 let cfg = config.services.dashy;
 in {
-  imports = [ ../modules/chaos-service.nix ];
-
   options = {
     services.dashy = {
       enable = mkOption {
@@ -17,7 +15,115 @@ in {
       };
 
       config = mkOption {
-        type = types.anything;
+        type = types.submodule {
+          options = {
+            pageInfo = mkOption {
+              type = types.submodule {
+                options = {
+                  title = mkOption { type = types.str; };
+                  description = mkOption {
+                    type = with types; nullOr str;
+                    default = null;
+                  };
+                  footerText = mkOption {
+                    type = with types; nullOr str;
+                    default = null;
+                  };
+                  logo = mkOption {
+                    type = with types; nullOr str;
+                    default = null;
+                  };
+                };
+              };
+            };
+
+            sections = mkOption {
+              type = with types;
+                listOf (submodule {
+                  options = {
+                    name = mkOption { type = types.str; };
+                    icon = mkOption {
+                      type = with types; nullOr str;
+                      default = null;
+                    };
+                    items = mkOption {
+                      default = [ ];
+                      type = with types;
+                        listOf (submodule {
+                          options = {
+                            title = mkOption { type = types.str; };
+                            description = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            url = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            icon = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            target = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            hotkey = mkOption {
+                              type = with types; nullOr (ints.between 0 9);
+                              default = null;
+                            };
+                            tags = mkOption {
+                              type = with types; nullOr (listOf str);
+                              default = null;
+                            };
+                            statusCheck = mkOption {
+                              type = with types; nullOr bool;
+                              default = null;
+                            };
+                            statusCheckUrl = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            statusCheckHeaders = mkOption {
+                              type = with types; nullOr attrs;
+                              default = null;
+                            };
+                            statusCheckAllowInsecure = mkOption {
+                              type = with types; nullOr bool;
+                              default = null;
+                            };
+                            statusCheckAcceptCodes = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            statusCheckMaxRedirects = mkOption {
+                              type = with types; nullOr int;
+                              default = null;
+                            };
+                            color = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            backgroundColor = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            provider = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                            displayData = mkOption {
+                              type = with types; nullOr str;
+                              default = null;
+                            };
+                          };
+                        });
+                    };
+                  };
+                });
+            };
+          };
+        };
         default = { };
         description = ''
           Dashy's configuration

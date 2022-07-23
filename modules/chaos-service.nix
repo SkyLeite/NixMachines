@@ -19,6 +19,8 @@ let
     };
   };
 in {
+  imports = [ ../services/dashy.nix ];
+
   options = {
     chaos = {
       enable = mkOption {
@@ -36,17 +38,27 @@ in {
   };
 
   config = let
+    getServiceUrl = name:
+      if name != "root" then name + "." + cfg.baseUrl else cfg.baseUrl;
+
     serviceToVirtualHost = (name: value:
-      lib.nameValuePair
-      (if name != "root" then name + "." + cfg.baseUrl else cfg.baseUrl) ({
+      lib.nameValuePair (getServiceUrl name) ({
         extraConfig = ''
           reverse_proxy 127.0.0.1:${toString value.port}
           header Access-Control-Allow-Origin *
         '' + value.caddyOptions;
       }));
 
+    serviceToDashyService = (name: service: {
+      title = name;
+      url = getServiceUrl name;
+    });
+
     enabledServices =
       lib.filterAttrs (name: value: value.enable == true) cfg.services;
+
+    dashyItems =
+      attrValues (lib.mapAttrs serviceToDashyService enabledServices);
 
     virtualHosts = lib.mapAttrs' serviceToVirtualHost enabledServices;
   in mkIf cfg.enable {
@@ -57,6 +69,15 @@ in {
       email = "sky@leite.dev";
 
       virtualHosts = virtualHosts;
+    };
+
+    services.dashy = {
+      config = {
+        sections = [{
+          name = "Test";
+          items = dashyItems;
+        }];
+      };
     };
   };
 }
