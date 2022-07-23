@@ -7,6 +7,7 @@ in {
     ../../services/webhook.nix
     ../../services/dashy.nix
     ../../services/n8n.nix
+    ../../services/papermc.nix
     ../../modules/chaos-service.nix
   ];
 
