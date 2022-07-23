@@ -57,8 +57,10 @@ in {
     enabledServices =
       lib.filterAttrs (name: value: value.enable == true) cfg.services;
 
-    dashyItems =
-      attrValues (lib.mapAttrs serviceToDashyService enabledServices);
+    dashyItems = lib.trivial.pipe enabledServices [
+      (lib.mapAttrs serviceToDashyService)
+      attrValues
+    ];
 
     virtualHosts = lib.mapAttrs' serviceToVirtualHost enabledServices;
   in mkIf cfg.enable {
