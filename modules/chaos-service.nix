@@ -51,7 +51,7 @@ in {
 
     serviceToDashyService = (name: service: {
       title = name;
-      url = getServiceUrl name;
+      url = "https://" + (getServiceUrl name);
     });
 
     enabledServices =
