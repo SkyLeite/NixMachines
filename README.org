@@ -3,4 +3,4 @@
 ** DONE Add secret to github webhook delivery
 Webhook only matches on Github's IPs now
 ** DONE Setup zerolab.app domain with TLS
-** TODO Automatically add services to dashy in chaos module
+** DONE Automatically add services to dashy in chaos module
