@@ -39,7 +39,6 @@ in {
       restartIfChanged = true;
       requires = [ "network-online.target" ];
       serviceConfig = {
-        User = "minecraft";
         Nice = 1;
         WorkingDirectory = "/opt/minecraft/server";
         ExecStart = "${pkgs.papermc}/bin/minecraft-server";
