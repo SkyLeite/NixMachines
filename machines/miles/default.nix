@@ -51,6 +51,8 @@ in {
     logind.lidSwitch = "ignore";
     logind.lidSwitchDocked = "ignore";
 
+    papermc.enable = true;
+
     webhook = {
       enable = true;
       port = 5000;
