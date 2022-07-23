@@ -76,7 +76,7 @@ in {
     services.dashy = {
       config = {
         sections = [{
-          name = "Test";
+          name = "Services";
           items = dashyItems;
         }];
       };
