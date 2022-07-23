@@ -6,6 +6,7 @@ let
           --option extra-builtins-file ./extra-builtins.nix \
           switch && \
           nix-env --list-generations --profile /nix/var/nix/profiles/system | tail -n 1 | tee /tmp/current-generation;
+
   '';
 in stdenv.mkDerivation {
   name = "build-machine";
