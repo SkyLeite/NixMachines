@@ -25,10 +25,7 @@ in {
   };
 
   config = mkIf cfg.enable {
-    chaos.services.root = {
-      enable = true;
-      port = 8080;
-    };
+    networking = { firewall = { allowedTCPPorts = [ 25565 ]; }; };
 
     systemd.services.papermc = let
       format = pkgs.formats.yaml { };
