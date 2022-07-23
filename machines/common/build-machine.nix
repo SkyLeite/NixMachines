@@ -4,7 +4,8 @@ let
     ${pkgs.nixos-rebuild}/bin/nixos-rebuild \
           --flake github:SkyLeite/NixMachines/$1 \
           --option extra-builtins-file ./extra-builtins.nix \
-          switch'';
+          switch;
+  '';
 in stdenv.mkDerivation {
   name = "build-machine";
   dontUnpack = true;
