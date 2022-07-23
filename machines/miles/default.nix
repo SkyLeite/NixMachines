@@ -112,7 +112,7 @@ in {
         pageInfo = { title = "Miles"; };
 
         sections = [{
-          name = "Information";
+          name = "Meta";
           icon = "far fa-rocket";
           items = [
             {
