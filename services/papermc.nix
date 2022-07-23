@@ -41,7 +41,6 @@ in {
       serviceConfig = {
         User = "minecraft";
         Nice = 1;
-        KillMode = "none";
         WorkingDirectory = "/opt/minecraft/server";
         ExecStart = "${pkgs.papermc}/bin/minecraft-server";
         TimeoutStartSec = 0;
