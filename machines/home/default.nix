@@ -299,9 +299,8 @@ in {
 
   nix = {
     settings = {
-      substituters =
-        [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
-      trusted-public-keys = [ "https://hydra.iohk.io" ];
+      substituters = [ ];
+      trusted-public-keys = [ ];
     };
 
     extraOptions = ''
