@@ -6,6 +6,12 @@
   inputs.build-machine.url = "path:./machines/common/build-machine";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
+    nixosConfigurations.home = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      specialArgs = { inherit attrs; };
+      modules = [ ./machines/home/default.nix ];
+    };
+
     nixosConfigurations.miles = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit attrs; };
