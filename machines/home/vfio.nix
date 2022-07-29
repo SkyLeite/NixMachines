@@ -1,12 +1,8 @@
 { config, pkgs, ... }:
 
 {
-  environment.systemPackages = [
-    pkgs.virt-manager
-    pkgs.looking-glass-client
-    pkgs.swtpm
-    pkgs.win-virtio
-  ];
+  environment.systemPackages =
+    [ pkgs.virt-manager pkgs.looking-glass-client pkgs.swtpm pkgs.win-virtio ];
 
   boot = {
     kernelParams = [ "amd_iommu=on" ];
@@ -29,29 +25,32 @@
     '';
   };
 
-  systemd.tmpfiles.rules = [
-    "f /dev/shm/looking-glass 0660 alex qemu-libvirtd -"
-  ];
+  systemd.tmpfiles.rules =
+    [ "f /dev/shm/looking-glass 0660 alex qemu-libvirtd -" ];
 
   programs.dconf.enable = true;
   virtualisation = {
     libvirtd = {
       enable = true;
-      qemuOvmf = true;
-      qemuSwtpm = true;
-      #qemuOvmfPackage = pkgs.OVMFFull;
-      qemuVerbatimConfig = ''
-        user = "sky"
-        group = "kvm"
-        cgroup_device_acl = [
-            "/dev/input/by-id/usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-event-kbd",
-            "/dev/input/by-id/usb-Logitech_G403_Prodigy_Gaming_Mouse_087838573135-event-mouse",
-            "/dev/null", "/dev/full", "/dev/zero",
-            "/dev/random", "/dev/urandom",
-            "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
-            "/dev/rtc","/dev/hpet", "/dev/sev"
-        ]
-      '';
+
+      qemu = {
+        ovmf.enable = true;
+        swtpm.enable = true;
+
+        verbatimConfig = ''
+
+          user = "sky"
+          group = "kvm"
+          cgroup_device_acl = [
+              "/dev/input/by-id/usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-event-kbd",
+              "/dev/input/by-id/usb-Logitech_G403_Prodigy_Gaming_Mouse_087838573135-event-mouse",
+              "/dev/null", "/dev/full", "/dev/zero",
+              "/dev/random", "/dev/urandom",
+              "/dev/ptmx", "/dev/kvm", "/dev/kqemu",
+              "/dev/rtc","/dev/hpet", "/dev/sev"
+          ]
+        '';
+      };
     };
   };
 }

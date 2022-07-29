@@ -80,10 +80,7 @@ in {
     };
     desktopManager = {
       xterm.enable = false;
-      xfce = {
-        enable = true;
-        thunarPlugins = [ pkgs.xfce.thunar-archive-plugin ];
-      };
+      xfce = { enable = true; };
     };
     windowManager.i3 = {
       enable = true;
@@ -180,6 +177,11 @@ in {
   };
   programs.noisetorch.enable = true;
   programs.nix-ld.enable = true;
+  programs.thunar = {
+    enable = true;
+    plugins = [ pkgs.xfce.thunar-archive-plugin ];
+  };
+
   hardware.bluetooth.enable = true;
 
   hardware.opengl.enable = true;
@@ -295,16 +297,18 @@ in {
     extraConfigFiles = [ "/etc/nixos/mopidy/mopidy.conf" ];
   };
 
-  # Binary Cache for Haskell.nix
-  nix.binaryCachePublicKeys =
-    [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+  nix = {
+    settings = {
+      substituters =
+        [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
+      trusted-public-keys = [ "https://hydra.iohk.io" ];
+    };
 
-  nix.binaryCaches = [ "https://hydra.iohk.io" ];
-
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-    plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
-  '';
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
+    '';
+  };
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
