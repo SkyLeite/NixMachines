@@ -1,8 +1,24 @@
 { config, pkgs, ... }:
 
-{
-  environment.systemPackages =
-    [ pkgs.virt-manager pkgs.looking-glass-client pkgs.swtpm pkgs.win-virtio ];
+let
+
+  lookingGlassDesktopItem = pkgs.makeDesktopItem {
+    name = "Looking Glass";
+    exec =
+      "${pkgs.looking-glass-client}/bin/looking-glass-client -s false -K 144";
+    comment = "User Defined Looking Glass Client";
+    desktopName = "Looking Glass";
+    categories = [ "Game" ];
+  };
+in {
+
+  environment.systemPackages = [
+    pkgs.virt-manager
+    pkgs.looking-glass-client
+    pkgs.swtpm
+    pkgs.win-virtio
+    lookingGlassDesktopItem
+  ];
 
   boot = {
     kernelParams = [ "amd_iommu=on" ];
@@ -38,7 +54,6 @@
         swtpm.enable = true;
 
         verbatimConfig = ''
-
           user = "sky"
           group = "kvm"
           cgroup_device_acl = [

@@ -5,6 +5,8 @@
 { config, pkgs, lib, ... }:
 
 let
+  SDL2Patched = pkgs.SDL2.override { udevSupport = true; };
+
   usBr = pkgs.fetchFromGitHub {
     owner = "SkyLeite";
     repo = "us-br";
@@ -22,7 +24,7 @@ in {
   nixpkgs.config.allowBroken = true;
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [ pango libthai harfbuzz ];
+      extraPkgs = pkgs: with pkgs; [ pango libthai harfbuzz libgdiplus ];
     };
   };
 
@@ -187,6 +189,7 @@ in {
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
   hardware.opengl.driSupport32Bit = true;
+  hardware.xpadneo.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -247,6 +250,10 @@ in {
     ffmpeg
   ];
 
+  environment.extraInit = ''
+    xset s off -dpms
+  '';
+
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -257,7 +264,11 @@ in {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   programs.mtr.enable = true;
-  programs.steam.enable = true;
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
   programs.adb.enable = true;
 
   # List services that you want to enable:
@@ -279,7 +290,7 @@ in {
   # '';
 
   services.mopidy = {
-    enable = true;
+    enable = false;
     extensionPackages = [
       pkgs.mopidy-mpd
       pkgs.mopidy-scrobbler
