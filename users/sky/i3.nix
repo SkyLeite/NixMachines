@@ -9,7 +9,7 @@ in {
     package = pkgs.i3-gaps;
     config = {
       modifier = mod;
-      bars = [ ];
+      # bars = [ ];
 
       terminal = "alacritty";
       fonts = {
@@ -135,11 +135,11 @@ in {
       ];
 
       startup = [
-        {
-          command = "systemctl --user restart polybar";
-          always = true;
-          notification = false;
-        }
+        # {
+        #   command = "systemctl --user restart polybar";
+        #   always = true;
+        #   notification = false;
+        # }
         { command = "flameshot"; }
         {
           command = "sh ../nixpkgs/screens.sh";
