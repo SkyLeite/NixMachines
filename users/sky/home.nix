@@ -30,7 +30,6 @@ in {
   home.packages = [
     pkgs.nodejs
     pkgs.python3
-    #pkgs.rake
     pkgs.elixir
     pkgs.elixir_ls
     pkgs.yarn
@@ -38,7 +37,6 @@ in {
     pkgs.simplescreenrecorder
     pkgs.arandr
     pkgs.gimp-with-plugins
-    pkgs.picom
     pkgs.virt-manager
     pkgs.xorg.xmodmap
     pkgs.libnotify
@@ -48,7 +46,6 @@ in {
     pkgs.clj-kondo
     pkgs.leiningen
     pkgs.boot
-    pkgs.sbcl
     pkgs.lispPackages.quicklisp
     pkgs.tdrop
     pkgs.libreoffice
@@ -58,7 +55,6 @@ in {
     pkgs.tty-clock
 
     # pkgs.nerdfonts
-    pkgs.ytmdesktop
     pkgs.lutris
     pkgs.niv
     pkgs.polymc
@@ -67,7 +63,6 @@ in {
     pkgs.jdk8
     pkgs.mpv
     pkgs.deluge
-    pkgs.brasero
     pkgs.sqls
     #pkgs.haskell-language-server
     #pkgs.ghc
@@ -143,27 +138,15 @@ in {
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
-    plugins = [{
-      name = "fzf-tab";
-      src = pkgs.fetchFromGitHub {
-        owner = "Aloxaf";
-        repo = "fzf-tab";
-        rev = "e3fae7478fc365a04a06b9972b04766ffed78c1c";
-        sha256 = "152vhm7i84ab7xp8bkvxr5axfy6lljiqc0k9vggxpc149knkyh9n";
-        fetchSubmodules = true;
-      };
-    }];
+    plugins = [ ];
     oh-my-zsh = {
       enable = true;
-      plugins = [ "git" "sudo" "fzf" ];
+      plugins = [ "git" "sudo" ];
       theme = "alanpeabody";
     };
     initExtra = ''
-      path+=("/home/sky/.yarn-packages/bin")
-
       export PATH
       eval "$(direnv hook zsh)"
-      enable-fzf-tab
 
       # disable sort when completing `git checkout`
       zstyle ':completion:*:git-checkout:*' sort false
