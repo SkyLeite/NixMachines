@@ -250,10 +250,6 @@ in {
     ffmpeg
   ];
 
-  environment.extraInit = ''
-    xset s off -dpms
-  '';
-
   services.pcscd.enable = true;
   programs.gnupg.agent = {
     enable = true;
@@ -283,11 +279,9 @@ in {
 
   users.extraGroups.vboxusers.members = [ "sky" ];
 
-  # services.xserver.config = lib.mkAfter ''
-  # Section "Extensions"
-  #   Option "MIT-SHM" "Disable"
-  # EndSection
-  # '';
+  services.xserver.config = lib.mkAfter ''
+    Option "DPMS" "true"
+  '';
 
   services.mopidy = {
     enable = false;
