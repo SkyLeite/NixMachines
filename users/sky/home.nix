@@ -80,6 +80,7 @@ in {
     pkgs.source-code-pro
     pkgs.shellcheck
     pkgs.shfmt
+    pkgs.zoom-us
 
     #lol-launchhelper
   ];
