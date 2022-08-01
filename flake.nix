@@ -2,7 +2,10 @@
   description = "Sky's NixOS machines";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  inputs.home-manager.url = "github:nix-community/home-manager";
+  inputs.home-manager = {
+    url = "github:nix-community/home-manager";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.build-machine.url = "path:./machines/common/build-machine";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
@@ -28,6 +31,15 @@
               })
           ];
         })
+        home-manager.nixosModules.home-manager
+        {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.sky = import ./users/sky/home.nix;
+
+          # Optionally, use home-manager.extraSpecialArgs to pass
+          # arguments to home.nix
+        }
         ./machines/home/default.nix
       ];
     };
