@@ -311,7 +311,7 @@ in {
   users.extraGroups.vboxusers.members = [ "sky" ];
 
   services.xserver.config = lib.mkAfter ''
-    Option "DPMS" "true"
+    # Option "DPMS" "true"
   '';
 
   services.mopidy = {
