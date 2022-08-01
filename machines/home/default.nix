@@ -139,6 +139,37 @@ in {
   # Enable CUPS to print documents.
   services.printing.enable = true;
 
+  services.autorandr = {
+    enable = true;
+    profiles = {
+      "home" = {
+        fingerprint = {
+          DisplayPort-0 = "<EDID>";
+          DisplayPort-1 = "<EDID>";
+          DisplayPort-2 = "<EDID>";
+        };
+        config = {
+          DisplayPort-0 = {
+            enable = true;
+            mode = "1920x1080";
+            position = "0x1080";
+            rate = "143.98";
+          };
+          DisplayPort-2 = {
+            enable = true;
+            mode = "1920x1080";
+            position = "0x0";
+            rate = "143.98";
+            primary = true;
+          };
+        };
+      };
+    };
+    hooks = {
+      postswitch = { "notify-i3" = "${pkgs.i3}/bin/i3-msg restart"; };
+    };
+  };
+
   # Enable sound.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
