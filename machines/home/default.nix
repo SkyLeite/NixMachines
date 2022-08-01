@@ -152,7 +152,7 @@ in {
           DisplayPort-0 = {
             enable = true;
             mode = "1920x1080";
-            position = "0x1080";
+            position = "1920x0";
             rate = "143.98";
           };
           DisplayPort-2 = {
