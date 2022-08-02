@@ -270,7 +270,6 @@ in {
     editorconfig-core-c
     emacs
     fd
-    firefox
     flameshot
     git
     gparted

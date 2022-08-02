@@ -102,7 +102,28 @@ in {
     enable = true;
     package = pkgs.emacs28NativeComp;
   };
-  #programs.firefox.enable = true;
+  programs.firefox = {
+    enable = true;
+    profiles.sky = {
+      settings = {
+        "browser.search.isUS" = false;
+        "browser.bookmarks.showMobileBookmarks" = true;
+      };
+      userChrome = ''
+        /* Hide tab bar in FF Quantum */
+        @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+          #titlebar {
+            visibility: collapse !important;
+            margin-bottom: 21px !important;
+          }
+
+          #sidebar-box[sidebarcommand="treestyletab_piro_sakura_ne_jp-sidebar-action"] #sidebar-header {
+            visibility: collapse !important;
+          }
+      '';
+    };
+  };
 
   programs.alacritty = {
     enable = true;
