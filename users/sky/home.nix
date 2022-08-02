@@ -292,6 +292,19 @@ in {
     };
   };
 
+  programs.ssh = {
+    enable = true;
+
+    matchBlocks = {
+      work = {
+        hostname = "192.168.122.49";
+        user = "sky";
+        identityFile = "/home/sky/.ssh/id_rsa";
+        forwardX11 = true;
+      };
+    };
+  };
+
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = "sky";
