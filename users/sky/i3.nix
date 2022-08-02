@@ -260,6 +260,18 @@ in {
             command_off = "${virsh} shutdown ${vm}";
             interval = 5;
           })
+          (let
+            qemuUri = "qemu:///system";
+            virsh = "${pkgs.libvirt}/bin/virsh -c ${qemuUri}";
+            vm = "work";
+          in {
+            block = "toggle";
+            text = "Work";
+            command_state = ''${virsh} domstate ${vm} | grep -v "shut off"'';
+            command_on = "${virsh} start ${vm}";
+            command_off = "${virsh} shutdown ${vm}";
+            interval = 5;
+          })
           {
             block = "sound";
             on_click = "pavucontrol --tab=3";
