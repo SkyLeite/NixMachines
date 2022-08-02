@@ -184,6 +184,27 @@ in {
 
         {
           command = "floating enable";
+          criteria = { class = ".zoom "; };
+        }
+
+        {
+          command = "floating disable";
+          criteria = {
+            class = ".zoom ";
+            title = "Zoom - (Free|Licensed) Account";
+          };
+        }
+
+        {
+          command = "floating disable";
+          criteria = {
+            class = ".zoom ";
+            title = "Zoom Meeting";
+          };
+        }
+
+        {
+          command = "floating enable";
           criteria = { instance = "AlacrittyFloating"; };
         }
 
