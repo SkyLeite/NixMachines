@@ -9,7 +9,17 @@ in {
     package = pkgs.i3-gaps;
     config = {
       modifier = mod;
-      # bars = [ ];
+      bars = [{
+        fonts = {
+          names = [ "DejaVu Sans Mono" "Font Awesome 6 Free" ];
+          size = 10.0;
+        };
+        position = "bottom";
+        workspaceNumbers = true;
+        workspaceButtons = true;
+        statusCommand =
+          "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-main.toml";
+      }];
 
       terminal = "alacritty";
       fonts = {
@@ -31,7 +41,6 @@ in {
       gaps = { inner = 12; };
 
       keybindings = lib.mkOptionDefault {
-        # "${mod}+d" = "exec ${pkgs.albert}/bin/albert toggle";
         "${mod}+d" = "exec rofi -show drun -columns 3 -sidebar-mode";
         "${mod}+s" = "exec rofi -show emoji";
         "${mod}+o" = "exit";
@@ -183,6 +192,63 @@ in {
           criteria = { instance = "origin.exe"; };
         }
       ];
+    };
+
+  };
+
+  programs.i3status-rust = {
+    enable = true;
+
+    bars = {
+      main = {
+        icons = "awesome6";
+        blocks = [
+          {
+            block = "music";
+            format = "{artist} - {title}";
+          }
+          {
+            block = "disk_space";
+            path = "/";
+            info_type = "available";
+            format = "{icon} {used}/{total} ({available} free)";
+            unit = "GB";
+            interval = 60;
+            warning = 20.0;
+            alert = 10.0;
+          }
+          {
+            block = "disk_space";
+            path = "/mnt/hdd";
+            info_type = "available";
+            format = "{icon} {used}/{total} ({available} free)";
+            unit = "GB";
+            interval = 60;
+            warning = 20.0;
+            alert = 10.0;
+          }
+          (let
+            qemuUri = "qemu:///system";
+            virsh = "${pkgs.libvirt}/bin/virsh -c ${qemuUri}";
+            vm = "win10";
+          in {
+            block = "toggle";
+            text = "Windows";
+            command_state = ''${virsh} domstate ${vm} | grep -v "shut off"'';
+            command_on = "${virsh} start ${vm}";
+            command_off = "${virsh} shutdown ${vm}";
+            interval = 5;
+          })
+          {
+            block = "sound";
+            on_click = "pavucontrol --tab=3";
+          }
+          {
+            block = "time";
+            on_click = "xdg-open https://calendar.google.com";
+          }
+        ];
+      };
     };
   };
 }

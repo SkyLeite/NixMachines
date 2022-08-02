@@ -81,6 +81,7 @@ in {
     pkgs.shellcheck
     pkgs.shfmt
     pkgs.zoom-us
+    pkgs.font-awesome
 
     #lol-launchhelper
   ];
