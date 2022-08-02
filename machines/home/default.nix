@@ -213,6 +213,7 @@ in {
       }
     ];
   };
+  programs.nm-applet.enable = true;
   programs.noisetorch.enable = true;
   programs.nix-ld.enable = true;
   programs.thunar = {
@@ -238,8 +239,16 @@ in {
     isNormalUser = true;
     createHome = true;
     description = "Sky Leite";
-    extraGroups =
-      [ "wheel" "docker" "libvirtd" "kvm" "input" "adbusers" "audio" ];
+    extraGroups = [
+      "wheel"
+      "docker"
+      "libvirtd"
+      "kvm"
+      "input"
+      "adbusers"
+      "audio"
+      "networkmanager"
+    ];
     group = "users";
     home = "/home/sky";
     hashedPassword =
@@ -284,6 +293,7 @@ in {
     unzip
     openssl
     ffmpeg
+    slack
   ];
 
   services.pcscd.enable = true;
@@ -357,6 +367,7 @@ in {
   # networking.firewall.enable = false;
 
   networking.firewall.enable = false;
+  networking.networkmanager = { enable = true; };
   # networking.firewall.allowedTCPPorts = [ 22 80 8080 8000 11470 ];
 
   # This value determines the NixOS release from which the default
