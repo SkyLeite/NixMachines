@@ -53,6 +53,16 @@ in {
         ovmf.enable = true;
         swtpm.enable = true;
 
+        package = pkgs.qemu_kvm.overrideAttrs (oldAttrs: rec {
+          patches = [
+            (pkgs.fetchpatch {
+              url =
+                "https://gist.githubusercontent.com/SkyLeite/eb12aec4298c4f06c8a05bb0c70e242f/raw/7ddcd42a895b97e15509430f6d9269d6e56402aa/qemu-stop-capturing-evdev-on-boot.diff";
+              sha256 = "sha256-T2gM6VtdJSI6zbNaG2qV8Dxn30vruplxjl2shx7djPE=";
+            })
+          ];
+        });
+
         verbatimConfig = ''
           user = "sky"
           group = "kvm"
