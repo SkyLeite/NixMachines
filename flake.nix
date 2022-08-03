@@ -10,7 +10,7 @@
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
     homeConfigurations.sky = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+      pkgs = nixpkgs;
 
       # Specify your home configuration modules here, for example,
       # the path to your home.nix.
