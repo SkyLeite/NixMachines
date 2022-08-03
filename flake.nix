@@ -9,6 +9,17 @@
   inputs.build-machine.url = "path:./machines/common/build-machine";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs: {
+    homeConfigurations.sky = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+
+      # Specify your home configuration modules here, for example,
+      # the path to your home.nix.
+      modules = [ ./users/sky/home.nix ];
+
+      # Optionally use extraSpecialArgs
+      # to pass through arguments to home.nix
+    };
+
     nixosConfigurations.home = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit attrs; };
