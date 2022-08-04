@@ -54,16 +54,20 @@ in {
         "funkwhale.zerolab.app" = {
           extraConfig = ''
             header Access-Control-Allow-Origin *
-            root ${staticFiles}
+            file_server / {
+              root ${staticFiles}
+            }
+
+            reverse_proxy /api 127.0.0.1:5000
           '';
         };
 
-        "funkwhale.zerolab.app/api" = {
-          extraConfig = ''
-            reverse_proxy 127.0.0.1:5000
-            header Access-Control-Allow-Origin *
-          '';
-        };
+        # "funkwhale.zerolab.app/api" = {
+        #   extraConfig = ''
+        #     reverse_proxy 127.0.0.1:5000
+        #     header Access-Control-Allow-Origin *
+        #   '';
+        # };
       };
     };
 
