@@ -54,11 +54,11 @@ in {
         "funkwhale.zerolab.app" = {
           extraConfig = ''
             header Access-Control-Allow-Origin *
-            file_server / {
+            reverse_proxy /api 127.0.0.1:5000
+
+            file_server /* {
               root ${staticFiles}/dist
             }
-
-            reverse_proxy /api 127.0.0.1:5000
           '';
         };
 
