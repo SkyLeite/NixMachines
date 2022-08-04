@@ -27,12 +27,12 @@ in {
   };
 
   config = mkIf cfg.enable {
-    chaos.services.funkwhale = {
+    chaos.services."funkwhale/api" = {
       enable = true;
       port = 5000;
     };
 
-    chaos.services."funkwhale/api" = {
+    chaos.services.funkwhale = {
       enable = true;
       port = 5000;
     };
