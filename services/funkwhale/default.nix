@@ -55,7 +55,7 @@ in {
           extraConfig = ''
             header Access-Control-Allow-Origin *
             file_server / {
-              root ${staticFiles}
+              root ${staticFiles}/dist
             }
 
             reverse_proxy /api 127.0.0.1:5000
