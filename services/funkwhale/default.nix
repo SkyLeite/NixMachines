@@ -56,7 +56,7 @@ in {
             header Access-Control-Allow-Origin *
             reverse_proxy /api 127.0.0.1:5000
 
-            file_server /* {
+            file_server * {
               root ${staticFiles}/dist
             }
           '';
