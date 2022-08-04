@@ -38,6 +38,7 @@ in {
     chaos.services.funkwhale = {
       enable = true;
       port = 5000;
+      addToCaddy = false;
     };
 
     services.redis = {

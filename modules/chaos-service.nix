@@ -12,6 +12,10 @@ let
         default = false;
       };
       port = mkOption { type = types.int; };
+      addToCaddy = mkOption {
+        type = types.bool;
+        default = true;
+      };
       caddyOptions = mkOption {
         type = types.str;
         default = "";
@@ -54,8 +58,9 @@ in {
       url = "https://" + (getServiceUrl name);
     });
 
-    enabledServices =
-      lib.filterAttrs (name: value: value.enable == true) cfg.services;
+    enabledServices = lib.filterAttrs
+      (name: value: value.enable == true && value.addToCaddy == true)
+      cfg.services;
 
     dashyItems = lib.trivial.pipe enabledServices [
       (lib.mapAttrs serviceToDashyService)
