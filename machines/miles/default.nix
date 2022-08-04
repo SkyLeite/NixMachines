@@ -8,6 +8,7 @@ in {
     ../../services/dashy.nix
     ../../services/n8n.nix
     ../../services/papermc.nix
+    ../../services/funkwhale/default.nix
     ../../modules/chaos-service.nix
   ];
 
@@ -52,6 +53,8 @@ in {
     logind.lidSwitchDocked = "ignore";
 
     papermc.enable = true;
+
+    funkwhale.enable = true;
 
     webhook = {
       enable = true;
