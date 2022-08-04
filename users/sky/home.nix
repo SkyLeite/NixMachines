@@ -297,10 +297,18 @@ in {
 
     matchBlocks = {
       work = {
-        hostname = "192.168.122.49";
+        hostname = "192.168.122.21";
         user = "sky";
         identityFile = "/home/sky/.ssh/id_rsa";
         forwardX11 = true;
+        forwardX11Trusted = true;
+        compression = true;
+        localForwards = map (port: {
+          bind.port = port;
+          host.address = "127.0.0.1";
+          host.port = port;
+        }) [ 1313 3000 ];
+        extraOptions = { };
       };
     };
   };
