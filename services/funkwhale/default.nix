@@ -6,6 +6,14 @@ let
   cfg = config.services.funkwhale;
   postgresCfg = config.services.postgresql;
   postgresPort = postgresCfg.port;
+  staticFiles = pkgs.stdenv.mkDerivation {
+    name = "funkwhale-front";
+    src = ./front;
+    installPhase = ''
+      mkdir $out
+      cp -rv $src/* $out
+    '';
+  };
 in {
   imports = [ ../../modules/chaos-service.nix ];
 
@@ -27,11 +35,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    chaos.services."funkwhale/api" = {
-      enable = true;
-      port = 5000;
-    };
-
     chaos.services.funkwhale = {
       enable = true;
       port = 5000;
@@ -42,6 +45,24 @@ in {
         enable = true;
         user = "redis-funkwhale";
         port = 6397;
+      };
+    };
+
+    services.caddy = {
+      virtualHosts = {
+        "funkwhale.zerolab.app" = {
+          extraConfig = ''
+            header Access-Control-Allow-Origin *
+            root ${staticFiles}
+          '';
+        };
+
+        "funkwhale.zerolab.app/api" = {
+          extraConfig = ''
+            reverse_proxy 127.0.0.1:5000
+            header Access-Control-Allow-Origin *
+          '';
+        };
       };
     };
 
