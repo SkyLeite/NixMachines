@@ -228,6 +228,7 @@ in {
             block = "music";
             format = "{artist} - {title}";
             max_width = 50;
+            dynamic_width = true;
           }
           {
             block = "disk_space";
