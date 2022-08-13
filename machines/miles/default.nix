@@ -141,6 +141,16 @@ in {
         }];
       };
     };
+
+    factorio = {
+      enable = true;
+      admins = [ "Sky" ];
+      openFirewall = true;
+      game-name = "Dr. Zap";
+      game-password = "drzap";
+      loadLatestSave = true;
+      description = "*emoji apontando o dedo*";
+    };
   };
 
   virtualisation.docker.enable = true;
