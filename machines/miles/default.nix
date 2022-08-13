@@ -153,6 +153,8 @@ in {
       game-password = "drzap";
       loadLatestSave = true;
       description = "*emoji apontando o dedo*";
+      public = true;
+      token = "07ffc97315dd787e2b6cde6810a9e5";
     };
   };
 
