@@ -42,10 +42,13 @@ in {
 
       keybindings = lib.mkOptionDefault {
         "${mod}+d" = "exec rofi -show drun -columns 3 -sidebar-mode";
-        "${mod}+s" = "exec rofi -show emoji";
+        "${mod}+z" = "exec rofi -show emoji";
         "${mod}+o" = "exit";
         "${mod}+g" =
           "exec tdrop -am -w 80% -h 45% -x 10% alacritty --class AlacrittyFloating";
+
+        "${mod}+s" =
+          "exec tdrop -am -w 50% -x 25% -y 25% alacritty -e pulsemixer";
 
         "${mod}+Shift+f" = "kill";
         "${mod}+Shift+y" = "restart";
