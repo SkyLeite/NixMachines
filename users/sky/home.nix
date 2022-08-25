@@ -248,7 +248,7 @@ in {
     enable = true;
     enableXinerama = true;
     display = "fill";
-    imageDirectory = "%h/Pictures/Backgrounds";
+    imageDirectory = "%h/Pictures/Backgrounds/Active";
     interval = "1h";
   };
 
