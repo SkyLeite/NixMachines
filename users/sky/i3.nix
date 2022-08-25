@@ -172,6 +172,11 @@ in {
 
       window.commands = [
         {
+          command = "border pixel 0";
+          criteria = { class = "^.*"; };
+        }
+
+        {
           command = "floating enable";
           criteria = { instance = "yakuake"; };
         }

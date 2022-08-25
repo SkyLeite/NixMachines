@@ -21,6 +21,7 @@ in {
     ./neovim.nix
     ./scripts/gui.nix
     ./packages/deadd.nix
+    ./packages/xborders.nix
   ];
 
   # Let Home Manager install and manage itself.
@@ -261,6 +262,14 @@ in {
     vSync = false;
     fade = true;
     fadeDelta = 2;
+
+    extraOptions = ''
+      corner-radius = 10
+      rounded-corners-exclude = [
+        "window_type = 'dock'",
+        "window_type = 'desktop'"
+      ];
+    '';
   };
 
   services.dunst = {
