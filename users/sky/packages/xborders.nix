@@ -51,7 +51,7 @@ in {
         RestartSec = 10;
       };
 
-      Install = { WantedBy = [ "multi-user.target" ]; };
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
   };
 }
