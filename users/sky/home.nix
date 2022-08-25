@@ -3,6 +3,7 @@
 let
   mod = "Mod4";
   my-nur = import /mnt/hdd/projects/nix-repository { };
+  dbus-tabs = pkgs.callPackage ./packages/dbus-tabs.nix pkgs;
 
   nur = import (builtins.fetchTarball
     "https://github.com/nix-community/NUR/archive/master.tar.gz") {
@@ -11,6 +12,7 @@ let
 
   lol-launchhelper = my-nur.lol-launchhelper;
   rofi-libvirt = import ./scripts/rofi-libvirt.nix pkgs;
+  rofi-firefox = pkgs.callPackage ./scripts/rofi-firefox.nix pkgs;
 in {
   imports = [
     ./polybar
@@ -29,7 +31,6 @@ in {
   home.keyboard = false;
   home.packages = [
     pkgs.nodejs
-    pkgs.python3
     pkgs.elixir
     pkgs.elixir_ls
     pkgs.yarn
@@ -83,6 +84,7 @@ in {
     pkgs.zoom-us
     pkgs.font-awesome
     pkgs.pulsemixer
+    pkgs.dfeet
 
     #lol-launchhelper
   ];
@@ -210,7 +212,7 @@ in {
     package = pkgs.rofi.override { plugins = [ pkgs.rofi-emoji ]; };
     theme = "Arc-Dark";
     extraConfig = {
-      modi = "emoji,drun,ssh";
+      modi = "emoji,drun,ssh,firefox:${rofi-firefox}/bin/rofi-firefox.sh";
       kb-primary-paste = "Control+V,Shift+Insert";
       kb-secondary-paste = "Control+v,Insert";
       padding = 18;
@@ -318,6 +320,19 @@ in {
   # paths it should manage.
   home.username = "sky";
   home.homeDirectory = "/home/sky";
+  home.file = {
+    ".mozilla/native-messaging-hosts/dbus_tabs.json" = {
+      text = ''
+        {
+            "name": "dbus_tabs",
+            "description": "Host for native messaging",
+            "path": "${dbus-tabs}/dbus_tabs_native_service.py",
+            "type": "stdio",
+            "allowed_extensions": ["dbus_tabs@cubimon.org"]
+        }
+      '';
+    };
+  };
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
