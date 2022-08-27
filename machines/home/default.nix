@@ -157,15 +157,16 @@ in {
           DisplayPort-0 = {
             enable = true;
             mode = "1920x1080";
-            position = "1920x0";
+            position = "1080x393";
             rate = "143.98";
+            primary = true;
           };
           DisplayPort-2 = {
             enable = true;
             mode = "1920x1080";
             position = "0x0";
             rate = "143.98";
-            primary = true;
+            rotate = "left";
           };
         };
       };
