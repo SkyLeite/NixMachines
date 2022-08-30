@@ -306,6 +306,12 @@ in {
     };
   };
 
+  services.mopidy = {
+    enable = true;
+    extensionPackages =
+      [ pkgs.mopidy-ytmusic pkgs.mopidy-mpd pkgs.mopidy-mpris ];
+  };
+
   programs.ssh = {
     enable = true;
 
