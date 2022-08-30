@@ -22,6 +22,7 @@ in {
     ./scripts/gui.nix
     ./packages/deadd.nix
     ./packages/xborders.nix
+    ./packages/noisetorch.nix
   ];
 
   # Let Home Manager install and manage itself.
@@ -244,6 +245,7 @@ in {
     ];
   };
 
+  services.noisetorch.enable = true;
   services.random-background = {
     enable = true;
     enableXinerama = true;

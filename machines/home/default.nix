@@ -16,7 +16,7 @@ let
 
   microphone = {
     unit =
-      "sys-devices-pci0000:00-0000:00:08.1-0000:0a:00.4-sound-card1-controlC1.device";
+      "sys-devices-pci0000:00-0000:00:08.1-0000:0a:00.3-usb3-3\\x2d3-3\\x2d3:1.0-sound-card2-controlC2.device";
     id = "alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-mono";
   };
 in {
@@ -31,14 +31,7 @@ in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./vfio.nix
-    ../../services/noisetorch.nix
   ];
-
-  services.noisetorch = {
-    enable = true;
-    unit = microphone.unit;
-    id = microphone.id;
-  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

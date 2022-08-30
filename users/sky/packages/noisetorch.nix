@@ -13,33 +13,28 @@ in {
           Whether to enable Noisetorch service
         '';
       };
-
-      unit = mkOption {
-        type = types.str;
-        description = "The systemd unit for the device";
-      };
-
-      id = mkOption {
-        type = types.str;
-        description = "The id for the device";
-      };
     };
   };
 
   config = mkIf cfg.enable {
-    systemd.services.noisetorch = {
-      description = "Noisetorch Noise Canceling";
-      after = [ "pipewire.service" cfg.unit ];
-      requires = [ cfg.unit ];
-      serviceConfig = {
+    home.packages = [ pkgs.noisetorch ];
+
+    systemd.user.services.noisetorch = {
+      Unit = {
+        Description = "Noisetorch Noise Canceling";
+        After = "pipewire.service";
+      };
+
+      Service = {
         Type = "simple";
-        User = "sky";
         Restart = "on-failure";
         RestartSec = "3";
         RemainAfterExit = "yes";
-        ExecStart = "${pkgs.noisetorch}/bin/noisetorch -i -s ${cfg.id} -t 95";
+        ExecStart = "${pkgs.noisetorch}/bin/noisetorch -i -t 95";
         ExecStop = "${pkgs.noisetorch}/bin/noisetorch -u";
       };
+
+      Install = { WantedBy = [ "graphical-session.target" ]; };
     };
   };
 }
