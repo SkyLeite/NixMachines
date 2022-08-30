@@ -133,6 +133,9 @@ in {
 
   services.blueman.enable = true;
   services.k3s.enable = false;
+  xdg.portal.enable = true;
+  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  services.flatpak.enable = true;
 
   # Configure keymap in X11
   services.xserver.layout = "us";
