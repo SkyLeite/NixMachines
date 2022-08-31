@@ -87,6 +87,7 @@ in {
     pkgs.font-awesome
     pkgs.pulsemixer
     pkgs.dfeet
+    pkgs.comma
 
     #lol-launchhelper
   ];
