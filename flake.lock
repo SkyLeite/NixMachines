@@ -1,20 +1,5 @@
 {
   "nodes": {
-    "build-machine": {
-      "inputs": {
-        "nixpkgs": "nixpkgs"
-      },
-      "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-IjdwDmKVS8o9wN31LeFQYA5fD6xV0htA8VVN+FEVecE=",
-        "path": "./machines/common/build-machine",
-        "type": "path"
-      },
-      "original": {
-        "path": "./machines/common/build-machine",
-        "type": "path"
-      }
-    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -23,11 +8,11 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1657213438,
-        "narHash": "sha256-FKZRHORuj1BhlEqKgW7EYqRpH9WiAp+oV/tZ3x8e6Ow=",
+        "lastModified": 1661824092,
+        "narHash": "sha256-nSWLWytlXbeLrx5A+r5Pso7CvVrX5EgmIIXW/EXvPHQ=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "25a9948361cc6676e70c1b439e4d40f0610e8f76",
+        "rev": "5bd66dc6cd967033489c69d486402b75d338eeb6",
         "type": "github"
       },
       "original": {
@@ -38,25 +23,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1657177452,
-        "narHash": "sha256-CojBqno3Zbw9/788+kCjRXXornpc4jJGC6RYvTYdVkg=",
+        "lastModified": 1661720780,
+        "narHash": "sha256-AJNGyaB2eKZAYaPNjBZOzap87yL+F9ZLaFzzMkvega0=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "5cbfadba693e0453f3a4090e83fbf845e18d184b",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "type": "indirect"
-      }
-    },
-    "nixpkgs_2": {
-      "locked": {
-        "lastModified": 1659131907,
-        "narHash": "sha256-8bz4k18M/FuVC+EVcI4aREN2PsEKT7LGmU2orfjnpCg=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "8d435fca5c561da8168abb30270788d2da2a7951",
+        "rev": "a63021a330d8d33d862a8e29924b42d73037dd37",
         "type": "github"
       },
       "original": {
@@ -68,9 +39,8 @@
     },
     "root": {
       "inputs": {
-        "build-machine": "build-machine",
         "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs"
       }
     },
     "utils": {

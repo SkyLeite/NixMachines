@@ -6,7 +6,6 @@
     url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.build-machine.url = "path:./machines/common/build-machine";
 
   outputs = { self, nixpkgs, home-manager, ... }@attrs:
     let

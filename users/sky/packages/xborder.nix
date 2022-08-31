@@ -1,8 +1,8 @@
 { pkgs, ... }:
 
 let
-  xborders = pkgs.stdenv.mkDerivation {
-    name = "xborders";
+  xborder = pkgs.stdenv.mkDerivation {
+    name = "xborder";
     nativeBuildInputs = [ pkgs.wrapGAppsHook ];
 
     propagatedBuildInputs = with pkgs; [
@@ -19,7 +19,7 @@ let
 
     src = pkgs.fetchFromGitHub {
       owner = "deter0";
-      repo = "xborders";
+      repo = "xborder";
       rev = "fa50c9040c61e4ce17b2ada4de3b4a0e215e087a";
       sha256 = "sha256-Mrt5cm3z4Qt5trPoLLgKJaA88O/z0GYGNI7NaaPULCY=";
     };
@@ -34,19 +34,19 @@ let
     '';
   };
 in {
-  home.packages = [ xborders ];
+  home.packages = [ xborder ];
 
   systemd.user.services = {
-    xborders = {
+    xborder = {
       Unit = {
-        Description = "xborders";
+        Description = "xborder";
         After = [ "graphical-session-pre.target" ];
         PartOf = [ "graphical-session.target" ];
       };
 
       Service = {
         ExecStart =
-          "${xborders}/bin/xborders --disable-version-warning --border-radius 10 --border-width 3";
+          "${xborder}/bin/xborders --disable-version-warning --border-radius 10 --border-width 3";
         Restart = "always";
         RestartSec = 10;
       };
