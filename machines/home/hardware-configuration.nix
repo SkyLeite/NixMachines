@@ -7,7 +7,7 @@
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
-    [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" ];
+    [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "nvme" ];
   boot.kernel.sysctl = { "vm.swappiness" = 0; };
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
   boot.kernelPackages = pkgs.linuxPackages_zen;
