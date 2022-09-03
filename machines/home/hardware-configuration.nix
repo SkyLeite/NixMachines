@@ -48,12 +48,12 @@
   # services.xserver.videoDrivers = ["amdgpu"];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/5dac99e1-1850-4b49-8154-0739a1f22716";
+    device = "/dev/disk/by-label/nixos";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/8A7A-9713";
+    device = "/dev/disk/by-uuid/1802-3D04";
     fsType = "vfat";
   };
 
