@@ -48,7 +48,7 @@
   # services.xserver.videoDrivers = ["amdgpu"];
 
   fileSystems."/" = {
-    device = "/dev/disk/by-label/nixos";
+    device = "/dev/disk/by-uuid/dc58aeee-ca1b-404d-aafb-a3928d6cf7c9";
     fsType = "ext4";
   };
 
@@ -64,5 +64,7 @@
   };
 
   swapDevices = [ ];
+
+  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }
