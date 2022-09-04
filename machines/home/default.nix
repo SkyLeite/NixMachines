@@ -217,6 +217,10 @@ in {
     enable = true;
     plugins = [ pkgs.xfce.thunar-archive-plugin ];
   };
+  programs.gamemode = {
+    enable = true;
+    enableRenice = true;
+  };
 
   hardware.bluetooth.enable = true;
 
@@ -290,6 +294,7 @@ in {
     openssl
     ffmpeg
     slack
+    nix-index
   ];
 
   services.pcscd.enable = true;

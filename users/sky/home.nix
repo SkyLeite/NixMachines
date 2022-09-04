@@ -13,6 +13,7 @@ let
   lol-launchhelper = my-nur.lol-launchhelper;
   rofi-libvirt = import ./scripts/rofi-libvirt.nix pkgs;
   rofi-firefox = pkgs.callPackage ./scripts/rofi-firefox.nix pkgs;
+  xivlauncher = pkgs.callPackage ./packages/xivlauncher/default.nix pkgs;
 in {
   imports = [
     ./polybar
@@ -58,7 +59,7 @@ in {
     pkgs.tty-clock
 
     # pkgs.nerdfonts
-    pkgs.xivlauncher
+    xivlauncher
     pkgs.niv
     pkgs.polymc
     pkgs.discord-canary
