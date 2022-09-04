@@ -58,7 +58,7 @@ in {
     pkgs.tty-clock
 
     # pkgs.nerdfonts
-    pkgs.lutris
+    pkgs.xivlauncher
     pkgs.niv
     pkgs.polymc
     pkgs.discord-canary
