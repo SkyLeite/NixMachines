@@ -235,27 +235,52 @@ in {
     SUBSYSTEM=="usb", ATTRS{idVendor}=="057e", ATTRS{idProduct}=="3006", TAG+="uaccess"
   '';
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.sky = {
-    isNormalUser = true;
-    createHome = true;
-    description = "Sky Leite";
-    extraGroups = [
-      "wheel"
-      "docker"
-      "libvirtd"
-      "kvm"
-      "input"
-      "adbusers"
-      "audio"
-      "networkmanager"
-    ];
-    group = "users";
-    home = "/home/sky";
-    hashedPassword =
-      "$6$BxcfpoGqb.I$msdWrRc75bsmegjGBvrC.qRS1Hw5KR0OjseqTZnxoN.U7W52srD5WWT0w4Z5QhFjZaq7/gzQXQ1YUfSlvcE13.";
-    uid = 1234;
-    shell = pkgs.zsh;
+  users = {
+    groups = {
+      music = {
+        name = "music";
+        gid = 101;
+      };
+    };
+
+    users = {
+      # Define a user account. Don't forget to set a password with ‘passwd’.
+      sky = {
+        isNormalUser = true;
+        createHome = true;
+        description = "Sky Leite";
+        extraGroups = [
+          "music"
+          "wheel"
+          "docker"
+          "libvirtd"
+          "kvm"
+          "input"
+          "adbusers"
+          "audio"
+          "networkmanager"
+        ];
+        group = "users";
+        home = "/home/sky";
+        hashedPassword =
+          "$6$BxcfpoGqb.I$msdWrRc75bsmegjGBvrC.qRS1Hw5KR0OjseqTZnxoN.U7W52srD5WWT0w4Z5QhFjZaq7/gzQXQ1YUfSlvcE13.";
+        uid = 1234;
+        shell = pkgs.zsh;
+      };
+
+      musicdownloader = {
+        isSystemUser = true;
+        createHome = false;
+        description = "Music Downloader";
+        group = "music";
+        extraGroups = [ "deluge" ];
+      };
+
+      deluge = {
+        isSystemUser = true;
+        extraGroups = [ "music" ];
+      };
+    };
   };
 
   security.sudo.wheelNeedsPassword = false;
@@ -330,23 +355,22 @@ in {
     # Option "DPMS" "true"
   '';
 
-  services.mopidy = {
-    enable = false;
-    extensionPackages = [
-      pkgs.mopidy-mpd
-      pkgs.mopidy-scrobbler
-      pkgs.mopidy-mpris
-      pkgs.mopidy-local
-      pkgs.mopidy-youtube
-    ];
-    configuration = ''
-      [mpd]
-      enabled = true
+  services.jackett = {
+    enable = true;
+    user = "musicdownloader";
+  };
 
-      [youtube]
-      enabled = true
-    '';
-    extraConfigFiles = [ "/etc/nixos/mopidy/mopidy.conf" ];
+  services.lidarr = {
+    enable = true;
+    user = "musicdownloader";
+  };
+
+  services.deluge = {
+    enable = true;
+    web = {
+      enable = true;
+      port = 8112;
+    };
   };
 
   nix = {
