@@ -314,8 +314,34 @@ in {
 
   services.mopidy = {
     enable = true;
-    extensionPackages =
-      [ pkgs.mopidy-ytmusic pkgs.mopidy-mpd pkgs.mopidy-mpris ];
+    extensionPackages = [
+      (pkgs.mopidy-ytmusic.overrideAttrs (old: rec {
+        version = "0.3.6";
+        src = pkgs.python3Packages.fetchPypi {
+          inherit version;
+          pname = "Mopidy-YTMusic";
+          sha256 = "nBNOTmi/mgPzZXVD7G0xfvvvyVChERWB/bjlvaTvrsU=";
+        };
+        postPatch =
+          "	substituteInPlace setup.py \\\n	--replace 'ytmusicapi>=0.22.0,<0.23.0' 'ytmusicapi>=0.22.0'\n";
+      }))
+      pkgs.mopidy-mpd
+      pkgs.mopidy-mpris
+      pkgs.mopidy-scrobbler
+    ];
+
+    settings = {
+      mpd = { enabled = true; };
+
+      youtube = { enabled = true; };
+
+      ytmusic = {
+        enabled = true;
+        auth_json = "${config.xdg.configHome}/mopidy/auth.json";
+      };
+    };
+
+    # extraConfigFiles = [ "~/.config/mopidy/extra.conf" ];
   };
 
   programs.ssh = {
