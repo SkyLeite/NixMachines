@@ -29,6 +29,11 @@ in {
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  programs.nix-index = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
   nixpkgs.config.allowUnfree = true;
 
   home.keyboard = false;
