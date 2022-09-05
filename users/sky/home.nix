@@ -120,6 +120,7 @@ in {
       settings = {
         "browser.search.isUS" = false;
         "browser.bookmarks.showMobileBookmarks" = true;
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
       userChrome = ''
         /* Hide tab bar in FF Quantum */
