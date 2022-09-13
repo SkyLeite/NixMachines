@@ -250,6 +250,7 @@ in {
         createHome = true;
         description = "Sky Leite";
         extraGroups = [
+          "cdrom"
           "music"
           "wheel"
           "docker"
@@ -266,6 +267,13 @@ in {
           "$6$BxcfpoGqb.I$msdWrRc75bsmegjGBvrC.qRS1Hw5KR0OjseqTZnxoN.U7W52srD5WWT0w4Z5QhFjZaq7/gzQXQ1YUfSlvcE13.";
         uid = 1234;
         shell = pkgs.zsh;
+        openssh.authorizedKeys.keys = [
+          # ipad
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCi98YRWL9clAOG7SWOcVy+7ZjyCYoSWsKVTcALQD8XoxuSEaxa1C2jaJEopz4NU5lc+soZ2nhnFefTTEgBjizW61+W14hr+ZhMkEP+qFK4SYyoStsGqQRBFNk6zVxO5egZ2k+Ir1g+Dg9sm9T6ijUTNNEv+AZtQ/l/z3UBH7ksRp4LzPbPTLOL7uprh4eGPNOwd0OD8cgAi49aCe7F9Nr3R+ocsyWnkZZ9B8IYszG6WH4HNOJDQFqUR+FxB+w6Hvv2F9cCvLOo/1+kgveEGSlbGZg5jlQgQeCmE8l6q/Bft+YwZVQENi7tsnPV+mC2nlAaHUd+JPPfJ+knpjxOlsD0EC5UQwSNx+0v/BKU2uMpkTiNXP9F/aZN92m20yZ/tsLsxc7kYTa+BL8emskPd1G4rLpMLd6me84nc9RR5C2yGJDMWP8A1FO+576dG3P4hvUQUR1vc+cCQiYTRR80V3H7JJWh61X+Ycct+ffzTBmOaF6gcsHvykXvk0OcKlEhYWQY9/djt8rJwvCx1LcHBnMQSBhAJmMMrQZ/saJmIvxN+dL0K3ig+yDsIcgifisx2UF1dX8EkIp/ZldiR2Ef+KMbxk6czb0okIVAaTBeCPhiRAMdVl9oJOyJo9fhYoWf0p0ygszPUTujkSvu+LIrr4DXq9/ssHAl667Mk+ElEVp4uQ== sky"
+
+          # miles
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFIbNWbPJ5TExvDqs9g0cMsvOOwsfY4PV2p4pIXyQn0x6E11ly2HbKfVFhA2sUhS95qIN/ZJmYe0M0YHP003NKe2cRopcnn0wzvHkti9aF+4bh05c7CLf9mc7ajEzbNQ1p7urmLNibWh/XXP+D3k/pnX9W2TzKAmT+fVmKOFIpg0Cja2i6aRpflwD3Yj+xAsTDLkf4MA/He4M+MFpDnKNqWUUQyY/w1wUNroFZe4lBL/CWLEfHYgfqLXnGFFHoQ9fkgU+W8T6GYoF4aaRrI18QQBxdXLrpyMWWg6zvMiJM78CIZfVKC7CwOgFjbvcpIcbbGRzu7f5MMhtXOlKeeuv75oSISltiVIfKDDPZbvtw6t+XVxCrwFLoeIyHrd4JNv82/lEejDq76j9gvuBCypZCGzuGrCNa0Y5l1zVfnrtFaiKtFmFeTA4nlFLEUvyRnB70kXdTyKI9qhCn+nyhBDt26RTOPSLwJpHvPRQTRA4Vem0Ibfzg0RERgfWBNeFRrOM= sky@miles"
+        ];
       };
 
       musicdownloader = {
@@ -323,6 +331,7 @@ in {
   ];
 
   services.pcscd.enable = true;
+  programs.mosh.enable = true;
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "curses";
@@ -344,8 +353,10 @@ in {
 
   # Enable the OpenSSH daemon.
   services.sshd.enable = true;
-  services.openssh.enable = true;
-  services.openssh.passwordAuthentication = true;
+  services.openssh = {
+    enable = true;
+    forwardX11 = true;
+  };
   virtualisation.docker.enable = true;
   virtualisation.virtualbox.host.enable = true;
 

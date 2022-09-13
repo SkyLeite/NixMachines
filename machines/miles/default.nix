@@ -161,6 +161,7 @@ in {
 
   virtualisation.docker.enable = true;
   programs.ssh.startAgent = true;
+  programs.mosh.enable = true;
   programs.bash.enableCompletion = true;
 
   services.pcscd.enable = true;
