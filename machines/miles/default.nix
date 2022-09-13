@@ -55,7 +55,7 @@ in {
     logind.lidSwitch = "ignore";
     logind.lidSwitchDocked = "ignore";
 
-    papermc.enable = true;
+    papermc.enable = false;
 
     funkwhale.enable = true;
 
