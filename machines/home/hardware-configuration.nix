@@ -17,12 +17,12 @@
     "pcie_acs_override=downstream,multifunction"
   ];
   boot.kernelModules = [
-  # "kvm-amd"
-  # "amdgpu"
-  # "vfio_virqfd"
-  # "vfio_pci"
-  # "vfio_iommu_type1"
-  # "vfio"
+    # "kvm-amd"
+    # "amdgpu"
+    # "vfio_virqfd"
+    # "vfio_pci"
+    # "vfio_iommu_type1"
+    # "vfio"
     "uvcvideo"
   ];
 
@@ -63,8 +63,15 @@
     options = [ "nofail" ];
   };
 
+  fileSystems."/mnt/disk0" = {
+    device = "/dev/disk/by-id/usb-HL-DT-ST_DVD+-RW_GT10N_DD56419883915-0:0";
+    fsType = "auto";
+    options = [ "ro" "user" "noauto" "unhide" "nofail" ];
+  };
+
   swapDevices = [ ];
 
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.cpu.amd.updateMicrocode =
+    lib.mkDefault config.hardware.enableRedistributableFirmware;
 
 }
