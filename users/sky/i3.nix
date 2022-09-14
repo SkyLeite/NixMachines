@@ -47,6 +47,7 @@ in {
         "${mod}+z" = "exec rofi -show emoji";
         "${mod}+Escape" = "exec rofi -show firefox";
         "${mod}+o" = "exit";
+        "${mod}+x" = "exec ~/.emacs.d/bin/org-capture";
         "${mod}+g" =
           "exec tdrop -am -w 80% -h 45% -x 10% alacritty --class AlacrittyFloating";
 
@@ -173,6 +174,10 @@ in {
       ];
 
       window.commands = [
+        {
+          command = "floating enable";
+          criteria = { title = "doom-capture"; };
+        }
         {
           command = "border pixel 0";
           criteria = { class = "^.*"; };
