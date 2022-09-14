@@ -3,6 +3,8 @@ let
   mod = "Mod4";
   leftScreen = "DisplayPort-2";
   rightScreen = "DisplayPort-0";
+  players = [ "mopidy" ];
+  playerctlPlayers = "-p ${builtins.concatStringsSep "," players}";
 in {
   xsession.windowManager.i3 = {
     enable = true;
@@ -98,9 +100,9 @@ in {
         "XF86AudioMute" =
           "exec amixer sset Master toggle && killall -USR1 i3blocks";
 
-        "XF86AudioPlay" = "exec playerctl play-pause";
-        "XF86AudioPrev" = "exec playerctl previous";
-        "XF86AudioNext" = "exec playerctl next";
+        "XF86AudioPlay" = "exec playerctl play-pause ${playerctlPlayers}";
+        "XF86AudioPrev" = "exec playerctl previous ${playerctlPlayers}";
+        "XF86AudioNext" = "exec playerctl next ${playerctlPlayers}";
       };
 
       workspaceOutputAssign = [
@@ -235,6 +237,7 @@ in {
         blocks = [
           {
             block = "music";
+            player = "mopidy";
             format = "{artist} - {title}";
             max_width = 50;
             dynamic_width = true;

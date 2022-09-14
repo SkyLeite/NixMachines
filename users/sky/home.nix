@@ -94,6 +94,12 @@ in {
     pkgs.pulsemixer
     pkgs.dfeet
     pkgs.comma
+    pkgs.hexchat
+    pkgs.wine
+    pkgs.winetricks
+    pkgs.ncmpcpp
+    pkgs.chromium
+    pkgs.lutris
 
     #lol-launchhelper
   ];
@@ -328,16 +334,50 @@ in {
       pkgs.mopidy-mpd
       pkgs.mopidy-mpris
       pkgs.mopidy-scrobbler
+      pkgs.mopidy-local
+      pkgs.mopidy-mpris
     ];
 
     settings = {
-      mpd = { enabled = true; };
+      mpd = {
+        enabled = true;
+        command_blacklist = [ ];
+      };
 
       youtube = { enabled = true; };
 
       ytmusic = {
-        enabled = true;
+        enabled = false;
         auth_json = "${config.xdg.configHome}/mopidy/auth.json";
+      };
+
+      scrobbler = {
+        username = "alphinaud";
+        password = "9WvdNfXMTvv%eia@N6qA";
+      };
+
+      mpris = { enabled = true; };
+
+      local = {
+        enabled = true;
+        library = "json";
+        media_dir = "/mnt/hdd/music";
+        scan_timeout = 1000;
+        scan_flush_threshold = 1000;
+        excluded_file_extensions = [
+          ".directory"
+          ".html"
+          ".jpeg"
+          ".jpg"
+          ".log"
+          ".nfo"
+          ".pdf"
+          ".png"
+          ".txt"
+          ".zip"
+          ".cue"
+          ".log"
+        ];
       };
     };
 
