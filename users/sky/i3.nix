@@ -168,7 +168,7 @@ in {
         }
         {
           command = ''
-            ${pkgs.pipewire}/bin/pw-loopback --capture-props='node.target="alsa_input.pci-0000_0a_00.4.analog-stereo"'
+            ${pkgs.pipewire}/bin/pw-loopback --capture-props='node.target="alsa_input.pci-0000_0f_00.4.analog-stereo"'
           '';
         }
       ];

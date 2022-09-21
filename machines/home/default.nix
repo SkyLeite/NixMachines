@@ -87,6 +87,8 @@ in {
     videoDrivers = [ "amdgpu" ];
   };
 
+  services.tailscale = { enable = true; };
+
   services.samba = {
     enable = true;
     securityType = "user";
@@ -298,11 +300,10 @@ in {
   environment.systemPackages = with pkgs; [
     alacritty
     bitwarden
-    discord
+    (discord.override { nss = pkgs.nss_latest; })
     docker
     docker-compose
     editorconfig-core-c
-    emacs
     fd
     flameshot
     git

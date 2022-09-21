@@ -4,3 +4,6 @@
 Webhook only matches on Github's IPs now
 ** DONE Setup zerolab.app domain with TLS
 ** DONE Automatically add services to dashy in chaos module
+
+* DONE Add ActiveState Wireguard
+* TODO Reset ActiveState email password

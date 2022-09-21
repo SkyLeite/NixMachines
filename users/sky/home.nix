@@ -21,6 +21,7 @@ in {
     ./tmux.nix
     ./neovim.nix
     ./scripts/gui.nix
+    ./emacs/default.nix
     ./packages/deadd.nix
     ./packages/xborder.nix
     ./packages/noisetorch.nix
@@ -67,7 +68,6 @@ in {
     xivlauncher
     pkgs.niv
     pkgs.polymc
-    pkgs.discord-canary
     pkgs.jre8
     pkgs.jdk8
     pkgs.mpv
@@ -97,29 +97,26 @@ in {
     pkgs.hexchat
     pkgs.wine
     pkgs.winetricks
-    pkgs.ncmpcpp
     pkgs.chromium
     pkgs.lutris
+    pkgs.mpc_cli
+    pkgs.gh
 
     #lol-launchhelper
   ];
 
-  home.sessionVariables = {
-    EDITOR = "emacs";
-    DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
-  };
+  home.sessionVariables = { DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox"; };
 
   programs.git = {
     enable = true;
     userName = "Sky";
     userEmail = "sky@leite.dev";
-    extraConfig = { init = { defaultBranch = "main"; }; };
+    extraConfig = {
+      init = { defaultBranch = "main"; };
+      github.user = "SkyLeite";
+    };
   };
 
-  programs.emacs = {
-    enable = true;
-    package = pkgs.emacs28NativeComp;
-  };
   programs.firefox = {
     enable = true;
     profiles.sky = {
@@ -238,7 +235,7 @@ in {
   };
 
   programs.ncmpcpp = {
-    enable = false;
+    enable = true;
     bindings = [
       {
         key = "j";
@@ -273,11 +270,24 @@ in {
 
   services.picom = {
     enable = true;
-    shadow = true;
+    shadow = false;
     shadowOffsets = [ (-12) (-12) ];
     vSync = false;
     fade = true;
     fadeDelta = 2;
+
+    wintypes = {
+      tooltip = {
+        fade = true;
+        shadow = false;
+        focus = true;
+        full-shadow = false;
+      };
+      dock = { shadow = false; };
+      dnd = { shadow = false; };
+      popup_menu = { shadow = false; };
+      dropdown_menu = { shadow = false; };
+    };
 
     settings = {
       corner-radius = 10;
