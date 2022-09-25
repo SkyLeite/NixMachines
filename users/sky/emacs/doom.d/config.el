@@ -116,3 +116,9 @@
 
 (after! dap-mode
   (require 'dap-dlv-go))
+
+(after! eglot
+  (require 'eglot-fsharp))
+
+(after! lsp
+  (setq lsp-fsharp-use-dotnet-tool-for-fsac t))

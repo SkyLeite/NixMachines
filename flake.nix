@@ -25,7 +25,10 @@
 
       nixosConfigurations.home = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit attrs; };
+        specialArgs = {
+          inherit nixpkgs;
+          inherit attrs;
+        };
         modules = [
           ({ config, pkgs, ... }: {
             nixpkgs.overlays = [

@@ -51,3 +51,4 @@
 
 (package! org-ql)
 (package! ts)
+(package! eglot-fsharp)

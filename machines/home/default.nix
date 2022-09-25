@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nixpkgs, ... }:
 
 let
   SDL2Patched = pkgs.SDL2.override { udevSupport = true; };
@@ -183,35 +183,31 @@ in {
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
     jack.enable = true;
-    media-session.config.bluez-monitor.rules = [
-      {
-        # Matches all cards
-        matches = [{ "device.name" = "~bluez_card.*"; }];
-        actions = {
-          "update-props" = {
-            "bluez5.reconnect-profiles" = [ "hfp_hf" "hsp_hs" "a2dp_sink" ];
-            # mSBC is not expected to work on all headset + adapter combinations.
-            "bluez5.msbc-support" = true;
-            # SBC-XQ is not expected to work on all headset + adapter combinations.
-            "bluez5.sbc-xq-support" = true;
+    wireplumber.enable = false;
+    media-session.enable = true;
+
+    config.pipewire = let
+      defaultConf = lib.importJSON
+        "${nixpkgs}/nixos/modules/services/desktops/pipewire/daemon/pipewire.conf.json";
+    in lib.recursiveUpdate defaultConf {
+      "context.objects" = defaultConf."context.objects" ++ [ ];
+      "context.modules" = defaultConf."context.modules" ++ [{
+        name = "libpipewire-module-loopback";
+        args = {
+          "node.name" = "LoopbackTest";
+          "capture.props" = {
+            "node.name" = "test";
+            "node.target" = "alsa_input.pci-0000_0f_00.4.analog-stereo";
+          };
+          "playback.props" = {
+            # "media.class" = "Audio/Sink";
           };
         };
-      }
-      {
-        matches = [
-          # Matches all sources
-          {
-            "node.name" = "~bluez_input.*";
-          }
-          # Matches all outputs
-          { "node.name" = "~bluez_output.*"; }
-        ];
-        actions = { "node.pause-on-idle" = false; };
-      }
-    ];
+      }];
+    };
   };
+
   programs.nm-applet.enable = true;
   programs.noisetorch.enable = true;
   programs.nix-ld.enable = true;
@@ -329,6 +325,7 @@ in {
     ffmpeg
     slack
     nix-index
+    tailscale
   ];
 
   services.pcscd.enable = true;
