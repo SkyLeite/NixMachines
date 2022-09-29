@@ -101,6 +101,7 @@ in {
     pkgs.lutris
     pkgs.mpc_cli
     pkgs.gh
+    pkgs.dotnet-sdk
 
     #lol-launchhelper
   ];
@@ -411,6 +412,36 @@ in {
           host.port = port;
         }) [ 1313 3000 ];
         extraOptions = { };
+      };
+    };
+  };
+
+  xdg = {
+    enable = true;
+
+    userDirs = {
+      enable = true;
+      createDirectories = true;
+    };
+
+    mimeApps = {
+      enable = true;
+      defaultApplications = {
+        "x-scheme-handler/http" = "firefox.desktop";
+        "x-scheme-handler/https" = "firefox.desktop";
+        "x-scheme-handler/chrome" = "firefox.desktop";
+        "text/html" = "firefox.desktop";
+        "application/x-extension-htm" = "firefox.desktop";
+        "application/x-extension-html" = "firefox.desktop";
+        "application/x-extension-shtml" = "firefox.desktop";
+        "application/xhtml+xml" = "firefox.desktop";
+        "application/x-extension-xhtml" = "firefox.desktop";
+        "application/x-extension-xht" = "firefox.desktop";
+        "text/plain" = "emacs.desktop";
+        "image/png" = "org.xfce.ristretto.desktop";
+        "image/jpeg" = "org.xfce.ristretto.desktop";
+        "image/gif" = "org.xfce.ristretto.desktop";
+        "image/webp" = "firefox.desktop";
       };
     };
   };
