@@ -145,7 +145,7 @@ in {
     };
 
     factorio = {
-      enable = true;
+      enable = false;
       admins = [ "Sky" ];
       openFirewall = true;
       game-name = "Dr. Zap";
