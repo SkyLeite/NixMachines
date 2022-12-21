@@ -44,6 +44,8 @@ in {
   systemd.tmpfiles.rules =
     [ "f /dev/shm/looking-glass 0660 alex qemu-libvirtd -" ];
 
+  boot.kernel.sysctl."net.ipv4.ip_forward" = 1;
+
   programs.dconf.enable = true;
   virtualisation = {
     libvirtd = {
@@ -69,6 +71,12 @@ in {
           cgroup_device_acl = [
               "/dev/input/by-id/usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-event-kbd",
               "/dev/input/by-id/usb-Logitech_G403_Prodigy_Gaming_Mouse_087838573135-event-mouse",
+              "/dev/input/by-id/uinput-persist-keyboard0",
+              "/dev/input/by-id/uinput-persist-keyboard1",
+              "/dev/input/by-id/uinput-persist-keyboard2",
+              "/dev/input/by-id/uinput-persist-keyboard3",
+              "/dev/input/by-id/uinput-persist-mouse0",
+              "/dev/input/by-id/uinput-persist-mouse1",
               "/dev/null", "/dev/full", "/dev/zero",
               "/dev/random", "/dev/urandom",
               "/dev/ptmx", "/dev/kvm", "/dev/kqemu",

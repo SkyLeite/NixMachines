@@ -87,7 +87,7 @@
                '("i" "Idea" entry (file+headline +org-capture-todo-file "Idea") "* TODO %? %(org-set-tags \"idea\")"))
 
   (add-to-list 'org-capture-templates
-               '("d" "Daily Standup note" entry (file+olp+datetree "~/org/standup.org") "* %U %? %(org-set-tags \"standup\")\n%i\n%a" :prepend t))
+               '("d" "Daily Standup note" entry (file+olp+datetree "~/org/standup.org") "* TODO %U %? %(org-set-tags \"standup\")\n%i\n%a" :prepend t))
 
   (let* ((now (ts-now))
          (today-after-standup (ts-apply :hour 14 :minute 0 :second 0 now))
@@ -118,7 +118,9 @@
   (require 'dap-dlv-go))
 
 (after! eglot
-  (require 'eglot-fsharp))
+  (require 'eglot-fsharp)
+  (set-eglot-client! 'haskell-mode '("/nix/store/l4vfmlm894xpa17plhfwacycalqajcys-haskell-language-server-1.7.0.0/bin/haskell-language-server-9.0.2" "--lsp")))
 
 (after! lsp
-  (setq lsp-fsharp-use-dotnet-tool-for-fsac t))
+  (setq lsp-fsharp-use-dotnet-tool-for-fsac t)
+  (setq lsp-clients-lua-language-server-bin "/nix/store/z2f0fiq74nmnqq9gw2xbp9n2b3fvbaz0-user-environment/bin/lua-language-server"))

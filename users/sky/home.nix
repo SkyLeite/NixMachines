@@ -13,17 +13,19 @@ let
   lol-launchhelper = my-nur.lol-launchhelper;
   rofi-libvirt = import ./scripts/rofi-libvirt.nix pkgs;
   rofi-firefox = pkgs.callPackage ./scripts/rofi-firefox.nix pkgs;
-  xivlauncher = pkgs.callPackage ./packages/xivlauncher/default.nix pkgs;
+  etterna = pkgs.callPackage ../../packages/etterna/default.nix pkgs;
+  bitwarden = import ../../util/bitwarden.nix;
 in {
   imports = [
     ./polybar
     ./i3.nix
+    ./awesomewm.nix
     ./tmux.nix
     ./neovim.nix
     ./scripts/gui.nix
     ./emacs/default.nix
     ./packages/deadd.nix
-    ./packages/xborder.nix
+    #./packages/xborder.nix
     ./packages/noisetorch.nix
   ];
 
@@ -65,9 +67,6 @@ in {
     pkgs.tty-clock
 
     # pkgs.nerdfonts
-    xivlauncher
-    pkgs.niv
-    pkgs.polymc
     pkgs.jre8
     pkgs.jdk8
     pkgs.mpv
@@ -102,6 +101,18 @@ in {
     pkgs.mpc_cli
     pkgs.gh
     pkgs.dotnet-sdk
+    pkgs.soundkonverter
+    pkgs.bottles
+    pkgs.libunwind
+    pkgs.lua53Packages.luarocks
+    pkgs.sumneko-lua-language-server
+    pkgs.ripgrep
+    pkgs.sqlite
+    pkgs.wordnet
+    pkgs.prismlauncher
+    pkgs.protontricks
+    pkgs.proton-caller
+    # etterna
 
     #lol-launchhelper
   ];
@@ -120,6 +131,7 @@ in {
 
   programs.firefox = {
     enable = true;
+    package = pkgs.firefox-bin;
     profiles.sky = {
       settings = {
         "browser.search.isUS" = false;
@@ -291,7 +303,7 @@ in {
     };
 
     settings = {
-      corner-radius = 10;
+      corner-radius = 1;
       rounded-corners-exclude =
         [ "window_type = 'dock'" "window_type = 'desktop'" ];
     };
@@ -451,6 +463,9 @@ in {
   home.username = "sky";
   home.homeDirectory = "/home/sky";
   home.file = {
+    "test.sh" = { text = builtins.exec [ "bash" "-c" ''echo \"hi\"'' ]; };
+    #"test2.sh" = { text = bitwarden.get "password" "Github"; };
+
     ".mozilla/native-messaging-hosts/dbus_tabs.json" = {
       text = ''
         {
@@ -463,6 +478,8 @@ in {
       '';
     };
   };
+
+  programs.beets = { enable = true; };
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

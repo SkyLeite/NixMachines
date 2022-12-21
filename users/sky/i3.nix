@@ -173,6 +173,8 @@ in {
         }
       ];
 
+      window = { border = 0; };
+
       window.commands = [
         {
           command = "floating enable";

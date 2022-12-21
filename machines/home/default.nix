@@ -31,6 +31,7 @@ in {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./vfio.nix
+    ../../modules/tailscale.nix
   ];
 
   # Use the systemd-boot EFI boot loader.
@@ -84,10 +85,21 @@ in {
       enable = true;
       package = pkgs.i3-gaps;
     };
+    windowManager.awesome = { enable = true; };
     videoDrivers = [ "amdgpu" ];
   };
 
-  services.tailscale = { enable = true; };
+  services.xrdp = {
+    enable = true;
+    openFirewall = true;
+    defaultWindowManager = "awesome";
+  };
+
+  services.tailscale.enable = true;
+  services.tailscale-autoconnect = {
+    enable = true;
+    key = "tskey-k2RQki6CNTRL-8B4NkmT6zsJkNfRBFqpBP";
+  };
 
   services.samba = {
     enable = true;
@@ -126,6 +138,28 @@ in {
     };
   };
 
+  services.persistent-evdev = {
+    enable = true;
+    devices = {
+      persist-mouse0 =
+        "usb-Logitech_G403_Prodigy_Gaming_Mouse_087838573135-event-mouse";
+      persist-mouse1 =
+        "usb-Logitech_G403_Prodigy_Gaming_Mouse_087838573135-if01-event-kbd";
+      persist-mouse2 =
+        "usb-Logitech_G403_Prodigy_Gaming_Mouse_087838573135-mouse";
+      persist-keyboard0 =
+        "usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-if01-event-mouse";
+      persist-keyboard1 =
+        "usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-event-if02";
+      persist-keyboard2 =
+        "usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-if02-event-kbd";
+      persist-keyboard3 =
+        "usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-event-kbd";
+      persist-keyboard4 =
+        "usb-ZSA_Technology_Labs_Inc_ErgoDox_EZ_Glow-if01-mouse";
+    };
+  };
+
   services.blueman.enable = true;
   services.k3s.enable = false;
   xdg.portal.enable = true;
@@ -155,7 +189,7 @@ in {
           DisplayPort-0 = {
             enable = true;
             mode = "1920x1080";
-            position = "1080x393";
+            position = "1920x0";
             rate = "143.98";
             primary = true;
           };
@@ -164,7 +198,6 @@ in {
             mode = "1920x1080";
             position = "0x0";
             rate = "143.98";
-            rotate = "left";
           };
         };
       };
@@ -192,19 +225,20 @@ in {
         "${nixpkgs}/nixos/modules/services/desktops/pipewire/daemon/pipewire.conf.json";
     in lib.recursiveUpdate defaultConf {
       "context.objects" = defaultConf."context.objects" ++ [ ];
-      "context.modules" = defaultConf."context.modules" ++ [{
-        name = "libpipewire-module-loopback";
-        args = {
-          "node.name" = "LoopbackTest";
-          "capture.props" = {
-            "node.name" = "test";
-            "node.target" = "alsa_input.pci-0000_0f_00.4.analog-stereo";
-          };
-          "playback.props" = {
-            # "media.class" = "Audio/Sink";
-          };
-        };
-      }];
+      "context.modules" = defaultConf."context.modules";
+      # "context.modules" = defaultConf."context.modules" ++ [{
+      #   name = "libpipewire-module-loopback";
+      #   args = {
+      #     "node.name" = "LoopbackTest";
+      #     "capture.props" = {
+      #       "node.name" = "test";
+      #       "node.target" = "alsa_input.pci-0000_0f_00.4.analog-stereo";
+      #     };
+      #     "playback.props" = {
+      #       # "media.class" = "Audio/Sink";
+      #     };
+      #   };
+      # }];
     };
   };
 
@@ -326,6 +360,9 @@ in {
     slack
     nix-index
     tailscale
+    bitwarden
+    bitwarden-cli
+    stremio
   ];
 
   services.pcscd.enable = true;
@@ -384,8 +421,10 @@ in {
 
   nix = {
     settings = {
-      substituters = [ ];
-      trusted-public-keys = [ ];
+      trusted-substituters =
+        [ "https://cache.nixos.org" "https://cache.iog.io" ];
+      trusted-public-keys =
+        [ "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ=" ];
     };
 
     extraOptions = ''

@@ -1,7 +1,8 @@
 { config, pkgs, nixos, lib, ... }:
 let
   material-nvim = pkgs.vimUtils.buildVimPlugin {
-    name = "material-nvim";
+    pname = "material-nvim";
+    version = "latest";
     src = pkgs.fetchFromGitHub {
       owner = "marko-cerovac";
       repo = "material.nvim";
@@ -12,7 +13,8 @@ let
   };
 
   coc-elixir = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    name = "coc-elixir";
+    pname = "coc-elixir";
+    version = "latest";
     src = pkgs.fetchFromGitHub {
       owner = "SkyLeite";
       repo = "coc-elixir";
@@ -146,7 +148,7 @@ in {
       nmap <Leader>wk <C-w>k
       nmap <Leader>wl <C-w>l
 
-      nmap <Leader>ca <CMD>CocAction<CR>
+      nmap <Leader>ca <Plug>(coc-codeaction-selected)w
       nmap <Leader>cd <Plug>(coc-definition)
       nmap <Leader>cD <Plug>(coc-type-definition)
       nmap <Leader>cr <Plug>(coc-references)

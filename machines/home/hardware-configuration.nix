@@ -10,7 +10,7 @@
     [ "xhci_pci" "ahci" "usb_storage" "usbhid" "sd_mod" "nvme" ];
   boot.kernel.sysctl = { "vm.swappiness" = 0; };
   boot.supportedFilesystems = [ "ntfs" "exfat" ];
-  boot.kernelPackages = pkgs.linuxPackages_zen;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_zen;
   boot.kernelParams = [
     "boot.shell_on_fail"
     "pci=noats"
