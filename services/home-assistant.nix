@@ -2,12 +2,12 @@
 
 with lib;
 
-let cfg = config.services.home-assistant;
+let cfg = config.services.home-assistant-oci;
 in {
   imports = [ ../modules/chaos-service.nix ];
 
   options = {
-    services.home-assistant = {
+    services.home-assistant-oci = {
       enable = mkOption {
         type = types.bool;
         default = false;

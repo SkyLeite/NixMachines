@@ -51,7 +51,7 @@ in {
       permitRootLogin = "no";
     };
 
-    home-assistant.enable = true;
+    home-assistant-oci.enable = true;
 
     sshd.enable = true;
 
