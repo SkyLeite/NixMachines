@@ -40,7 +40,7 @@ in {
         Restart = "on-abnormal";
         ExecStart = ''
           ${pkgs.docker}/bin/docker run \
-            --name homeassistant \
+            --name home-assistant \
             --privileged \
             --restart=unless-stopped \
             -e TZ=America/Sao_Paulo \
