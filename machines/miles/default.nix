@@ -9,6 +9,7 @@ in {
     ../../services/n8n.nix
     ../../services/papermc.nix
     ../../services/funkwhale/default.nix
+    ../../services/home-assistant.nix
     ../../modules/chaos-service.nix
   ];
 
@@ -49,6 +50,8 @@ in {
       passwordAuthentication = false;
       permitRootLogin = "no";
     };
+
+    home-assistant.enable = true;
 
     sshd.enable = true;
 
