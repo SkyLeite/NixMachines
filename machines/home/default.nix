@@ -365,6 +365,7 @@ in {
     stremio
   ];
 
+  services.avahi.enable = true;
   services.pcscd.enable = true;
   programs.mosh.enable = true;
   programs.gnupg.agent = {
