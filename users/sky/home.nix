@@ -244,6 +244,11 @@ in {
       padding = 18;
       width = 60;
       font = "Noto Sans 12";
+
+      kb-mode-next = "Tab";
+      kb-mode-previous = "ISO_Left_Tab";
+      kb-element-prev = "";
+      kb-element-next = "";
     };
   };
 
