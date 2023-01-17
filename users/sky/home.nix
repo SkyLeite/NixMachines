@@ -112,6 +112,7 @@ in {
     pkgs.prismlauncher
     pkgs.protontricks
     pkgs.proton-caller
+    pkgs.spotify
     # etterna
 
     #lol-launchhelper
