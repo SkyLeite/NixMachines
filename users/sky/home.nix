@@ -94,7 +94,7 @@ in {
     pkgs.dfeet
     pkgs.comma
     pkgs.hexchat
-    pkgs.wine
+    pkgs.wineWowPackages.staging
     pkgs.winetricks
     pkgs.chromium
     pkgs.lutris
