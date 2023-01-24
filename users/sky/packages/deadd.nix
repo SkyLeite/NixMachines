@@ -47,7 +47,7 @@ in {
         width = 500
 
         # Monitor on which the notification center will be printed.
-        monitor = 1
+        monitor = 0
 
         # If true, the notification center will open on the screen, on which the
         # mouse is
@@ -116,7 +116,7 @@ in {
         width = 300
 
         # Monitor on which the notification will be printed.
-        monitor = 1
+        monitor = 0
 
         # If true, the notifications will open on the screen, on which the
         # mouse is
