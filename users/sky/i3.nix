@@ -1,14 +1,14 @@
 { config, pkgs, lib, ... }:
 let
   mod = "Mod4";
-  leftScreen = "DisplayPort-2";
-  rightScreen = "DisplayPort-0";
+  leftScreen = "DisplayPort-0";
+  rightScreen = "DisplayPort-1";
   players = [ "mopidy" ];
   playerctlPlayers = "-p ${builtins.concatStringsSep "," players}";
 in {
   xsession.windowManager.i3 = {
     enable = true;
-    package = pkgs.i3-gaps;
+    package = pkgs.i3;
     config = {
       modifier = mod;
       bars = [{

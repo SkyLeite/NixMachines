@@ -22,6 +22,7 @@ let
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
+  nixpkgs.config.permittedInsecurePackages = [ "xrdp-0.9.9" ];
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
       extraPkgs = pkgs: with pkgs; [ pango libthai harfbuzz libgdiplus ];
@@ -182,21 +183,21 @@ in {
         fingerprint = {
           DisplayPort-0 =
             "00ffffffffffff001e6d715b01010101011a0104b5351e789f0331a6574ea2260d5054a54b80317c4568457c617c8168818081bc953cdf8880a070385a403020350055502100001e023a801871382d40582c4500132a2100001e000000fd003090a0a03c010a202020202020000000fc003237474c363530460a20202020014b020320f1230907074b010203041112131f903f0083010000e305c000e30605018048801871382d40582c4500132a2100001e866f80a07038404030203500132a2100001efe5b80a07038354030203500132a21000018011d007251d01e206e285500132a2100001e00000000000000000000000000000000000000000000003c";
-          DisplayPort-2 =
+          DisplayPort-1 =
             "00ffffffffffff001e6d715b01010101011a0104b5351e789f0331a6574ea2260d5054a54b80317c4568457c617c8168818081bc953cdf8880a070385a403020350055502100001e023a801871382d40582c4500132a2100001e000000fd003090a0a03c010a202020202020000000fc003237474c363530460a20202020014b020320f1230907074b010203041112131f903f0083010000e305c000e30605018048801871382d40582c4500132a2100001e866f80a07038404030203500132a2100001efe5b80a07038354030203500132a21000018011d007251d01e206e285500132a2100001e00000000000000000000000000000000000000000000003c";
         };
         config = {
           DisplayPort-0 = {
             enable = true;
             mode = "1920x1080";
-            position = "1920x0";
+            position = "0x0";
             rate = "143.98";
             primary = true;
           };
-          DisplayPort-2 = {
+          DisplayPort-1 = {
             enable = true;
             mode = "1920x1080";
-            position = "0x0";
+            position = "1920x0";
             rate = "143.98";
           };
         };
@@ -217,8 +218,8 @@ in {
     alsa.support32Bit = true;
     pulse.enable = true;
     jack.enable = true;
-    wireplumber.enable = false;
-    media-session.enable = true;
+    wireplumber.enable = true;
+    media-session.enable = false;
 
     config.pipewire = let
       defaultConf = lib.importJSON
