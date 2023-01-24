@@ -48,7 +48,7 @@ in {
     pkgs.playerctl
     pkgs.simplescreenrecorder
     pkgs.arandr
-    pkgs.gimp-with-plugins
+    pkgs.gimp
     pkgs.virt-manager
     pkgs.xorg.xmodmap
     pkgs.libnotify
@@ -113,6 +113,7 @@ in {
     pkgs.protontricks
     pkgs.proton-caller
     pkgs.spotify
+    pkgs.gamescope
     # etterna
 
     #lol-launchhelper
