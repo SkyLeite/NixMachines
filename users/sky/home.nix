@@ -317,7 +317,7 @@ in {
   };
 
   services.dunst = {
-    enable = false;
+    enable = true;
 
     settings = {
       global = {
