@@ -166,11 +166,11 @@ in {
             "${pkgs.polkit_gnome}/bin/polkit-gnome-authentication-agent-1";
           always = true;
         }
-        {
-          command = ''
-            ${pkgs.pipewire}/bin/pw-loopback --capture-props='node.target="alsa_input.pci-0000_0f_00.4.analog-stereo"'
-          '';
-        }
+        # {
+        #   command = ''
+        #     ${pkgs.pipewire}/bin/pw-loopback --capture-props='node.target="alsa_input.pci-0000_0f_00.4.analog-stereo"'
+        #   '';
+        # }
       ];
 
       window = { border = 0; };
