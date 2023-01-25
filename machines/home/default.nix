@@ -25,7 +25,23 @@ in {
   nixpkgs.config.permittedInsecurePackages = [ "xrdp-0.9.9" ];
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
-      extraPkgs = pkgs: with pkgs; [ pango libthai harfbuzz libgdiplus ];
+      extraPkgs = pkgs:
+        with pkgs; [
+          pango
+          libthai
+          harfbuzz
+          libgdiplus
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+        ];
     };
   };
 
@@ -382,6 +398,26 @@ in {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
+
+    package = pkgs.steam.override {
+      extraPkgs = pkgs:
+        with pkgs; [
+          pango
+          libthai
+          harfbuzz
+          libgdiplus
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+        ];
+    };
   };
   programs.adb.enable = true;
 
