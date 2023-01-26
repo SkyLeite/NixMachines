@@ -11,17 +11,18 @@ in {
     package = pkgs.i3;
     config = {
       modifier = mod;
-      bars = [{
-        fonts = {
-          names = [ "DejaVu Sans Mono" "Font Awesome 6 Free" ];
-          size = 10.0;
-        };
-        position = "bottom";
-        workspaceNumbers = true;
-        workspaceButtons = true;
-        statusCommand =
-          "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-main.toml";
-      }];
+      bars = [ ];
+      # bars = [{
+      #   fonts = {
+      #     names = [ "DejaVu Sans Mono" "Font Awesome 6 Free" ];
+      #     size = 10.0;
+      #   };
+      #   position = "bottom";
+      #   workspaceNumbers = true;
+      #   workspaceButtons = true;
+      #   statusCommand =
+      #     "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-main.toml";
+      # }];
 
       terminal = "alacritty";
       fonts = {
@@ -151,11 +152,11 @@ in {
       ];
 
       startup = [
-        # {
-        #   command = "systemctl --user restart polybar";
-        #   always = true;
-        #   notification = false;
-        # }
+        {
+          command = "systemctl --user restart polybar";
+          always = true;
+          notification = false;
+        }
         { command = "flameshot"; }
         {
           command = "sh ../nixpkgs/screens.sh";

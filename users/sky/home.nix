@@ -115,6 +115,7 @@ in {
     pkgs.spotify
     pkgs.gamescope
     # etterna
+    pkgs.mangohud
 
     #lol-launchhelper
   ];
