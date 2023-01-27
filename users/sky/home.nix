@@ -290,12 +290,22 @@ in {
   services.lorri = { enable = true; };
 
   services.picom = {
+    package = pkgs.picom-next.overrideAttrs (prev: {
+      version = "git";
+      src = pkgs.fetchFromGitHub {
+        owner = "yshui";
+        repo = "picom";
+        rev = "364463feaf89fa0b7ad82f15af6576400b6daec4";
+        sha256 = "sha256-ukYfi86muqe05IEeteaWTdINT7Bq+PTvt64Jq+j1ed0=";
+      };
+    });
+
     enable = true;
     shadow = false;
     shadowOffsets = [ (-12) (-12) ];
     vSync = false;
     fade = true;
-    fadeDelta = 2;
+    fadeDelta = 3;
 
     wintypes = {
       tooltip = {
