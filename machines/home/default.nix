@@ -83,6 +83,23 @@ in {
     keyMap = "us";
   };
 
+  fonts = {
+    fontconfig.enable = true;
+    fontDir.enable = true;
+    enableGhostscriptFonts = true;
+    fonts = with pkgs; [
+      corefonts
+      openmoji-color
+      dejavu_fonts
+      inconsolata
+      source-han-sans-japanese
+      source-han-sans-korean
+      source-han-sans-simplified-chinese
+      source-han-sans-traditional-chinese
+      ubuntu_font_family
+    ];
+  };
+
   # Enable the X11 windowing system.
   services.xserver = {
     enable = true;

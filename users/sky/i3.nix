@@ -153,8 +153,7 @@ in {
 
       startup = [
         {
-          command = "systemctl --user restart polybar";
-          always = true;
+          command = "systemctl --user start polybar";
           notification = false;
         }
         { command = "flameshot"; }

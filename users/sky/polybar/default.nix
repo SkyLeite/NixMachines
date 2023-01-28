@@ -2,11 +2,12 @@
   services.polybar = {
     enable = true;
     script = "SHELL=$(which sh) polybar mybar &";
-    package = pkgs.polybar.override {
-      i3Support = true;
-      i3 = pkgs.i3;
-      jsoncpp = pkgs.jsoncpp;
-    };
+    # package = pkgs.polybar.override {
+    #   i3Support = true;
+    #   i3 = pkgs.i3;
+    #   jsoncpp = pkgs.jsoncpp;
+    # };
+    package = pkgs.polybarFull;
     config = ./config.ini;
   };
 
