@@ -151,6 +151,8 @@ in {
         }
       ];
 
+      assigns = { "4" = [{ class = "^.gamescope-wrapped$"; }]; };
+
       startup = [
         {
           command = "systemctl --user start polybar";
@@ -229,6 +231,11 @@ in {
         {
           command = "floating enable";
           criteria = { instance = "origin.exe"; };
+        }
+
+        {
+          command = "sticky enable";
+          criteria = { title = "Picture-in-Picture"; };
         }
       ];
     };
