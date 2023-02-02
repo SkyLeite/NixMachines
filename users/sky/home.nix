@@ -15,6 +15,15 @@ let
   rofi-firefox = pkgs.callPackage ./scripts/rofi-firefox.nix pkgs;
   etterna = pkgs.callPackage ../../packages/etterna/default.nix pkgs;
   bitwarden = import ../../util/bitwarden.nix;
+
+  gamescopeSteam = pkgs.makeDesktopItem {
+    name = "Steam (Gamescope)";
+    exec =
+      "${pkgs.gamescope}/bin/gamescope -W 5120 -H 1440 -U -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
+    comment = "Steam big picture running in gamescope";
+    desktopName = "Steam (Gamescope)";
+    categories = [ "Game" ];
+  };
 in {
   imports = [
     ./polybar
@@ -116,6 +125,7 @@ in {
     pkgs.gamescope
     # etterna
     pkgs.mangohud
+    gamescopeSteam
 
     #lol-launchhelper
   ];
