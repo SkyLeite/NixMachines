@@ -74,4 +74,6 @@
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
+  # Huge monitor stuff
+  hardware.video.hidpi.enable = true;
 }
