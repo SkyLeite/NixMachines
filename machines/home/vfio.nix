@@ -28,7 +28,7 @@ in {
       "vfio_pci"
       "vfio_iommu_type1"
       "vfio"
-      "amdgpu"
+      # "amdgpu"
     ];
     extraModprobeConfig = "options vfio-pci ids=1002:699f,1002:aae0";
     extraModulePackages = [

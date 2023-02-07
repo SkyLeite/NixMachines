@@ -105,7 +105,11 @@ in {
     enable = true;
     autorun = true;
     displayManager = {
-      sddm.enable = true;
+      sddm.enable = false;
+      gdm = {
+        enable = true;
+        wayland = true;
+      };
       sessionCommands = ''
         ${pkgs.xorg.xmodmap}/bin/xmodmap ${usBr}/us-br
         autorandr -c
@@ -120,7 +124,7 @@ in {
       package = pkgs.i3-gaps;
     };
     windowManager.awesome = { enable = true; };
-    videoDrivers = [ "amdgpu" ];
+    videoDrivers = [ "modesetting" ];
   };
 
   services.xrdp = {
