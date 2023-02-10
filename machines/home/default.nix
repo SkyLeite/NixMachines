@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, nixpkgs, ... }:
+{ config, pkgs, lib, nixpkgs, modulesPath, mesa-git-src, ... }:
 
 let
   SDL2Patched = pkgs.SDL2.override { udevSupport = true; };
@@ -46,7 +46,9 @@ in {
   };
 
   imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    (import ./hardware-configuration.nix {
+      inherit modulesPath config lib pkgs mesa-git-src;
+    })
     ./vfio.nix
     ../../modules/tailscale.nix
   ];
@@ -102,12 +104,12 @@ in {
 
   # Enable the X11 windowing system.
   services.xserver = {
-    enable = true;
-    autorun = true;
+    enable = false;
+    autorun = false;
     displayManager = {
       sddm.enable = false;
       gdm = {
-        enable = true;
+        enable = false;
         wayland = true;
       };
       sessionCommands = ''
@@ -125,6 +127,16 @@ in {
     };
     windowManager.awesome = { enable = true; };
     videoDrivers = [ "modesetting" ];
+  };
+
+  services.greetd = {
+    enable = true;
+    vt = 1;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+      };
+    };
   };
 
   services.xrdp = {

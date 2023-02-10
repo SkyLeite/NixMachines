@@ -28,6 +28,7 @@ in {
   imports = [
     ./polybar
     ./i3.nix
+    ./sway.nix
     ./awesomewm.nix
     ./tmux.nix
     ./neovim.nix

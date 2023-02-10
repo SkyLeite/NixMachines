@@ -6,8 +6,13 @@
     url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
+  inputs.mesa-git-src = {
+    url =
+      "github:chaotic-aur/mesa-mirror/99fb770c4502f36110bd8ba8a8bc0fb810ba76a6";
+    flake = false;
+  };
 
-  outputs = { self, nixpkgs, home-manager, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, mesa-git-src, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -28,6 +33,7 @@
         specialArgs = {
           inherit nixpkgs;
           inherit attrs;
+          inherit mesa-git-src;
         };
         modules = [
           ({ config, pkgs, ... }: {
