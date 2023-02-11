@@ -8,7 +8,7 @@ in {
       modifier = i3.config.modifier;
       terminal = i3.config.terminal;
       fonts = i3.config.fonts;
-      colors = i3.config.colors // {
+      colors = i3.config.colors // rec {
         focused = {
           border = config.colorscheme.colors.base06;
           background = config.colorscheme.colors.base06;
@@ -24,6 +24,8 @@ in {
           childBorder = config.colorscheme.colors.base00;
           indicator = config.colorscheme.colors.base00;
         };
+
+        unfocused = focusedInactive;
       };
 
       output = {
