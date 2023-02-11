@@ -8,12 +8,37 @@ in {
       modifier = i3.config.modifier;
       terminal = i3.config.terminal;
       fonts = i3.config.fonts;
-      colors = i3.config.colors;
+      colors = i3.config.colors // {
+        focused = {
+          border = config.colorscheme.colors.base06;
+          background = config.colorscheme.colors.base06;
+          text = config.colorscheme.colors.base00;
+          childBorder = config.colorscheme.colors.base06;
+          indicator = config.colorscheme.colors.base04;
+        };
+
+        focusedInactive = {
+          border = config.colorscheme.colors.base00;
+          background = config.colorscheme.colors.base00;
+          text = config.colorscheme.colors.base06;
+          childBorder = config.colorscheme.colors.base00;
+          indicator = config.colorscheme.colors.base00;
+        };
+      };
+
+      output = {
+        "*" = { background = "${config.variables.wallpaper} fill"; };
+      };
+
       gaps = i3.config.gaps;
       input = { "*" = { xkb_file = builtins.toString ./us-br.xkb; }; };
       keybindings = i3.config.keybindings;
       assigns = i3.config.assigns;
-      window = i3.config.window;
+      window = i3.config.window // {
+        titlebar = true;
+        border = 5;
+        commands = [ ];
+      };
       startup = [
         { command = "flameshot"; }
         {

@@ -11,8 +11,10 @@
       "github:chaotic-aur/mesa-mirror/99fb770c4502f36110bd8ba8a8bc0fb810ba76a6";
     flake = false;
   };
+  inputs.nix-colors.url = "github:misterio77/nix-colors";
 
-  outputs = { self, nixpkgs, home-manager, mesa-git-src, ... }@attrs:
+  outputs =
+    { self, nixpkgs, home-manager, mesa-git-src, nix-colors, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -26,6 +28,7 @@
 
         # Optionally use extraSpecialArgs
         # to pass through arguments to home.nix
+        # extraSpecialArgs = { inherit nix-colors; };
       };
 
       nixosConfigurations.home = nixpkgs.lib.nixosSystem {
@@ -62,6 +65,7 @@
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
+            home-manager.extraSpecialArgs = { inherit nix-colors; };
           }
           ./machines/home/default.nix
         ];

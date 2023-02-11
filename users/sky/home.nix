@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, nix-colors, ... }:
 
 let
   mod = "Mod4";
@@ -9,6 +9,8 @@ let
     "https://github.com/nix-community/NUR/archive/master.tar.gz") {
       inherit pkgs;
     };
+
+  nix-colors-lib = nix-colors.lib-contrib { inherit pkgs; };
 
   lol-launchhelper = my-nur.lol-launchhelper;
   rofi-libvirt = import ./scripts/rofi-libvirt.nix pkgs;
@@ -26,7 +28,9 @@ let
   };
 in {
   imports = [
+    nix-colors.homeManagerModule
     ./polybar
+    ./variables.nix
     ./i3.nix
     ./sway.nix
     ./awesomewm.nix
@@ -38,6 +42,14 @@ in {
     #./packages/xborder.nix
     ./packages/noisetorch.nix
   ];
+
+  variables = {
+    wallpaper = ./wallpapers/djdK2IJ.png;
+    colorScheme = nix-colors-lib.colorSchemeFromPicture {
+      path = ./wallpapers/ffmobile.jpg;
+      kind = "light";
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
