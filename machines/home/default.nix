@@ -19,6 +19,12 @@ let
       "sys-devices-pci0000:00-0000:00:08.1-0000:0a:00.3-usb3-3\\x2d3-3\\x2d3:1.0-sound-card2-controlC2.device";
     id = "alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-mono";
   };
+
+  customFlameshot = pkgs.flameshot.overrideAttrs (base: {
+    nativeBuildInputs = base.nativeBuildInputs
+      ++ [ pkgs.libsForQt5.kguiaddons ];
+    cmakeFlags = [ "-DUSE_WAYLAND_CLIPBOARD=true" ];
+  });
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
@@ -133,8 +139,17 @@ in {
     enable = true;
     vt = 1;
     settings = {
-      default_session = {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+      default_session = let
+        swayStarter = pkgs.writeShellScript "swayLauncher.sh" ''
+          export SDL_VIDEODRIVER=wayland
+          export _JAVA_AWT_WM_NONREPARENTING=1
+          export QT_QPA_PLATFORM=wayland
+          export XDG_CURRENT_DESKTOP=sway
+          export XDG_SESSION_DESKTOP=sway
+          exec sway
+        '';
+      in {
+        command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${swayStarter}";
       };
     };
   };
@@ -212,8 +227,25 @@ in {
 
   services.blueman.enable = true;
   services.k3s.enable = false;
-  xdg.portal.enable = true;
-  xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  xdg.portal = {
+    enable = true;
+
+    wlr = {
+      enable = true;
+      settings = {
+        screencast = {
+          output_name = "DP-1";
+          max_fps = 60;
+          exec_before = "disable_notifications.sh";
+          exec_after = "enable_notifications.sh";
+          chooser_type = "simple";
+          chooser_cmd = "${pkgs.slurp}/bin/slurp -f %o -or";
+        };
+      };
+    };
+
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
   services.flatpak.enable = true;
 
   # Configure keymap in X11
@@ -385,7 +417,7 @@ in {
     docker-compose
     editorconfig-core-c
     fd
-    flameshot
+    customFlameshot
     git
     gparted
     neovim
