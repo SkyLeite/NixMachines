@@ -77,10 +77,8 @@ in {
 
   home.keyboard = false;
   home.packages = [
-    pkgs.nodejs
     pkgs.elixir
     pkgs.elixir_ls
-    pkgs.yarn
     pkgs.playerctl
     pkgs.simplescreenrecorder
     pkgs.arandr
