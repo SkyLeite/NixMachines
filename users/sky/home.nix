@@ -26,6 +26,20 @@ let
     desktopName = "Steam (Gamescope)";
     categories = [ "Game" ];
   };
+
+  customXivLauncher = pkgs.xivlauncher.overrideAttrs (base: {
+    desktopItems = [
+      (pkgs.makeDesktopItem {
+        name = "xivlauncher";
+        exec = "XIVLauncher.Core";
+        icon = "xivlauncher";
+        desktopName = "XIVLauncher (Native)";
+        comment = base.meta.description;
+        categories = [ "Game" ];
+        startupWMClass = "XIVLauncher.Core";
+      })
+    ];
+  });
 in {
   imports = [
     nix-colors.homeManagerModule
@@ -139,6 +153,7 @@ in {
     pkgs.swaynotificationcenter
     # etterna
     pkgs.mangohud
+    customXivLauncher
     gamescopeSteam
 
     #lol-launchhelper
