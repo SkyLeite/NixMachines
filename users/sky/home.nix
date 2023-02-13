@@ -38,7 +38,7 @@ in {
     ./neovim.nix
     ./scripts/gui.nix
     ./emacs/default.nix
-    ./packages/deadd.nix
+    # ./packages/deadd.nix
     #./packages/xborder.nix
     ./packages/noisetorch.nix
   ];
@@ -136,6 +136,7 @@ in {
     pkgs.proton-caller
     pkgs.spotify
     pkgs.gamescope
+    pkgs.swaynotificationcenter
     # etterna
     pkgs.mangohud
     gamescopeSteam
