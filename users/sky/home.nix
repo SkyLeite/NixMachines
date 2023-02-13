@@ -150,7 +150,6 @@ in {
     pkgs.proton-caller
     pkgs.spotify
     pkgs.gamescope
-    pkgs.swaynotificationcenter
     # etterna
     pkgs.mangohud
     customXivLauncher
