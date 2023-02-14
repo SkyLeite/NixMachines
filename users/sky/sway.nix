@@ -61,11 +61,16 @@ in {
 
   home.packages = [ pkgs.swaynotificationcenter ];
 
+  xdg.configFile."swaync/style.css" = {
+    source = ./swaync.css;
+    onChange = "${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css";
+  };
+
   xdg.configFile."swaync/config.json" = let
     swayncConfig = {
       "$schema" =
         "${pkgs.swaynotificationcenter}/etc/xdg/swaync/configSchema.json";
-      positionX = "right";
+      positionX = "center";
       positionY = "top";
       layer = "top";
       cssPriority = "application";
@@ -80,8 +85,8 @@ in {
       timeout-low = 5;
       timeout-critical = 0;
       fit-to-screen = true;
-      control-center-width = 500;
-      control-center-height = 600;
+      control-center-width = 600;
+      control-center-height = 800;
       notification-window-width = 500;
       keyboard-shortcuts = true;
       image-visibility = "when-available";
