@@ -34,7 +34,10 @@ in {
 
       gaps = i3.config.gaps;
       input = { "*" = { xkb_file = builtins.toString ./us-br.xkb; }; };
-      keybindings = i3.config.keybindings;
+      keybindings = i3.config.keybindings // {
+        "Print" =
+          "exec ${pkgs.flameshot}/bin/flameshot gui --raw | ${pkgs.wl-clipboard}/bin/wl-copy --type image/png";
+      };
       assigns = i3.config.assigns;
       window = i3.config.window // {
         titlebar = true;
