@@ -40,15 +40,15 @@ in {
       usbutils
     ];
 
-    networking.defaultGateway = "10.0.0.1";
-    networking.bridges.br0.interfaces = [ "enp2s0" ];
-    networking.interfaces.br0 = {
-      useDHCP = false;
-      ipv4.addresses = [{
-        "address" = "10.0.0.5";
-        "prefixLength" = 24;
-      }];
-    };
+    #networking.defaultGateway = "10.0.0.1";
+    #networking.bridges.br0.interfaces = [ "enp2s0" ];
+    #networking.interfaces.br0 = {
+    #  useDHCP = false;
+    #  ipv4.addresses = [{
+    #    "address" = "10.0.0.5";
+    #    "prefixLength" = 24;
+    #  }];
+    #};
 
     # systemd.services.home-assistant = {
     #   startLimitIntervalSec = 14400;

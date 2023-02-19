@@ -27,10 +27,9 @@ in {
   };
 
   networking = {
-    hostId = "miles";
     hostName = "miles";
     domain = "home";
-    dhcpcd.enable = true;
+    networkmanager.enable = true;
     firewall = {
       enable = true;
       allowedUDPPorts = [ 34197 ];
@@ -64,7 +63,7 @@ in {
     papermc.enable = false;
     funkwhale.enable = false;
 
-    webhook = {
+    webhookCustom = {
       enable = true;
       port = 5000;
       verbose = true;
@@ -184,7 +183,7 @@ in {
     home = "/home/sky";
     description = "Sky Leite";
     group = "sky";
-    extraGroups = [ "wheel" "audio" "video" "docker" ];
+    extraGroups = [ "wheel" "audio" "video" "docker" "networkmanager" ];
     useDefaultShell = true;
     initialPassword = "1234";
 
@@ -237,6 +236,7 @@ in {
   };
 
   security.sudo.enable = true;
+  security.polkit.enable = true;
 
   nix = {
     package = pkgs.nixUnstable;

@@ -4,12 +4,12 @@ with lib; # use the functions from lib, such as mkIf
 
 let
   # the values of the options set for the service by the user of the service
-  cfg = config.services.webhook;
+  cfg = config.services.webhookCustom;
 in {
   ##### interface. here we define the options that users of our service can specify
   options = {
     # the options for our service will be located under services.webhook
-    services.webhook = {
+    services.webhookCustom = {
       enable = mkOption {
         type = types.bool;
         default = false;
@@ -60,7 +60,7 @@ in {
     networking = { firewall = { allowedTCPPorts = [ cfg.port ]; }; };
     environment.systemPackages = [ pkgs.webhook ];
 
-    systemd.services.webhook = let
+    systemd.services.webhookCustom = let
       format = pkgs.formats.json { };
       hooksJson = format.generate "hooks.json" cfg.webhooks;
     in {
