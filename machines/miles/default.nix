@@ -27,13 +27,15 @@ in {
   };
 
   networking = {
+    hostId = "miles";
+    hostName = "miles";
+    domain = "home";
+    dhcpcd.enable = true;
     firewall = {
       enable = true;
       allowedUDPPorts = [ 34197 ];
     };
     nameservers = [ "8.8.8.8" "8.8.4.4" ];
-    hostName = "miles";
-    networkmanager.enable = true;
   };
 
   # Select internationalisation properties.
@@ -182,7 +184,7 @@ in {
     home = "/home/sky";
     description = "Sky Leite";
     group = "sky";
-    extraGroups = [ "wheel" "audio" "video" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "audio" "video" "docker" ];
     useDefaultShell = true;
     initialPassword = "1234";
 
@@ -203,7 +205,6 @@ in {
     gnutls
     htop
     jq
-    networkmanager
     nmap
     openssl
     pavucontrol
