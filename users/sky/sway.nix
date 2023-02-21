@@ -30,6 +30,11 @@ in {
 
       output = {
         "*" = { background = "${config.variables.wallpaper} fill"; };
+
+        # TV
+        # "Samsung Electric Company SAMSUNG 0x00000F00" = {
+        #   mode = "4096x2160@60.000Hz";
+        # };
       };
 
       gaps = i3.config.gaps;
@@ -42,7 +47,10 @@ in {
       window = i3.config.window // {
         titlebar = true;
         border = 5;
-        commands = [ ];
+        commands = [{
+          command = "floating enable, sticky enable";
+          criteria = { title = " - Sharing Indicator$"; };
+        }];
       };
       startup = [
         { command = "flameshot"; }
@@ -63,6 +71,27 @@ in {
   };
 
   home.packages = [ pkgs.swaynotificationcenter ];
+
+  services.kanshi = {
+    enable = false;
+    profiles = {
+      tvOn = {
+        outputs = [
+          # Odyssey G9
+          {
+            criteria = "Samsung Electric Company LS49AG95 HNTT800044";
+            mode = "5120x1440@239.761Hz";
+          }
+
+          # Samsung TV
+          {
+            criteria = "Samsung Electric Company SAMSUNG 0x00000F00";
+            mode = "4096x2160@60.000Hz";
+          }
+        ];
+      };
+    };
+  };
 
   xdg.configFile."swaync/style.css" = {
     source = ./swaync.css;
