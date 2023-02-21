@@ -214,7 +214,6 @@ in {
     pass
     pinentry-curses
     vim
-    emacs
     hello
     curl
   ];

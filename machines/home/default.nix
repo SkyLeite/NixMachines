@@ -28,7 +28,6 @@ let
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
-  nixpkgs.config.permittedInsecurePackages = [ "xrdp-0.9.9" ];
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
       extraPkgs = pkgs:
@@ -55,7 +54,7 @@ in {
     (import ./hardware-configuration.nix {
       inherit modulesPath config lib pkgs mesa-git-src;
     })
-    ./vfio.nix
+    # ./vfio.nix
     ../../modules/tailscale.nix
   ];
 
@@ -132,7 +131,7 @@ in {
       package = pkgs.i3-gaps;
     };
     windowManager.awesome = { enable = true; };
-    videoDrivers = [ "modesetting" ];
+    videoDrivers = [ "amdgpu" ];
   };
 
   services.greetd = {
@@ -155,7 +154,7 @@ in {
   };
 
   services.xrdp = {
-    enable = true;
+    enable = false;
     openFirewall = true;
     defaultWindowManager = "awesome";
   };
@@ -167,7 +166,7 @@ in {
   };
 
   services.samba = {
-    enable = true;
+    enable = false;
     securityType = "user";
     openFirewall = true;
     extraConfig = ''
@@ -226,7 +225,6 @@ in {
   };
 
   services.blueman.enable = true;
-  services.k3s.enable = false;
   xdg.portal = {
     enable = true;
 
@@ -341,7 +339,6 @@ in {
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
   hardware.opengl.driSupport32Bit = true;
-  hardware.xpadneo.enable = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
@@ -417,7 +414,7 @@ in {
     docker-compose
     editorconfig-core-c
     fd
-    customFlameshot
+    # customFlameshot
     git
     gparted
     neovim
@@ -430,7 +427,6 @@ in {
     teams
     wget
     xclip
-    virtualbox
     xorg.xkbcomp
     pavucontrol
     ncpamixer
@@ -496,21 +492,18 @@ in {
     forwardX11 = true;
   };
   virtualisation.docker.enable = true;
-  virtualisation.virtualbox.host.enable = true;
-
-  users.extraGroups.vboxusers.members = [ "sky" ];
 
   services.xserver.config = lib.mkAfter ''
     # Option "DPMS" "true"
   '';
 
   services.jackett = {
-    enable = true;
+    enable = false;
     user = "musicdownloader";
   };
 
   services.lidarr = {
-    enable = true;
+    enable = false;
     user = "musicdownloader";
   };
 

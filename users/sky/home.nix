@@ -122,7 +122,6 @@ in {
     pkgs.source-code-pro
     pkgs.shellcheck
     pkgs.shfmt
-    pkgs.zoom-us
     pkgs.font-awesome
     pkgs.pulsemixer
     pkgs.dfeet
