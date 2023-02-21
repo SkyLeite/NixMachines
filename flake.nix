@@ -8,7 +8,7 @@
   };
   inputs.mesa-git-src = {
     url =
-      "github:chaotic-aur/mesa-mirror/99fb770c4502f36110bd8ba8a8bc0fb810ba76a6";
+      "github:chaotic-aur/mesa-mirror/a72035f9c55e035592c0c1bf92d564b76f20eed7";
     flake = false;
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
