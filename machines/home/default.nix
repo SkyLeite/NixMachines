@@ -91,12 +91,13 @@ in {
   };
 
   fonts = {
+    enableDefaultFonts = true;
     fontconfig.enable = true;
     fontDir.enable = true;
     enableGhostscriptFonts = true;
     fonts = with pkgs; [
       corefonts
-      openmoji-color
+      noto-fonts-emoji
       dejavu_fonts
       inconsolata
       source-han-sans-japanese
