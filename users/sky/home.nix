@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nix-colors, ... }:
+{ config, pkgs, lib, nix-colors, hyprland, ... }:
 
 let
   mod = "Mod4";
@@ -43,6 +43,7 @@ let
 in {
   imports = [
     nix-colors.homeManagerModule
+    hyprland.homeManagerModules.default
     ./polybar
     ./variables.nix
     ./i3.nix
@@ -52,6 +53,8 @@ in {
     ./neovim.nix
     ./scripts/gui.nix
     ./emacs/default.nix
+    ./hyprland/default.nix
+    ./eww/default.nix
     # ./packages/deadd.nix
     #./packages/xborder.nix
     ./packages/noisetorch.nix

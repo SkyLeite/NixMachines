@@ -12,9 +12,10 @@
     flake = false;
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
+  inputs.hyprland.url = "github:hyprwm/Hyprland";
 
-  outputs =
-    { self, nixpkgs, home-manager, mesa-git-src, nix-colors, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, mesa-git-src, nix-colors, hyprland
+    , ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -65,7 +66,7 @@
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
-            home-manager.extraSpecialArgs = { inherit nix-colors; };
+            home-manager.extraSpecialArgs = { inherit nix-colors hyprland; };
           }
           ./machines/home/default.nix
         ];

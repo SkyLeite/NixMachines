@@ -1,0 +1,59 @@
+;; (defvar workspaces "[1, 2, 3]")
+(defvar output "DP-1")
+(defvar orientation "vertical")
+
+(defpoll workspaces :initial "[]"
+  :interval "50s"
+  `swaymsg -t get_workspaces --raw | jq 'map(select(.output == "DP-1"))'`)
+
+(defwindow main-bar
+  :monitor 0
+  :geometry (geometry :x "0"
+                      :y "0"
+                      :width "47px"
+                      :height "100%"
+                      :anchor "center left")
+  :stacking "fg"
+  :exclusive true
+  :windowtype "dock"
+  :wm-ignore false
+  (box :orientation orientation
+       :class "main"
+       :vexpand "false"
+       :hexpand "false"
+    (top)
+    (end)))
+
+; Top & top widgets
+(defwidget top []
+  (box :orientation orientation
+       :valign "start"
+       (view-logo)
+       (view-workspaces :workspaces workspaces
+                        :orientation orientation)))
+
+(defwidget view-logo []
+  (image :path "./images/trans-flag.svg"
+         :image-width 30
+         :height 30))
+
+; `workspaces`: A list of swaymsg-formatted workspaces
+; `onclick`: A command to run when a workspace is clicked. Defaults to `swaymsg workspace ${entry.num}`
+; `orientation`: The orientation of the workspaces. Defaults to `vertical`
+(defwidget view-workspaces [workspaces orientation ?onclick]
+  (box :orientation {orientation == "" ? "vertical" : orientation}
+       (for entry in workspaces
+        (button
+         :class {entry.focused ? "active" : "inactive"}
+         :onclick {onclick == "" ? "swaymsg workspace ${entry.num}" : onclick}
+         "${entry.num}"))))
+
+; End & end widgets
+(defwidget end []
+  (box :orientation orientation
+       :valign "end"
+       (view-power)))
+
+(defwidget view-power []
+  (image :path "./images/power.svg"
+         :image-width 30))

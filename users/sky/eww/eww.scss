@@ -1,0 +1,44 @@
+$bg-color: #242038;
+$bg-color-secondary: #725AC1;
+$bg-color-tertiary: #8D86C9;
+$contrast-color: #F7ECE1;
+
+.main {
+  $padding-y: 10px;
+  padding: $padding-y 0 $padding-y 0;
+
+  background-color: $bg-color;
+}
+
+button {
+  border-radius: 0px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+
+  background-image: none;
+  background-color: $bg-color-secondary;
+  color: $contrast-color;
+  font-weight: normal;
+}
+
+button:focus {
+  border-radius: 0px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+button:active {
+  border-radius: 0px;
+  outline: none;
+  border: none;
+  box-shadow: none;
+  font-weight: normal;
+}
+
+.inactive {
+    background-color: $bg-color-tertiary;
+}
+
