@@ -150,6 +150,7 @@ in {
     # etterna
     pkgs.mangohud
     pkgs.rpcs3
+    pkgs.jq
     customXivLauncher
     gamescopeSteam
 
