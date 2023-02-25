@@ -31,10 +31,20 @@ in {
       output = {
         "*" = { background = "${config.variables.wallpaper} fill"; };
 
-        # TV
-        # "Samsung Electric Company SAMSUNG 0x00000F00" = {
-        #   mode = "4096x2160@60.000Hz";
-        # };
+        "DP-1" = {
+          mode = "5120x1440@239.761Hz";
+          pos = "0 1080";
+        };
+
+        "DP-3" = {
+          mode = "1920x1080@143.980Hz";
+          pos = "0 0";
+        };
+
+        "HDMI-A-1" = {
+          mode = "1920x1080@60Hz";
+          pos = "1920 0";
+        };
       };
 
       gaps = i3.config.gaps;
@@ -71,27 +81,6 @@ in {
   };
 
   home.packages = [ pkgs.swaynotificationcenter ];
-
-  services.kanshi = {
-    enable = false;
-    profiles = {
-      tvOn = {
-        outputs = [
-          # Odyssey G9
-          {
-            criteria = "Samsung Electric Company LS49AG95 HNTT800044";
-            mode = "5120x1440@239.761Hz";
-          }
-
-          # Samsung TV
-          {
-            criteria = "Samsung Electric Company SAMSUNG 0x00000F00";
-            mode = "4096x2160@60.000Hz";
-          }
-        ];
-      };
-    };
-  };
 
   xdg.configFile."swaync/style.css" = {
     source = ./swaync.css;
