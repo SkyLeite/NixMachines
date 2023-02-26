@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
-let i3 = config.xsession.windowManager.i3;
+let
+  i3 = config.xsession.windowManager.i3;
+  lock-command =
+    "${pkgs.swaylock-effects}/bin/swaylock -SK --effect-blur 5x10 --clock --indicator";
 in {
   wayland.windowManager.sway = {
     enable = true;
@@ -53,8 +56,7 @@ in {
         "Print" =
           "exec ${pkgs.flameshot}/bin/flameshot gui --raw | ${pkgs.wl-clipboard}/bin/wl-copy --type image/png";
 
-        "${i3.config.modifier}+s" =
-          "exec ${pkgs.swaylock-effects}/bin/swaylock -SK --effect-blur 5x10 --clock --indicator";
+        "${i3.config.modifier}+s" = "exec ${lock-command}";
       };
       assigns = i3.config.assigns;
       window = i3.config.window // {
@@ -78,6 +80,14 @@ in {
         {
           command =
             "hash dbus-update-activation-environment 2>/dev/null && dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK";
+        }
+        {
+          command = ''
+            ${pkgs.swayidle}/bin/swayidle -w \
+              timeout 1800 '${lock-command}' \
+              timeout 10 'if pgrep -x swaylock; then swaymsg "output * power off"; fi' \
+              resume 'swaymsg "output * power on"'
+          '';
         }
       ];
     };
