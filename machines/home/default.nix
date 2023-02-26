@@ -403,7 +403,18 @@ in {
     };
   };
 
-  security.sudo.wheelNeedsPassword = false;
+  security = {
+    sudo.wheelNeedsPassword = false;
+    pam = {
+      services = {
+        swaylock = {
+          text = ''
+            auth include login
+          '';
+        };
+      };
+    };
+  };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget

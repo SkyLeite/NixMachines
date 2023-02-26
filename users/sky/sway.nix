@@ -52,6 +52,9 @@ in {
       keybindings = i3.config.keybindings // {
         "Print" =
           "exec ${pkgs.flameshot}/bin/flameshot gui --raw | ${pkgs.wl-clipboard}/bin/wl-copy --type image/png";
+
+        "${i3.config.modifier}+s" =
+          "exec ${pkgs.swaylock-effects}/bin/swaylock -SK --effect-blur 5x10 --clock --indicator";
       };
       assigns = i3.config.assigns;
       window = i3.config.window // {
