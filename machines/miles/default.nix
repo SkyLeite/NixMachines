@@ -43,6 +43,11 @@ in {
   chaos = {
     enable = true;
     baseUrl = "zerolab.app";
+
+    services.octoprint = {
+      enable = true;
+      port = config.services.octoprint.port;
+    };
   };
 
   services = {
@@ -160,6 +165,11 @@ in {
       public = true;
       username = "Kaze404";
       token = "07ffc97315dd787e2b6cde6810a9e5";
+    };
+
+    octoprint = {
+      enable = true;
+      port = 7483;
     };
   };
 
