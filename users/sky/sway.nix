@@ -95,6 +95,31 @@ in {
 
   home.packages = [ pkgs.swaynotificationcenter ];
 
+  services.kanshi = {
+    enable = true;
+    profiles = {
+      default = {
+        outputs = [
+          {
+            criteria = "HDMI-A-1";
+            mode = "1920x1080@143.980Hz";
+            position = "0,0";
+          }
+          {
+            criteria = "DP-3";
+            mode = "1920x1080@144.001Hz";
+            position = "1920,0";
+          }
+          {
+            criteria = "DP-1";
+            mode = "5120x1440@239.761Hz";
+            position = "0,1080";
+          }
+        ];
+      };
+    };
+  };
+
   xdg.configFile."swaync/style.css" = {
     source = ./swaync.css;
     onChange = "${pkgs.swaynotificationcenter}/bin/swaync-client --reload-css";
