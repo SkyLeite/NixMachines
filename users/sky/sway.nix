@@ -70,7 +70,7 @@ in {
       startup = [
         { command = "flameshot"; }
         {
-          command = "sh ../nixpkgs/screens.sh";
+          command = "systemctl --user restart kanshi";
           always = true;
         }
         {
