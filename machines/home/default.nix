@@ -501,7 +501,7 @@ in {
   services.sshd.enable = true;
   services.openssh = {
     enable = true;
-    forwardX11 = true;
+    settings = { X11Forwarding = true; };
   };
   virtualisation.docker.enable = true;
 
