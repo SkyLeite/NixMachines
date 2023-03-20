@@ -1,4 +1,5 @@
-;; (defvar workspaces "[1, 2, 3]")
+(include "./hydra.yuck")
+
 (defvar output "DP-1")
 (defvar orientation "vertical")
 

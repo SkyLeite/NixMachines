@@ -1,0 +1,44 @@
+(defvar hydra-options "[]")
+(defvar current-hydra "HYDRA_MAIN")
+
+(defwindow hydra
+  :monitor 1
+  :geometry (geometry :x "0"
+                      :y "0"
+                      :width "1400px"
+                      :height "40%"
+                      :anchor "center center")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (box :class "rofi"
+       :orientation "vertical"
+       :space-evenly false
+    (box :class "hydra-option-container"
+         :orientation "vertical"
+         :space-evenly false
+         :height "100%"
+         :vexpand true
+         (for option in hydra-options
+              (box :class "hydra-option"
+                   :orientation "horizontal"
+                   :space-evenly false
+                   (label :class "key"
+                     :text "${option.key}"
+                     :justify "left"
+                     :xalign 0)
+                   (label :class "separator"
+                     :text "→"
+                     :justify "left"
+                     :xalign 0)
+                   (label :class "description"
+                     :text "${option.description}"
+                     :justify "left"
+                     :xalign 0))
+              ))
+    (input
+        :class "invisible"
+        :height 10
+        :active true
+        :onchange "/mnt/hdd/projects/nix/users/sky/eww/hydra.sh exec ${current-hydra} {}")
+    (button :onclick "${EWW_CMD} close-all" "close")))
