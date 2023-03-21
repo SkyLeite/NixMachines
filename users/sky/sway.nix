@@ -57,6 +57,9 @@ in {
           "exec ${pkgs.flameshot}/bin/flameshot gui --raw | ${pkgs.wl-clipboard}/bin/wl-copy --type image/png";
 
         "${i3.config.modifier}+s" = "exec ${lock-command}";
+
+        "${i3.config.modifier}+r" =
+          "exec eww open hydra & /home/sky/.local/share/scripts/hydra list HYDRA_MAIN";
       };
       assigns = i3.config.assigns;
       window = i3.config.window // {

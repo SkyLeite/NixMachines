@@ -1,8 +1,9 @@
 (defvar hydra-options "[]")
 (defvar current-hydra "HYDRA_MAIN")
+(defvar xdg-data-home "/home/sky/.local/share")
 
 (defwindow hydra
-  :monitor 1
+  :monitor 0
   :geometry (geometry :x "0"
                       :y "0"
                       :width "1400px"
@@ -17,7 +18,6 @@
     (box :class "hydra-option-container"
          :orientation "vertical"
          :space-evenly false
-         :height "100%"
          :vexpand true
          (for option in hydra-options
               (box :class "hydra-option"
@@ -25,20 +25,17 @@
                    :space-evenly false
                    (label :class "key"
                      :text "${option.key}"
-                     :justify "left"
                      :xalign 0)
                    (label :class "separator"
                      :text "→"
-                     :justify "left"
                      :xalign 0)
                    (label :class "description"
                      :text "${option.description}"
-                     :justify "left"
                      :xalign 0))
               ))
     (input
         :class "invisible"
         :height 10
         :active true
-        :onchange "/mnt/hdd/projects/nix/users/sky/eww/hydra.sh exec ${current-hydra} {}")
+        :onchange "EWW_CMD=\"${EWW_CMD}\" ${xdg-data-home}/scripts/hydra exec ${current-hydra} {}")
     (button :onclick "${EWW_CMD} close-all" "close")))

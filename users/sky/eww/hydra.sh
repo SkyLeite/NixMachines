@@ -2,8 +2,11 @@
 
 DELIMITER="|"
 
+# Assign "eww" to "EWW_CMD" when it is not set
+: "${EWW_CMD:=eww}"
+
 declare -A HYDRA_MAIN
-HYDRA_MAIN["q"]="eww -c /mnt/hdd/projects/nix/users/sky/eww close-all${DELIMITER}quit"
+HYDRA_MAIN["q"]="${EWW_CMD} close-all${DELIMITER}quit"
 HYDRA_MAIN["r"]="rofi -show run${DELIMITER}Run a program in Rofi"
 HYDRA_MAIN["w"]="rofi -show run${DELIMITER}Switch to a window"
 HYDRA_MAIN["f"]="rofi -show firefox${DELIMITER}Switch to a Firefox window using Rofi"
@@ -38,7 +41,7 @@ hydra_entry_to_json() {
 }
 
 kill_hydra() {
-    eww -c . close hydra
+    $EWW_CMD close hydra
 }
 
 case "$1" in
@@ -73,6 +76,6 @@ case "$1" in
         done
 
         echo "$json_output"
-        eww -c . update hydra-options="$json_output"
+        $EWW_CMD update hydra-options="$json_output"
         ;;
 esac
