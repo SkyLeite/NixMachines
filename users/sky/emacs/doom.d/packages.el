@@ -52,3 +52,4 @@
 (package! org-ql)
 (package! ts)
 (package! eglot-fsharp)
+(package! yuck-mode)
