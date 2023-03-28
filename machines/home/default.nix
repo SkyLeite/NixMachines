@@ -299,28 +299,6 @@ in {
     pulse.enable = true;
     jack.enable = true;
     wireplumber.enable = true;
-    media-session.enable = false;
-
-    config.pipewire = let
-      defaultConf = lib.importJSON
-        "${nixpkgs}/nixos/modules/services/desktops/pipewire/daemon/pipewire.conf.json";
-    in lib.recursiveUpdate defaultConf {
-      "context.objects" = defaultConf."context.objects" ++ [ ];
-      "context.modules" = defaultConf."context.modules";
-      # "context.modules" = defaultConf."context.modules" ++ [{
-      #   name = "libpipewire-module-loopback";
-      #   args = {
-      #     "node.name" = "LoopbackTest";
-      #     "capture.props" = {
-      #       "node.name" = "test";
-      #       "node.target" = "alsa_input.pci-0000_0f_00.4.analog-stereo";
-      #     };
-      #     "playback.props" = {
-      #       # "media.class" = "Audio/Sink";
-      #     };
-      #   };
-      # }];
-    };
   };
 
   programs.nm-applet.enable = true;
@@ -455,6 +433,7 @@ in {
     stremio
   ];
 
+  programs.zsh.enable = true;
   services.avahi.enable = true;
   services.pcscd.enable = true;
   programs.mosh.enable = true;

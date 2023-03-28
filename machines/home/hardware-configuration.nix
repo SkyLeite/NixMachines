@@ -96,9 +96,6 @@ in {
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # Huge monitor stuff
-  hardware.video.hidpi.enable = true;
-
   # Apply latest mesa in the system
   hardware.opengl.package = mesa-bleeding.drivers;
   hardware.opengl.package32 = lib32-mesa-bleeding.drivers;
