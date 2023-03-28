@@ -151,7 +151,7 @@ in {
         }
       ];
 
-      assigns = { "4" = [{ class = "^.gamescope-wrapped$"; }]; };
+      # assigns = { "4" = [{ class = "^.gamescope-wrapped$"; }]; };
 
       startup = [
         {
