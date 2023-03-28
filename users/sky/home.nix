@@ -154,6 +154,13 @@ in {
     pkgs.mangohud
     pkgs.rpcs3
     pkgs.jq
+    pkgs.steamtinkerlaunch
+    pkgs.xdotool
+    pkgs.xorg.xprop
+    pkgs.unixtools.xxd
+    pkgs.xorg.xwininfo
+    pkgs.yad
+
     customXivLauncher
     gamescopeSteam
 
