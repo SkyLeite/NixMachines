@@ -48,7 +48,11 @@ in {
     options uvcvideo quirks=4
   '';
 
-  boot.extraModulePackages = with config.boot.kernelPackages; [ xpadneo ];
+  boot.extraModulePackages = with config.boot.kernelPackages; [
+    xpadneo
+    zenpower
+    v4l2loopback
+  ];
 
   # nixpkgs.config.packageOverrides = pkgs: {
   #   linuxPackages_zen = pkgs.linuxPackages_zen.override {
