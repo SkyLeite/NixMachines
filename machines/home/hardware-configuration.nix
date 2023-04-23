@@ -72,14 +72,14 @@ in {
   services.xserver.videoDrivers = [ "modesetting" ];
 
   fileSystems."/" = {
-                              # b13ccfe4-9156-4b63-b14d-0a74fdc00fc7
-    device = "/dev/disk/by-uuid/b13ccfe4-9156-4b63-b14d-0a74fdc00fc7";
+    # 71a653f5-bb05-46b1-bbe4-950652b44cf7
+    device = "/dev/disk/by-uuid/71a653f5-bb05-46b1-bbe4-950652b44cf7";
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-                              # 3AA6-C5E2
-    device = "/dev/disk/by-uuid/3AA6-C5E2";
+    # D209-1E91
+    device = "/dev/disk/by-uuid/D209-1E91";
     fsType = "vfat";
   };
 
