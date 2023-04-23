@@ -124,7 +124,6 @@ in {
     pkgs.remmina
     pkgs.pamixer
     pkgs.barrier
-    pkgs.obs-studio
     # my-nur.ncpamixer-git
     pkgs.dbeaver
     pkgs.strawberry
@@ -561,6 +560,11 @@ in {
   };
 
   programs.beets = { enable = true; };
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = [ pkgs.obs-studio-plugins.wlrobs ];
+  };
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
