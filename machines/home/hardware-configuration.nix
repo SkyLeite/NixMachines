@@ -29,6 +29,7 @@ in {
     "boot.shell_on_fail"
     "pci=noats"
     "pcie_acs_override=downstream,multifunction"
+    "usbcore.old_scheme_first=y"
 
     # Maybe fix NVME QID timeouts
     # https://wiki.archlinux.org/title/Solid_state_drive/NVMe#Controller_failure_due_to_broken_APST_support
@@ -46,6 +47,7 @@ in {
 
   boot.extraModprobeConfig = ''
     options uvcvideo quirks=4
+    options usbcore use_both_schemes=y
   '';
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
