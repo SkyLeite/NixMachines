@@ -89,6 +89,12 @@ in {
     options = [ "nofail" ];
   };
 
+  fileSystems."/mnt/ram" = {
+    device = "none";
+    fsType = "tmpfs";
+    options = [ "nofail" "size=20G" "mode=777" "user" ];
+  };
+
   fileSystems."/mnt/disk0" = {
     device = "/dev/disk/by-id/usb-HL-DT-ST_DVD+-RW_GT10N_DD56419883915-0:0";
     fsType = "auto";
