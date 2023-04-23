@@ -2,22 +2,8 @@
 # and may be overwritten by future invocations.  Please make changes
 # to /etc/nixos/configuration.nix instead.
 { config, lib, pkgs, modulesPath, mesa-git-src, ... }:
-let
-  mesaGitApplier = base:
-    base.mesa.overrideAttrs (fa: {
-      version = "23.1.0-devel";
-      src = mesa-git-src;
-      buildInputs = fa.buildInputs
-        ++ [ base.zstd base.libunwind base.lm_sensors ];
-      mesonFlags = (lib.lists.remove "-Dgallium-rusticl=true" fa.mesonFlags)
-        ++ [
-          "-D android-libbacktrace=disabled"
-        ]; # fails to find "valgrind.h" with 23.0+ codebase
-    });
 
-  mesa-bleeding = mesaGitApplier pkgs;
-  lib32-mesa-bleeding = mesaGitApplier pkgs.pkgsi686Linux;
-in {
+{
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
   boot.initrd.availableKernelModules =
@@ -106,15 +92,7 @@ in {
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 
-  # Apply latest mesa in the system
-  hardware.opengl.package = mesa-bleeding.drivers;
-  hardware.opengl.package32 = lib32-mesa-bleeding.drivers;
-  hardware.opengl.extraPackages = [ mesa-bleeding.opencl ];
-
-  # Creates a second boot entry without latest drivers
-  specialisation.stable-mesa.configuration = {
-    system.nixos.tags = [ "stable-mesa" ];
-    hardware.opengl.package = lib.mkForce pkgs.mesa.drivers;
-    hardware.opengl.package32 = lib.mkForce pkgs.pkgsi686Linux.mesa.drivers;
-  };
+  hardware.opengl.package = pkgs.mesa.drivers;
+  hardware.opengl.package32 = pkgs.pkgsi686Linux.mesa.drivers;
+  hardware.opengl.extraPackages = [ pkgs.mesa.opencl ];
 }
