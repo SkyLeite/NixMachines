@@ -21,7 +21,7 @@ let
   gamescopeSteam = pkgs.makeDesktopItem {
     name = "Steam (Gamescope)";
     exec =
-      "${pkgs.gamescope}/bin/gamescope -W 5120 -H 1440 -U -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
+      "${pkgs.gamescope}/bin/gamescope -W 5120 -H 1440 -w 5120 -h 1440 -U -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
     comment = "Steam big picture running in gamescope";
     desktopName = "Steam (Gamescope)";
     categories = [ "Game" ];
