@@ -13,9 +13,10 @@
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
   inputs.hyprland.url = "github:hyprwm/Hyprland";
+  inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
 
   outputs = { self, nixpkgs, home-manager, mesa-git-src, nix-colors, hyprland
-    , ... }@attrs:
+    , emacs-overlay, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -42,6 +43,12 @@
         modules = [
           ({ config, pkgs, ... }: {
             nixpkgs.overlays = [
+              emacs-overlay.overlay
+              (final: prev: {
+                xdg-desktop-portal-wlr =
+                  prev.xdg-desktop-portal-wlr.overrideAttrs
+                  (fa: { version = "0.7.0"; });
+              })
               (final: prev:
                 let sdl2Patched = pkgs.SDL2.override { udevSupport = true; };
                 in {
