@@ -27,6 +27,15 @@ let
     categories = [ "Game" ];
   };
 
+  gamescopeSteam4k = pkgs.makeDesktopItem {
+    name = "Steam (Gamescope 4k)";
+    exec =
+      "${pkgs.gamescope}/bin/gamescope -W 3840 -H 2160 -w 3840 -h 2160 -U -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
+    comment = "Steam big picture running in gamescope 4k";
+    desktopName = "Steam (Gamescope 4k)";
+    categories = [ "Game" ];
+  };
+
   customXivLauncher = pkgs.xivlauncher.overrideAttrs (base: {
     desktopItems = [
       (pkgs.makeDesktopItem {
@@ -163,6 +172,7 @@ in {
 
     customXivLauncher
     gamescopeSteam
+    gamescopeSteam4k
 
     #lol-launchhelper
   ];
