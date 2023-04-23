@@ -53,3 +53,4 @@
 (package! ts)
 (package! eglot-fsharp)
 (package! yuck-mode)
+(package! closql :pin "0a7226331ff1f96142199915c0ac7940bac4afdd")

@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 
 let
-  emacsPkg = pkgs.emacs28NativeComp;
+  emacsPkg = pkgs.emacs;
   emacsD = "${config.home.homeDirectory}/.emacs.d";
   emacsBinDirectory = "${emacsD}/bin";
   doomSyncCommand =
@@ -20,7 +20,7 @@ in {
     #socketActivation.enable = true;
   };
 
-  home.sessionVariables = { EDITOR = "${emacsPkg}/bin/emacs"; };
+  home.sessionVariables = { EDITOR = lib.mkDefault "${emacsPkg}/bin/emacs"; };
 
   home.activation = {
     installDoom = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
