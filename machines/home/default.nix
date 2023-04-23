@@ -228,6 +228,7 @@ in {
   services.blueman.enable = true;
   xdg.portal = {
     enable = true;
+    xdgOpenUsePortal = true;
 
     wlr = {
       enable = true;
@@ -243,7 +244,9 @@ in {
       };
     };
 
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    lxqt.enable = true;
+
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gtk ];
   };
   services.flatpak.enable = true;
 
