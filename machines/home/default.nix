@@ -25,6 +25,18 @@ let
       ++ [ pkgs.libsForQt5.kguiaddons ];
     cmakeFlags = [ "-DUSE_WAYLAND_CLIPBOARD=true" ];
   });
+
+  swayLauncher = pkgs.writeShellScript "swayLauncher" ''
+    export SDL_VIDEODRIVER=wayland
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export QT_QPA_PLATFORM=wayland
+    export XDG_CURRENT_DESKTOP=sway
+    export XDG_SESSION_DESKTOP=sway
+    exec ${pkgs.sway}/bin/sway $@
+  '';
+
+  steamLauncher = pkgs.writeShellScript "steamLauncher"
+    "${pkgs.gamescope}/bin/gamescope -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
@@ -140,18 +152,25 @@ in {
     vt = 1;
     settings = {
       default_session = let
-        swayStarter = pkgs.writeShellScript "swayLauncher.sh" ''
-          export SDL_VIDEODRIVER=wayland
-          export _JAVA_AWT_WM_NONREPARENTING=1
-          export QT_QPA_PLATFORM=wayland
-          export XDG_CURRENT_DESKTOP=sway
-          export XDG_SESSION_DESKTOP=sway
-          exec sway
+        swayGreetConfig = pkgs.writeText "greetd-sway-config" ''
+          # `-l` activates layer-shell mode. Notice that `swaymsg exit` will run after gtkgreet.
+          exec "${pkgs.greetd.gtkgreet}/bin/gtkgreet -l; swaymsg exit"
+          bindsym Mod4+shift+e exec swaynag \
+            -t warning \
+            -m 'What do you want to do?' \
+            -b 'Poweroff' 'systemctl poweroff' \
+            -b 'Reboot' 'systemctl reboot'
         '';
-      in {
-        command = "${pkgs.greetd.greetd}/bin/agreety --cmd ${swayStarter}";
-      };
+      in { command = "${swayLauncher} --config ${swayGreetConfig}"; };
     };
+  };
+
+  environment.etc."greetd/environments" = {
+    enable = true;
+    text = ''
+      ${swayLauncher}
+      ${steamLauncher}
+    '';
   };
 
   services.xrdp = {
