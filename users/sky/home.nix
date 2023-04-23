@@ -349,7 +349,7 @@ in {
     interval = "1h";
   };
 
-  services.unclutter = { enable = true; };
+  services.unclutter = { enable = false; };
   services.lorri = { enable = true; };
 
   services.picom = {
