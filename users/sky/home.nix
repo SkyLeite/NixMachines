@@ -177,7 +177,13 @@ in {
     #lol-launchhelper
   ];
 
-  home.sessionVariables = { DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox"; };
+  home = {
+    sessionPath = [ "$HOME/.local/ActiveState/StateTool/beta/bin" ];
+    sessionVariables = {
+      DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
+      EDITOR = "emacs";
+    };
+  };
 
   programs.git = {
     enable = true;
