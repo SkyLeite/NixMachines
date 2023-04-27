@@ -441,10 +441,8 @@ in {
     nixfmt
     pciutils
     peek
-    plasma-desktop
     python3
     ripgrep
-    teams
     wget
     xclip
     xorg.xkbcomp
@@ -458,9 +456,7 @@ in {
     slack
     nix-index
     tailscale
-    bitwarden
     bitwarden-cli
-    stremio
     outputProfileScript
   ];
 
