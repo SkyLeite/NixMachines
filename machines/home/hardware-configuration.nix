@@ -33,7 +33,6 @@
 
   boot.extraModprobeConfig = ''
     options uvcvideo quirks=4
-    options usbcore use_both_schemes=y
   '';
 
   boot.extraModulePackages = with config.boot.kernelPackages; [
