@@ -37,6 +37,14 @@ let
 
   steamLauncher = pkgs.writeShellScript "steamLauncher"
     "${pkgs.gamescope}/bin/gamescope -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
+
+  outputProfileScript = pkgs.writeShellScriptBin "profile" ''
+    if [[ $1 == "1" ]]; then
+      swaymsg 'output HDMI-A-1 disable; output DP-1 enable mode 5120x1440@240Hz pos 0 1080; output DP-2 enable mode 1920x1080@144Hz pos 0 0; output DP-3 enable mode 1920x1080@144Hz pos 1920 0'
+    elif [[ $1 == "2" ]]; then
+      swaymsg 'output DP-2 disable; output DP-3 disable; output HDMI-A-1 enable mode 1920x1080@60Hz'
+    fi
+  '';
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
@@ -453,6 +461,7 @@ in {
     bitwarden
     bitwarden-cli
     stremio
+    outputProfileScript
   ];
 
   programs.zsh.enable = true;
