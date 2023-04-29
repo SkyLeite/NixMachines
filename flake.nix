@@ -6,17 +6,12 @@
     url = "github:nix-community/home-manager";
     inputs.nixpkgs.follows = "nixpkgs";
   };
-  inputs.mesa-git-src = {
-    url =
-      "github:chaotic-aur/mesa-mirror/a72035f9c55e035592c0c1bf92d564b76f20eed7";
-    flake = false;
-  };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
   inputs.hyprland.url = "github:hyprwm/Hyprland";
   inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-  outputs = { self, nixpkgs, home-manager, mesa-git-src, nix-colors, hyprland
-    , emacs-overlay, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland, emacs-overlay
+    , ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -42,7 +37,6 @@
         specialArgs = {
           inherit nixpkgs;
           inherit attrs;
-          inherit mesa-git-src;
           inherit monitors;
         };
         modules = [

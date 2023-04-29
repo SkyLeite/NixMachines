@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, nixpkgs, modulesPath, mesa-git-src, monitors, ... }:
+{ config, pkgs, lib, nixpkgs, modulesPath, monitors, ... }:
 
 let
   SDL2Patched = pkgs.SDL2.override { udevSupport = true; };
@@ -66,7 +66,7 @@ in {
 
   imports = [ # Include the results of the hardware scan.
     (import ./hardware-configuration.nix {
-      inherit modulesPath config lib pkgs mesa-git-src;
+      inherit modulesPath config lib pkgs;
     })
     # ./vfio.nix
     ../../modules/tailscale.nix

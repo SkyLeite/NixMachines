@@ -112,23 +112,6 @@
         "type": "github"
       }
     },
-    "mesa-git-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1676221876,
-        "narHash": "sha256-9xCUuYnOl29RIMhvKG5ElmNZB6Bk9rSiBQTixH80o6s=",
-        "owner": "chaotic-aur",
-        "repo": "mesa-mirror",
-        "rev": "a72035f9c55e035592c0c1bf92d564b76f20eed7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "chaotic-aur",
-        "repo": "mesa-mirror",
-        "rev": "a72035f9c55e035592c0c1bf92d564b76f20eed7",
-        "type": "github"
-      }
-    },
     "nix-colors": {
       "inputs": {
         "base16-schemes": "base16-schemes",
@@ -216,7 +199,6 @@
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
         "hyprland": "hyprland",
-        "mesa-git-src": "mesa-git-src",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs_3"
       }
