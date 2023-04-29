@@ -5,8 +5,6 @@
 { config, pkgs, lib, nixpkgs, modulesPath, monitors, ... }:
 
 let
-  SDL2Patched = pkgs.SDL2.override { udevSupport = true; };
-
   usBr = pkgs.fetchFromGitHub {
     owner = "SkyLeite";
     repo = "us-br";
@@ -20,12 +18,6 @@ let
     id = "alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-mono";
   };
 
-  customFlameshot = pkgs.flameshot.overrideAttrs (base: {
-    nativeBuildInputs = base.nativeBuildInputs
-      ++ [ pkgs.libsForQt5.kguiaddons ];
-    cmakeFlags = [ "-DUSE_WAYLAND_CLIPBOARD=true" ];
-  });
-
   swayLauncher = pkgs.writeShellScript "swayLauncher" ''
     export SDL_VIDEODRIVER=wayland
     export _JAVA_AWT_WM_NONREPARENTING=1
@@ -37,32 +29,9 @@ let
 
   steamLauncher = pkgs.writeShellScript "steamLauncher"
     "${pkgs.gamescope}/bin/gamescope -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
-
-  outputProfileScript = monitors.outputProfileScript;
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
-  nixpkgs.config.packageOverrides = pkgs: {
-    steam = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
-          pango
-          libthai
-          harfbuzz
-          libgdiplus
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-        ];
-    };
-  };
 
   imports = [ # Include the results of the hardware scan.
     (import ./hardware-configuration.nix {
@@ -77,7 +46,6 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "home"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
   time.timeZone = "America/Sao_Paulo";
@@ -175,53 +143,10 @@ in {
     '';
   };
 
-  services.xrdp = {
-    enable = false;
-    openFirewall = true;
-    defaultWindowManager = "awesome";
-  };
-
   services.tailscale.enable = true;
   services.tailscale-autoconnect = {
-    enable = true;
-    key = "tskey-k2RQki6CNTRL-8B4NkmT6zsJkNfRBFqpBP";
-  };
-
-  services.samba = {
     enable = false;
-    securityType = "user";
-    openFirewall = true;
-    extraConfig = ''
-      [global]
-
-      max protocol = NT1
-      min protocol = CORE
-      ntlm auth = yes
-      keepalive = 0
-      smb ports = 445
-    '';
-    shares = {
-      public = {
-        path = "/mnt/hdd/Console Games";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-      };
-
-      PS2SMB = {
-        comment = "PS2 SMB";
-        path = "/mnt/hdd/Console Games/PS2";
-        browseable = "yes";
-        "public" = "yes";
-        "available" = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-      };
-    };
+    key = "";
   };
 
   services.persistent-evdev = {
@@ -267,7 +192,7 @@ in {
 
     lxqt.enable = true;
 
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
   };
   services.flatpak.enable = true;
 
@@ -278,39 +203,6 @@ in {
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-
-  services.autorandr = {
-    enable = true;
-    defaultTarget = "home";
-    profiles = {
-      "home" = {
-        fingerprint = {
-          DisplayPort-0 =
-            "00ffffffffffff001e6d715b01010101011a0104b5351e789f0331a6574ea2260d5054a54b80317c4568457c617c8168818081bc953cdf8880a070385a403020350055502100001e023a801871382d40582c4500132a2100001e000000fd003090a0a03c010a202020202020000000fc003237474c363530460a20202020014b020320f1230907074b010203041112131f903f0083010000e305c000e30605018048801871382d40582c4500132a2100001e866f80a07038404030203500132a2100001efe5b80a07038354030203500132a21000018011d007251d01e206e285500132a2100001e00000000000000000000000000000000000000000000003c";
-          DisplayPort-1 =
-            "00ffffffffffff001e6d715b01010101011a0104b5351e789f0331a6574ea2260d5054a54b80317c4568457c617c8168818081bc953cdf8880a070385a403020350055502100001e023a801871382d40582c4500132a2100001e000000fd003090a0a03c010a202020202020000000fc003237474c363530460a20202020014b020320f1230907074b010203041112131f903f0083010000e305c000e30605018048801871382d40582c4500132a2100001e866f80a07038404030203500132a2100001efe5b80a07038354030203500132a21000018011d007251d01e206e285500132a2100001e00000000000000000000000000000000000000000000003c";
-        };
-        config = {
-          DisplayPort-0 = {
-            enable = true;
-            mode = "1920x1080";
-            position = "0x0";
-            rate = "143.98";
-            primary = true;
-          };
-          DisplayPort-1 = {
-            enable = true;
-            mode = "1920x1080";
-            position = "1920x0";
-            rate = "143.98";
-          };
-        };
-      };
-    };
-    hooks = {
-      postswitch = { "notify-i3" = "${pkgs.i3}/bin/i3-msg restart"; };
-    };
-  };
 
   # Enable sound.
   sound.enable = true;
@@ -423,18 +315,16 @@ in {
   environment.systemPackages = with pkgs; [
     alacritty
     bitwarden
-    (discord.override { nss = pkgs.nss_latest; })
+    discord
     docker
     docker-compose
     editorconfig-core-c
     fd
-    # customFlameshot
     git
     gparted
     neovim
     nixfmt
     pciutils
-    peek
     python3
     ripgrep
     wget
@@ -451,7 +341,7 @@ in {
     nix-index
     tailscale
     bitwarden-cli
-    outputProfileScript
+    monitors.outputProfileScript
   ];
 
   programs.zsh.enable = true;
@@ -471,26 +361,6 @@ in {
     enable = true;
     remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
-
-    package = pkgs.steam.override {
-      extraPkgs = pkgs:
-        with pkgs; [
-          pango
-          libthai
-          harfbuzz
-          libgdiplus
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-        ];
-    };
   };
   programs.adb.enable = true;
 
@@ -498,26 +368,11 @@ in {
   services.lorri.enable = false;
 
   # Enable the OpenSSH daemon.
-  services.sshd.enable = true;
   services.openssh = {
     enable = true;
     settings = { X11Forwarding = true; };
   };
   virtualisation.docker.enable = true;
-
-  services.xserver.config = lib.mkAfter ''
-    # Option "DPMS" "true"
-  '';
-
-  services.jackett = {
-    enable = false;
-    user = "musicdownloader";
-  };
-
-  services.lidarr = {
-    enable = false;
-    user = "musicdownloader";
-  };
 
   services.deluge = {
     enable = true;

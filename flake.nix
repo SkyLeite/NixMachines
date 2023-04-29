@@ -8,10 +8,8 @@
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
   inputs.hyprland.url = "github:hyprwm/Hyprland";
-  inputs.emacs-overlay.url = "github:nix-community/emacs-overlay";
 
-  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland, emacs-overlay
-    , ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -34,36 +32,8 @@
 
       nixosConfigurations.home = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = {
-          inherit nixpkgs;
-          inherit attrs;
-          inherit monitors;
-        };
+        specialArgs = { inherit nixpkgs attrs monitors; };
         modules = [
-          ({ config, pkgs, ... }: {
-            nixpkgs.overlays = [
-              emacs-overlay.overlay
-              (final: prev: {
-                xdg-desktop-portal-wlr =
-                  prev.xdg-desktop-portal-wlr.overrideAttrs
-                  (fa: { version = "0.7.0"; });
-              })
-              (final: prev:
-                let sdl2Patched = pkgs.SDL2.override { udevSupport = true; };
-                in {
-                  # This change makes `udevadm monitor` emit events inside `steam-run
-                  # bash`. The bug can be observed *without* this patch by running
-                  # `SYSTEMD_LOG_LEVEL=debug udevadm monitor` inside `steam-run bash` and
-                  # observing the "sd-device-monitor: Sender uid=N, message ignored"
-                  # messsage. However, it doesn't make *steam* detect devices
-                  # dynamically.
-                  steam = prev.steam.override {
-                    extraPkgs = pkgs: [ sdl2Patched ];
-                    extraLibraries = pkgs: [ sdl2Patched ];
-                  };
-                })
-            ];
-          })
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;

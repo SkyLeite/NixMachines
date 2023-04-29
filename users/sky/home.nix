@@ -2,20 +2,12 @@
 
 let
   mod = "Mod4";
-  my-nur = import /mnt/hdd/projects/nix-repository { };
   dbus-tabs = pkgs.callPackage ./packages/dbus-tabs.nix pkgs;
-
-  nur = import (builtins.fetchTarball
-    "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
-    };
 
   nix-colors-lib = nix-colors.lib-contrib { inherit pkgs; };
 
-  lol-launchhelper = my-nur.lol-launchhelper;
   rofi-libvirt = import ./scripts/rofi-libvirt.nix pkgs;
   rofi-firefox = pkgs.callPackage ./scripts/rofi-firefox.nix pkgs;
-  etterna = pkgs.callPackage ../../packages/etterna/default.nix pkgs;
   bitwarden = import ../../util/bitwarden.nix;
 
   gamescopeSteam = pkgs.makeDesktopItem {
@@ -64,8 +56,6 @@ in {
     ./emacs/default.nix
     ./hyprland/default.nix
     ./eww/default.nix
-    # ./packages/deadd.nix
-    #./packages/xborder.nix
     ./packages/noisetorch.nix
   ];
 
@@ -89,37 +79,22 @@ in {
 
   home.keyboard = false;
   home.packages = [
-    pkgs.elixir
-    pkgs.elixir_ls
     pkgs.playerctl
-    pkgs.simplescreenrecorder
-    pkgs.arandr
     pkgs.gimp
     pkgs.virt-manager
     pkgs.xorg.xmodmap
     pkgs.libnotify
-    pkgs.yadm
-    pkgs.clojure
-    pkgs.clojure-lsp
-    pkgs.clj-kondo
-    pkgs.leiningen
-    pkgs.boot
-    pkgs.lispPackages.quicklisp
-    pkgs.tdrop
     pkgs.libreoffice
     pkgs.inotify-tools
 
     pkgs.htop
     pkgs.tty-clock
 
-    # pkgs.nerdfonts
     pkgs.jre8
     pkgs.jdk8
     pkgs.mpv
     pkgs.deluge
     pkgs.sqls
-    #pkgs.haskell-language-server
-    #pkgs.ghc
     pkgs.gnome.zenity
     pkgs.remmina
     pkgs.pamixer
@@ -128,7 +103,6 @@ in {
     pkgs.dbeaver
     pkgs.strawberry
     pkgs.vscode-with-extensions
-    pkgs.sonic-pi
     pkgs.gnumake
     pkgs.source-code-pro
     pkgs.shellcheck
@@ -144,12 +118,8 @@ in {
     pkgs.lutris
     pkgs.mpc_cli
     pkgs.gh
-    pkgs.dotnet-sdk
     pkgs.soundkonverter
-    pkgs.bottles
     pkgs.libunwind
-    pkgs.lua53Packages.luarocks
-    pkgs.sumneko-lua-language-server
     pkgs.ripgrep
     pkgs.sqlite
     pkgs.wordnet
@@ -158,7 +128,6 @@ in {
     pkgs.proton-caller
     pkgs.spotify
     pkgs.gamescope
-    # etterna
     pkgs.mangohud
     pkgs.rpcs3
     pkgs.jq
@@ -172,8 +141,6 @@ in {
     customXivLauncher
     gamescopeSteam
     gamescopeSteam4k
-
-    #lol-launchhelper
   ];
 
   home = {
@@ -340,152 +307,6 @@ in {
   };
 
   services.noisetorch.enable = true;
-  services.random-background = {
-    enable = true;
-    enableXinerama = true;
-    display = "fill";
-    imageDirectory = "%h/Pictures/Backgrounds/Active";
-    interval = "1h";
-  };
-
-  services.unclutter = { enable = false; };
-  services.lorri = { enable = true; };
-
-  services.picom = {
-    package = pkgs.picom-next.overrideAttrs (prev: {
-      version = "git";
-      src = pkgs.fetchFromGitHub {
-        owner = "yshui";
-        repo = "picom";
-        rev = "364463feaf89fa0b7ad82f15af6576400b6daec4";
-        sha256 = "sha256-ukYfi86muqe05IEeteaWTdINT7Bq+PTvt64Jq+j1ed0=";
-      };
-    });
-
-    enable = true;
-    shadow = false;
-    shadowOffsets = [ (-12) (-12) ];
-    vSync = false;
-    fade = true;
-    fadeDelta = 3;
-
-    wintypes = {
-      tooltip = {
-        fade = true;
-        shadow = false;
-        focus = true;
-        full-shadow = false;
-      };
-      dock = { shadow = false; };
-      dnd = { shadow = false; };
-      popup_menu = { shadow = false; };
-      dropdown_menu = { shadow = false; };
-    };
-
-    settings = {
-      corner-radius = 1;
-      rounded-corners-exclude =
-        [ "window_type = 'dock'" "window_type = 'desktop'" ];
-    };
-  };
-
-  services.dunst = {
-    enable = false;
-
-    settings = {
-      global = {
-        format = "<b>%s</b>\\n\\n%b";
-        progress_bar = true;
-        progress_bar_height = 10;
-        progress_bar_frame_width = 1;
-        geometry = "500x20-30+20";
-        follow = "keyboard";
-        padding = "16";
-        ignore_newline = "no";
-        horizontal_padding = "25";
-        align = "right";
-        word_wrap = "yes";
-        markup = "full";
-        allow_markup = "yes";
-        timeout = 10;
-        frame_width = 4;
-        frame_color = "#8e24aa";
-        corner_radius = 2;
-        icon_position = "left";
-        show_indicators = true;
-        indicate_hidden = false;
-      };
-
-      urgency_normal = { background = "#141C21"; };
-      urgency_critical = { background = "#FF5250"; };
-    };
-  };
-
-  services.mopidy = {
-    enable = true;
-    extensionPackages = [
-      (pkgs.mopidy-ytmusic.overrideAttrs (old: rec {
-        version = "0.3.6";
-        src = pkgs.python3Packages.fetchPypi {
-          inherit version;
-          pname = "Mopidy-YTMusic";
-          sha256 = "nBNOTmi/mgPzZXVD7G0xfvvvyVChERWB/bjlvaTvrsU=";
-        };
-        postPatch =
-          "	substituteInPlace setup.py \\\n	--replace 'ytmusicapi>=0.22.0,<0.23.0' 'ytmusicapi>=0.22.0'\n";
-      }))
-      pkgs.mopidy-mpd
-      pkgs.mopidy-mpris
-      pkgs.mopidy-scrobbler
-      pkgs.mopidy-local
-      pkgs.mopidy-mpris
-    ];
-
-    settings = {
-      mpd = {
-        enabled = true;
-        command_blacklist = [ ];
-      };
-
-      youtube = { enabled = true; };
-
-      ytmusic = {
-        enabled = false;
-        auth_json = "${config.xdg.configHome}/mopidy/auth.json";
-      };
-
-      scrobbler = {
-        username = "alphinaud";
-        password = "9WvdNfXMTvv%eia@N6qA";
-      };
-
-      mpris = { enabled = true; };
-
-      local = {
-        enabled = true;
-        library = "json";
-        media_dir = "/mnt/hdd/music";
-        scan_timeout = 1000;
-        scan_flush_threshold = 1000;
-        excluded_file_extensions = [
-          ".directory"
-          ".html"
-          ".jpeg"
-          ".jpg"
-          ".log"
-          ".nfo"
-          ".pdf"
-          ".png"
-          ".txt"
-          ".zip"
-          ".cue"
-          ".log"
-        ];
-      };
-    };
-
-    # extraConfigFiles = [ "~/.config/mopidy/extra.conf" ];
-  };
 
   programs.ssh = {
     enable = true;
@@ -507,6 +328,14 @@ in {
       };
     };
   };
+
+  programs.obs-studio = {
+    enable = true;
+    plugins = [ pkgs.obs-studio-plugins.wlrobs ];
+  };
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 
   xdg = {
     enable = true;
@@ -558,16 +387,6 @@ in {
       '';
     };
   };
-
-  programs.beets = { enable = true; };
-
-  programs.obs-studio = {
-    enable = true;
-    plugins = [ pkgs.obs-studio-plugins.wlrobs ];
-  };
-
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage

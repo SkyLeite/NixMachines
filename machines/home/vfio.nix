@@ -21,7 +21,11 @@ in {
   ];
 
   boot = {
-    kernelParams = [ "amd_iommu=on" ];
+    kernelParams = [
+      "amd_iommu=on"
+      "pci=noats"
+      "pcie_acs_override=downstream,multifunction"
+    ];
     kernelModules = [
       "vendor-reset"
       "vfio_virqfd"
