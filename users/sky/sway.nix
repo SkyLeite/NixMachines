@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, monitors, ... }:
 
 let
   i3 = config.xsession.windowManager.i3;
@@ -31,23 +31,8 @@ in {
         unfocused = focusedInactive;
       };
 
-      output = {
+      output = monitors.swayOutput // {
         "*" = { background = "${config.variables.wallpaper} fill"; };
-
-        "DP-1" = {
-          mode = "5120x1440@239.761Hz";
-          pos = "0 1080";
-        };
-
-        "DP-3" = {
-          mode = "1920x1080@143.980Hz";
-          pos = "0 0";
-        };
-
-        "HDMI-A-1" = {
-          mode = "1920x1080@60Hz";
-          pos = "1920 0";
-        };
       };
 
       gaps = i3.config.gaps;

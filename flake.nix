@@ -20,6 +20,10 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      monitors = import ./machines/common/monitor-profiles.nix {
+        inherit pkgs;
+        inherit (nixpkgs) lib;
+      };
     in {
       homeConfigurations.sky = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
@@ -39,6 +43,7 @@
           inherit nixpkgs;
           inherit attrs;
           inherit mesa-git-src;
+          inherit monitors;
         };
         modules = [
           ({ config, pkgs, ... }: {
@@ -73,7 +78,9 @@
 
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
-            home-manager.extraSpecialArgs = { inherit nix-colors hyprland; };
+            home-manager.extraSpecialArgs = {
+              inherit nix-colors hyprland monitors;
+            };
           }
           ./machines/home/default.nix
         ];
