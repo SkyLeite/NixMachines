@@ -78,16 +78,9 @@ in {
         "${mod}+5" = "workspace 5";
         "${mod}+Shift+5" = "move workspace 5";
 
-        "${mod}+q" = "workspace 1:Q";
-        "${mod}+Shift+q" = "move workspace 1:Q";
-        "${mod}+w" = "workspace 2:W";
-        "${mod}+Shift+w" = "move workspace 2:W";
-        "${mod}+e" = "workspace 3:E";
-        "${mod}+Shift+e" = "move workspace 3:E";
-        "${mod}+r" = "workspace 4:R";
-        "${mod}+Shift+r" = "move workspace 4:R";
-        "${mod}+t" = "workspace 5:T";
-        "${mod}+Shift+t" = "move workspace 5:T";
+        "${mod}+q" = "layout stacking";
+        "${mod}+w" = "layout tabbed";
+        "${mod}+e" = "layout toggle split";
 
         "${mod}+v" = "split vertical";
         "${mod}+b" = "split horizontal";
