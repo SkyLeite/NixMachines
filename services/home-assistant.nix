@@ -71,6 +71,7 @@ in {
             --restart=unless-stopped \
             -e TZ=America/Sao_Paulo \
             -v /srv/home-assistant/config:/config \
+            -v /root/.ssh:~/.ssh:ro \
             --network=host \
             ghcr.io/home-assistant/home-assistant:stable
         '';
