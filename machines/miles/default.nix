@@ -266,12 +266,6 @@ in {
     };
 
     gc.automatic = false;
-
-    extraOptions = ''
-      plugin-files = ${
-        pkgs.nix-plugins.override { nix = config.nix.package; }
-      }/lib/nix/plugins
-    '';
   };
 
   system.stateVersion = "22.11";
