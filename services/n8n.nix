@@ -46,7 +46,7 @@ in {
             -e WEBHOOK_URL=n8n.${config.chaos.baseUrl} \
             -v /srv/n8n/config:/home/node/.n8n \
             -v /:/host \
-            n8nio/n8n:latest
+            n8nio/n8n:0.227.1
         '';
       };
     };
