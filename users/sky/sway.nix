@@ -55,6 +55,12 @@ in {
           criteria = { title = " - Sharing Indicator$"; };
         }];
       };
+
+      workspaceOutputAssign = [{
+        output = monitors.monitorPorts.tv;
+        workspace = "tv";
+      }];
+
       startup = [
         { command = "flameshot"; }
         {

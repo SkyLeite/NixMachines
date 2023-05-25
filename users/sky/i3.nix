@@ -78,6 +78,9 @@ in {
         "${mod}+5" = "workspace 5";
         "${mod}+Shift+5" = "move workspace 5";
 
+        "${mod}+0" = "workspace tv";
+        "${mod}+Shift+0" = "move workspace tv";
+
         "${mod}+q" = "layout stacking";
         "${mod}+w" = "layout tabbed";
         "${mod}+e" = "layout toggle split";

@@ -6,7 +6,9 @@
 # profile:
 # { name: string
 # , default: bool(false)
-# , layout: layout}
+# , layout: layout
+# , onActive : string -- bash command to be run when profile becomes active
+# }
 #
 # layout:
 # { [output-name: string]: output }
@@ -21,38 +23,60 @@
 # , transformDeg: int(0) }
 
 let
+  monitors = {
+    main = {
+      width = 5120;
+      height = 1440;
+      refreshRate = 239.761;
+    };
+
+    secondary = {
+      width = 1920;
+      height = 1080;
+      refreshRate = 144;
+    };
+
+    tv = {
+      width = 3840;
+      height = 2160;
+      refreshRate = 60;
+    };
+  };
+
+  ports = {
+    "DP-1" = monitors.main;
+    "DP-2" = monitors.secondary;
+    "DP-3" = monitors.secondary;
+    "HDMI-A-1" = monitors.tv;
+  };
+
+  monitorPorts = {
+    tv = "HDMI-A-1";
+    main = "DP-1";
+  };
+
   profiles = [
     {
       name = "main";
       default = true;
       layout = {
-        "DP-1" = {
+        "DP-1" = monitors.main // {
           enabled = true;
-          width = 5120;
-          height = 1440;
-          refreshRate = 239.761;
           position = {
             x = 0;
             y = 1080;
           };
-          flipped = false;
-          transformDeg = 0;
         };
 
-        "DP-2" = {
+        "DP-2" = monitors.secondary // {
           enabled = true;
-          width = 1920;
-          height = 1080;
-          refreshRate = 144;
           position = {
             x = 0;
             y = 0;
           };
-          flipped = false;
-          transformDeg = 0;
         };
 
-        "DP-3" = {
+        "DP-3" = monitors.secondary // {
           enabled = true;
           width = 1920;
           height = 1080;
@@ -61,78 +85,56 @@ let
             x = 1920;
             y = 0;
           };
-          flipped = false;
-          transformDeg = 0;
         };
 
-        "HDMI-A-1" = {
+        "HDMI-A-1" = monitors.tv // {
           enabled = false;
-          width = 3840;
-          height = 2160;
-          refreshRate = 60;
           position = {
             x = 0;
             y = 0;
           };
-          flipped = false;
-          transformDeg = 0;
         };
       };
     }
     {
       name = "tv";
       default = false;
+      onActive = lib.concatStringsSep "&&" [
+        "${pkgs.gtk3}/bin/gtk-launch --display=:0 'Steam (Gamescope 4k)'"
+        "${pkgs.wlrctl}/bin/wlrctl toplevel waitfor title:\"Steam Big Picture Mode\""
+        "${pkgs.sway}/bin/swaymsg '[title=\"^Steam Big Picture Mode$\"] focus, move to workspace tv'"
+      ];
       layout = {
-        "DP-1" = {
+        "DP-1" = monitors.main // {
           enabled = true;
-          width = 5120;
-          height = 1440;
-          refreshRate = 240;
           position = {
             x = 0;
             y = 2160;
           };
-          flipped = false;
-          transformDeg = 0;
         };
 
-        "DP-2" = {
+        "DP-2" = monitors.secondary // {
           enabled = false;
-          width = 1920;
-          height = 1080;
-          refreshRate = 144;
           position = {
             x = 0;
             y = 0;
           };
-          flipped = false;
-          transformDeg = 0;
         };
 
-        "DP-3" = {
+        "DP-3" = monitors.secondary // {
           enabled = false;
-          width = 1920;
-          height = 1080;
-          refreshRate = 144;
           position = {
             x = 1920;
             y = 0;
           };
-          flipped = false;
-          transformDeg = 0;
         };
 
-        "HDMI-A-1" = {
+        "HDMI-A-1" = monitors.tv // {
           enabled = true;
-          width = 3840;
-          height = 2160;
-          refreshRate = 60;
           position = {
             x = 0;
             y = 0;
           };
-          flipped = false;
-          transformDeg = 0;
         };
       };
     }
@@ -169,11 +171,16 @@ let
     "${profile.name}")
       swaymsg "${layoutToSwayCommand profile.layout}" && sleep 2 && swaymsg "${
         layoutToSwayCommand profile.layout
-      }"
+      }" ${
+        if lib.hasAttrByPath [ "onActive" ] profile then
+          "&& sleep 2 && ${profile.onActive}"
+        else
+          ""
+      }
       ;;
   '';
 in {
-  inherit profiles defaultProfile;
+  inherit profiles monitors ports monitorPorts defaultProfile;
 
   swayOutput = layoutToSwayLayout defaultProfile.layout;
 
