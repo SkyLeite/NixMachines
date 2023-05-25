@@ -39,7 +39,16 @@ in {
     })
     # ./vfio.nix
     ../../modules/tailscale.nix
+    ../../modules/web-command/default.nix
   ];
+
+  services.web-command = {
+    enable = true;
+    commands = [{
+      title = "Say hello";
+      command = "echo 'hello'";
+    }];
+  };
 
   # Use the systemd-boot EFI boot loader.
   boot.loader.systemd-boot.enable = true;

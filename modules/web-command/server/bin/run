@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if [[ $BASH_SOURCE = */* ]]; then
+    cd -- "${BASH_SOURCE%/*}/" || exit
+fi
+
+python ../web-command.py

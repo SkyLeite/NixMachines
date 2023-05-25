@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Command Runner</title>
+</head>
+<body>
+    <ul id="navigation">
+    {% for item in commands %}
+        <li>{{ item.title }} -- {{ item.command }}</li>
+    {% endfor %}
+    </ul>
+</body>
+</html>
