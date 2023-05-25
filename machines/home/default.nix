@@ -217,6 +217,7 @@ in {
     wireplumber.enable = true;
   };
 
+  programs.wireshark.enable = true;
   programs.nm-applet.enable = true;
   programs.noisetorch.enable = true;
   programs.nix-ld.enable = true;
@@ -266,6 +267,7 @@ in {
           "adbusers"
           "audio"
           "networkmanager"
+          "wireshark"
         ];
         group = "users";
         home = "/home/sky";
