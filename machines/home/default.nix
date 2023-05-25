@@ -147,8 +147,8 @@ in {
 
   services.tailscale.enable = true;
   services.tailscale-autoconnect = {
-    enable = false;
-    key = "";
+    enable = true;
+    key = "tskey-auth-ktejk16CNTRL-UpcsXuNWNrCq8j1wg8rriCdpEJ6LSiZf";
   };
 
   services.persistent-evdev = {
