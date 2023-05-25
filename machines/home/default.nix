@@ -348,7 +348,15 @@ in {
   ];
 
   programs.zsh.enable = true;
-  services.avahi.enable = true;
+  services.avahi = {
+    nssmdns = true;
+    enable = true;
+    publish = {
+      enable = true;
+      userServices = true;
+      domain = true;
+    };
+  };
   services.pcscd.enable = true;
   programs.mosh.enable = true;
   programs.gnupg.agent = {
