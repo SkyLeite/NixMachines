@@ -384,6 +384,10 @@ in {
     settings = { X11Forwarding = true; };
   };
   virtualisation.docker.enable = true;
+  virtualisation.podman = {
+    enable = true;
+    defaultNetwork.settings = { dns_enabled = true; };
+  };
 
   services.deluge = {
     enable = true;
