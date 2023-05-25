@@ -137,6 +137,9 @@ in {
     pkgs.unixtools.xxd
     pkgs.xorg.xwininfo
     pkgs.yad
+    pkgs.yuzu-mainline
+    pkgs.prusa-slicer
+    pkgs.uxplay
 
     customXivLauncher
     gamescopeSteam
