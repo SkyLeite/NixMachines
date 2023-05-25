@@ -12,6 +12,7 @@
   boot.kernelModules = [ "uvcvideo" ];
 
   boot.extraModprobeConfig = ''
+    options usbcore use_both_schemes=y
     options uvcvideo quirks=4
   '';
 
