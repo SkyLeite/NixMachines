@@ -342,6 +342,7 @@ in {
     tailscale
     bitwarden-cli
     monitors.outputProfileScript
+    waypipe
   ];
 
   programs.zsh.enable = true;
