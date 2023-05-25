@@ -5,6 +5,8 @@
 { config, pkgs, lib, nixpkgs, modulesPath, monitors, ... }:
 
 let
+  bluetoothExecStart =
+    config.systemd.services.bluetooth.serviceConfig.ExecStart;
   usBr = pkgs.fetchFromGitHub {
     owner = "SkyLeite";
     repo = "us-br";
@@ -230,7 +232,25 @@ in {
     enableRenice = true;
   };
 
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    settings = {
+      General = {
+        JustWorksRepairing = "always";
+        FastConnectable = true;
+        Class = "0x000100";
+      };
+
+      GATT = {
+        ReconnectIntervals = "1,1,2,3,5,8,13,21,34,55";
+        AutoEnable = true;
+      };
+    };
+  };
+  systemd.services.bluetooth.serviceConfig.ExecStart = [
+    ""
+    "${pkgs.bluez}/libexec/bluetooth/bluetoothd '--noplugin=sap' '-f' '/etc/bluetooth/main.conf'"
+  ];
 
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
