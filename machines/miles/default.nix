@@ -191,7 +191,8 @@ in {
       };
     };
     folders = {
-      "Obsidian" = {
+      # Obsidian notes
+      "gyakq-yzxwg" = {
         path = "/home/sky/Obsidian";
         devices = [ "sky-ipad" ];
       };
