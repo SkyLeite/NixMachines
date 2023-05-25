@@ -179,6 +179,25 @@ in {
   programs.bash.enableCompletion = true;
 
   services.pcscd.enable = true;
+
+  services.syncthing = {
+    enable = true;
+    configDir = "/srv/syncthing";
+    overrideDevices = true;
+    overrideFolders = true;
+    devices = {
+      "sky-ipad" = {
+        id = "PAYYTNA-6PU2FTP-VY7ATRQ-GAX4AIW-5KD2IAQ-VDCBLNJ-VGJPTSE-OGFKOQ2";
+      };
+    };
+    folders = {
+      "Obsidian" = {
+        path = "/home/sky/Obsidian";
+        devices = [ "sky-ipad" ];
+      };
+    };
+  };
+
   programs.gnupg.agent = {
     enable = true;
     pinentryFlavor = "curses";
