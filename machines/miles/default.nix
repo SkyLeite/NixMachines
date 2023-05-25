@@ -48,6 +48,11 @@ in {
       enable = true;
       port = config.services.octoprint.port;
     };
+
+    services.syncthing = {
+      enable = true;
+      port = 8384;
+    };
   };
 
   services = {
@@ -185,6 +190,7 @@ in {
     configDir = "/srv/syncthing";
     overrideDevices = true;
     overrideFolders = true;
+    openDefaultPorts = true;
     devices = {
       "sky-ipad" = {
         id = "PAYYTNA-6PU2FTP-VY7ATRQ-GAX4AIW-5KD2IAQ-VDCBLNJ-VGJPTSE-OGFKOQ2";
