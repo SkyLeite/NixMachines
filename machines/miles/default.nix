@@ -199,7 +199,7 @@ in {
     folders = {
       # Obsidian notes
       "gyakq-yzxwg" = {
-        path = "/home/sky/Obsidian";
+        path = "/var/lib/syncthing/Obsidian";
         devices = [ "sky-ipad" ];
       };
     };
