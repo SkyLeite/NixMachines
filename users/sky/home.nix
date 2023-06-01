@@ -311,6 +311,11 @@ in {
 
   services.noisetorch.enable = true;
 
+  services.syncthing = {
+    enable = true;
+    tray.enable = true;
+  };
+
   programs.ssh = {
     enable = true;
 
