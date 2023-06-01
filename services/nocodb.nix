@@ -32,7 +32,7 @@ in {
         volumes = [ "nc_data:/srv/nocodb/data" ];
         environment = {
           NC_DB = "postgresql://nocodb@localhost:5432/db";
-          PORT = 8070;
+          PORT = "8070";
         };
         extraOptions = [ "--network=host" ];
       };
