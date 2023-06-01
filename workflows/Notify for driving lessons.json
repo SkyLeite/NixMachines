@@ -1,0 +1,212 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get next classes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get next classes": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Filter out completed classes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter out completed classes": {
+      "main": [
+        [
+          {
+            "node": "Google Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-01T16:37:10.581Z",
+  "id": "5",
+  "name": "Notify for driving lessons",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes"
+            }
+          ]
+        }
+      },
+      "id": "8c1cf3e2-985d-46fe-af5a-0878de5e46c4",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        180,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://painel.teorico.com.br/api/dashboard/classes/search",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0"
+            },
+            {
+              "name": "Accept",
+              "value": "application/json, text/javascript, */*; q=0.01"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.5"
+            },
+            {
+              "name": "X-Requested-With",
+              "value": "XMLHttpRequest"
+            },
+            {
+              "name": "Origin",
+              "value": "https://painel.teorico.com.br"
+            },
+            {
+              "name": "DNT",
+              "value": "1"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Referer",
+              "value": "https://painel.teorico.com.br/dashboard"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "empty"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "cors"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-origin"
+            },
+            {
+              "name": "cookie",
+              "value": ".AspNetCore.Antiforgery.FJ9O8a4-vZg=CfDJ8N3R_x2zoLtOjqduc3cDgxzgf8DZU33J8DkiXz0QnIOllIE7K960twn8SpK0c_r1sBCcD0eQRlGD8y1r8qubxy7a80nphMsap5vS6aRK85jxllZxiTeJV68PM9k-hIluE6b0yZzkHbLS2uEJC59ACIE;.AspNetCore.Cookies=CfDJ8N3R_x2zoLtOjqduc3cDgxzdLOSs4V18i9J7g7G8Nh9R2dF8qwyg-Ria00L-K95KtTYBcbpocFPTot6j1Y8vb5p7Mi4EXqrJltJVCV02CNo2PACirB3sixY8rWjqsB6VWsjZlC13TqQvp2gzqxAkrO7hxXMwMlh-wrRs7hZiDYhMIQa-sQqhOzWpFySFbE3D_dqgfT2lGDmQ3Pvgf0EPhbzhOIU5UicegEkY7fDhkslT_zv1Jzio0JAe3fHtk-QfcSIrBCni_sabNqjyCsaQcN7lexwVVoGltr7vET2qhP2YOsGBAIBYRhTjEv7Arh44bcMLy4WR19HC4ve2OoN1bhxDoTXiJQ3qZMJnHYGV23DJOTx2ZP--7ou-Cj7YbPk255xjbYVV6djuFSQXRZNU4cbEN44sz374vwZfPKKtU9MDZvSkTorfeP7wLd108rIdCNXrp-4fwnHk-h_v8GZYWEab8XfDgS1w8mBuvUmQkrjfhyvXI6WAV_oECvy_g7YcUKQxU1X7hoCMVj7Hv5kzlX6NHo6nXeGfiSd-Yew9TPa5E0PgsBLskIQ3D-uYLy0Ye4_q2xUWR14YBLh-g7mffxreql_czr99GvRvTStMg6ZvH1OqHDMvFJLGjrkgTyChavGd5ick3XXOOZczpaHvmtH8rNCTyS6T3xckmByZfd4DSjo7wuIlH0V_DccWDY9UsWnkHD5QM2Lw5f5_039q_4U;"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\"draw\":2,\"columns\":[{\"data\":\"statusCode\",\"name\":\"\",\"searchable\":true,\"orderable\":false,\"search\":{\"value\":\"\",\"regex\":false}},{\"data\":\"moduleName\",\"name\":\"\",\"searchable\":true,\"orderable\":false,\"search\":{\"value\":\"\",\"regex\":false}},{\"data\":\"startTime\",\"name\":\"\",\"searchable\":true,\"orderable\":false,\"search\":{\"value\":\"\",\"regex\":false}},{\"data\":\"classCode\",\"name\":\"\",\"searchable\":true,\"orderable\":false,\"search\":{\"value\":\"\",\"regex\":false}},{\"data\":\"schoolName\",\"name\":\"\",\"searchable\":true,\"orderable\":false,\"search\":{\"value\":\"\",\"regex\":false}}],\"order\":[{\"column\":2,\"dir\":\"asc\"},{\"column\":0,\"dir\":\"asc\"}],\"start\":0,\"length\":6,\"search\":{\"value\":\"\",\"regex\":false},\"filter\":{\"unfinishedOnly\":true}}",
+        "options": {}
+      },
+      "id": "145720f1-9769-4571-9dd1-5abd0f551a2e",
+      "name": "Get next classes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        380,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "data",
+        "options": {}
+      },
+      "id": "8a84d3d8-0590-4116-a685-845c29239fcb",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        560,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.moduleName }}",
+              "value2": "Legislação"
+            },
+            {
+              "value1": "={{ $json.moduleName }}",
+              "value2": "Direção Defensiva"
+            },
+            {
+              "value1": "={{ $json.moduleName }}",
+              "value2": "Mecânica"
+            }
+          ]
+        },
+        "combineConditions": "OR"
+      },
+      "id": "ebf19728-bf5c-447c-a157-5eb64884a84d",
+      "name": "Filter out completed classes",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        740,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "additionalFields": {}
+      },
+      "id": "1d86ac82-26af-4f96-9308-ac442ebd78df",
+      "name": "Google Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        920,
+        460
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-06-01T21:29:29.000Z",
+  "versionId": "844bd4f5-4185-4ed5-8475-ac55aa155348"
+}
