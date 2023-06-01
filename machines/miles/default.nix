@@ -10,6 +10,7 @@ in {
     ../../services/papermc.nix
     ../../services/funkwhale/default.nix
     ../../services/home-assistant.nix
+    ../../services/nocodb.nix
     ../../modules/chaos-service.nix
   ];
 
@@ -57,11 +58,33 @@ in {
 
   services = {
     avahi.enable = true;
+
+    postgresql = {
+      enable = true;
+      port = 5432;
+      ensureUsers = [{
+        name = "nocodb";
+        ensurePermissions = {
+          "DATABASE \"db\"" = "ALL PRIVILEGES";
+          "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+        };
+        ensureClauses.login = true;
+      }];
+      ensureDatabases = [ "db" ];
+      enableTCPIP = false;
+      authentication = ''
+        local db nocodb auth-method trust
+        host  db nocodb 127.0.0.1 auth-method trust
+      '';
+    };
+
     openssh = {
       enable = true;
       passwordAuthentication = false;
       permitRootLogin = "no";
     };
+
+    nocodb.enable = true;
 
     home-assistant-oci.enable = true;
 
@@ -179,6 +202,7 @@ in {
   };
 
   virtualisation.docker.enable = true;
+  virtualisation.oci-containers.backend = "podman";
   programs.ssh.startAgent = true;
   programs.mosh.enable = true;
   programs.bash.enableCompletion = true;
