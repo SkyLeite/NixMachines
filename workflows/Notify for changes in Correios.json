@@ -1,0 +1,191 @@
+{
+  "active": false,
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Gerar token Correios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all tracked codes": {
+      "main": [
+        [
+          {
+            "node": "Separate tracked codes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Separate tracked codes": {
+      "main": [
+        [
+          {
+            "node": "Rastrear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gerar token Correios": {
+      "main": [
+        [
+          {
+            "node": "Get all tracked codes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-01T21:29:44.256Z",
+  "id": "6",
+  "name": "Notify for changes in Correios",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 2
+            }
+          ]
+        }
+      },
+      "id": "45fbc684-adb6-4049-96e8-180193f6d723",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [
+        200,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://nocodb.zerolab.app/api/v1/db/data/v1/Base/Correios Tracked Codes?limit=25&shuffle=0&offset=0",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "nocoDb",
+        "options": {}
+      },
+      "id": "51980ef1-8314-4995-9e0b-37e5c5443301",
+      "name": "Get all tracked codes",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        400
+      ],
+      "credentials": {
+        "nocoDb": {
+          "id": "9",
+          "name": "NocoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "list",
+        "options": {}
+      },
+      "id": "489a6993-257f-4179-ba20-0e78c7445b71",
+      "name": "Separate tracked codes",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        940,
+        380
+      ]
+    },
+    {
+      "parameters": {
+        "url": "=https://proxyapp.correios.com.br/v1/sro-rastro/{{ $json.Code }}",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Dart/2.18 (dart:io)"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "app-check-token",
+              "value": "={{ $node['Gerar token Correios'].json.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "7c2ae09f-764e-489b-abee-0c72cce63e47",
+      "name": "Rastrear",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1200,
+        320
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://proxyapp.correios.com.br/v1/app-validation",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Dart/2.18 (dart:io)"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "requestToken",
+              "value": "YW5kcm9pZDtici5jb20uY29ycmVpb3MucHJlYXRlbmRpbWVudG87RjMyRTI5OTc2NzA5MzU5ODU5RTBCOTdGNkY4QTQ4M0I5Qjk1MzU3OA=="
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2d17fdd7-8b87-4722-badd-7d5afbe58c21",
+      "name": "Gerar token Correios",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        440,
+        420
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2023-06-01T23:07:57.000Z",
+  "versionId": "6a41866a-6237-4566-a98e-8eb783fa101b"
+}
