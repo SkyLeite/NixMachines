@@ -84,10 +84,10 @@ in {
       enableTCPIP = false;
       authentication = ''
         local db nocodb trust
-        host  db nocodb 127.0.0.1 trust
+        host  db nocodb localhost trust
 
-        local db n8n trust
-        host  db n8n 127.0.0.1 trust
+        local db n8n    trust
+        host  db n8n    localhost trust
       '';
     };
 
