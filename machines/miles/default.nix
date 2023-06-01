@@ -62,14 +62,24 @@ in {
     postgresql = {
       enable = true;
       port = 5432;
-      ensureUsers = [{
-        name = "nocodb";
-        ensurePermissions = {
-          "DATABASE \"db\"" = "ALL PRIVILEGES";
-          "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
-        };
-        ensureClauses.login = true;
-      }];
+      ensureUsers = [
+        {
+          name = "nocodb";
+          ensurePermissions = {
+            "DATABASE \"db\"" = "ALL PRIVILEGES";
+            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          };
+          ensureClauses.login = true;
+        }
+        {
+          name = "n8n";
+          ensurePermissions = {
+            "DATABASE \"db\"" = "ALL PRIVILEGES";
+            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          };
+          ensureClauses.login = true;
+        }
+      ];
       ensureDatabases = [ "db" ];
       enableTCPIP = false;
       authentication = ''
