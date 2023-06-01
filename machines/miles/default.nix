@@ -83,8 +83,11 @@ in {
       ensureDatabases = [ "db" ];
       enableTCPIP = false;
       authentication = ''
-        local db nocodb auth-method trust
-        host  db nocodb 127.0.0.1 auth-method trust
+        local db nocodb trust
+        host  db nocodb 127.0.0.1 trust
+
+        local db n8n trust
+        host  db n8n 127.0.0.1 trust
       '';
     };
 
