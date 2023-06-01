@@ -39,7 +39,7 @@ in {
     (import ./hardware-configuration.nix {
       inherit modulesPath config lib pkgs;
     })
-    # ./vfio.nix
+    ./vfio.nix
     ../../modules/tailscale.nix
   ];
 
