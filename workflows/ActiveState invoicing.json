@@ -1,0 +1,445 @@
+{
+  "active": true,
+  "connections": {
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Get current date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get current date": {
+      "main": [
+        [
+          {
+            "node": "Get due date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get due date": {
+      "main": [
+        [
+          {
+            "node": "Format date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format date": {
+      "main": [
+        [
+          {
+            "node": "Format date1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format date1": {
+      "main": [
+        [
+          {
+            "node": "Create invoice",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract useful products": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create line": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create invoice": {
+      "main": [
+        [
+          {
+            "node": "Get all products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cron": {
+      "main": [
+        [
+          {
+            "node": "Get current date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all products": {
+      "main": [
+        [
+          {
+            "node": "Extract useful products",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Create line",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists": {
+      "main": [
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-05-23T20:43:02.252Z",
+  "id": "3",
+  "name": "ActiveState invoicing",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        120
+      ],
+      "id": "feeea24e-578d-46ed-8202-fe47a87011a3"
+    },
+    {
+      "parameters": {
+        "triggerTimes": {
+          "item": [
+            {
+              "mode": "everyMonth",
+              "dayOfMonth": 29
+            }
+          ]
+        }
+      },
+      "name": "Cron",
+      "type": "n8n-nodes-base.cron",
+      "typeVersion": 1,
+      "position": [
+        -200,
+        -80
+      ],
+      "id": "07de794e-e3f1-4e33-9b58-51e486da55af"
+    },
+    {
+      "parameters": {
+        "action": "calculate",
+        "value": "={{ new Date() }}",
+        "dataPropertyName": "today",
+        "options": {}
+      },
+      "name": "Get current date",
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        120
+      ],
+      "id": "17127f72-61af-4ae3-b3e5-c151541d2337"
+    },
+    {
+      "parameters": {
+        "action": "calculate",
+        "value": "={{$json[\"today\"]}}",
+        "duration": 15,
+        "dataPropertyName": "due_date",
+        "options": {
+          "fromFormat": ""
+        }
+      },
+      "name": "Get due date",
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 1,
+      "position": [
+        120,
+        120
+      ],
+      "id": "b4f125bc-fbcb-4f70-afbe-84ff2a45e6a8"
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "=account.move",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "move_type",
+              "fieldValue": "out_invoice"
+            },
+            {
+              "fieldName": "partner_id",
+              "fieldValue": "7"
+            },
+            {
+              "fieldName": "invoice_date",
+              "fieldValue": "={{$json[\"today\"]}}"
+            },
+            {
+              "fieldName": "invoice_date_due",
+              "fieldValue": "={{$json[\"due_date\"]}}"
+            },
+            {
+              "fieldName": "commercial_partner_id",
+              "fieldValue": "3"
+            }
+          ]
+        }
+      },
+      "name": "Create invoice",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        480,
+        340
+      ],
+      "id": "d1b71497-5d77-4d95-8ecb-891bbe35446a",
+      "credentials": {
+        "odooApi": {
+          "id": "3",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "value": "={{$json[\"due_date\"]}}",
+        "dataPropertyName": "due_date",
+        "toFormat": "YYYY-MM-DD",
+        "options": {}
+      },
+      "name": "Format date",
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 1,
+      "position": [
+        300,
+        120
+      ],
+      "id": "520ccb41-e66f-48d0-a831-4205f5093503"
+    },
+    {
+      "parameters": {
+        "value": "={{$json[\"today\"]}}",
+        "dataPropertyName": "today",
+        "toFormat": "YYYY-MM-DD",
+        "options": {}
+      },
+      "name": "Format date1",
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 1,
+      "position": [
+        480,
+        120
+      ],
+      "id": "7610cd95-11fa-4576-8bea-c9520fc643cb"
+    },
+    {
+      "parameters": {
+        "content": "ActiveState customer ID: 7\n\nTest user ID: 3"
+      },
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        880,
+        -260
+      ],
+      "id": "34c8eea4-060b-4796-912e-070296f40c1c"
+    },
+    {
+      "parameters": {
+        "functionCode": "// Code here will run only once, no matter how many input items there are.\n// More info and help: https://docs.n8n.io/nodes/n8n-nodes-base.function\n// Tip: You can use luxon for dates and $jmespath for querying JSON structures\nconst xs = items.map(item => item.json);\n\nconst products = {\n  kpiBonus: xs.find(item => item.id == 2),\n  softwareDevelopment: xs.find(item => item.id == 1)\n};\n\nreturn Object.values(products);"
+      },
+      "name": "Extract useful products",
+      "type": "n8n-nodes-base.function",
+      "typeVersion": 1,
+      "position": [
+        780,
+        520
+      ],
+      "id": "8cd69a2a-4ea9-4dbc-b77b-7e81bfd5b627"
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "=account.move.line",
+        "fieldsToCreateOrUpdate": {
+          "fields": [
+            {
+              "fieldName": "name",
+              "fieldValue": "={{$json[\"name\"]}}"
+            },
+            {
+              "fieldName": "price_unit",
+              "fieldValue": "={{$json[\"list_price\"]}}"
+            },
+            {
+              "fieldName": "quantity",
+              "fieldValue": "1"
+            },
+            {
+              "fieldName": "move_id",
+              "fieldValue": "={{$node[\"Create invoice\"].json[\"id\"]}}"
+            }
+          ]
+        }
+      },
+      "name": "Create line",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        280
+      ],
+      "id": "fe03df37-5097-4113-91de-5ff82649d9de",
+      "credentials": {
+        "odooApi": {
+          "id": "3",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "custom",
+        "customResource": "product.template",
+        "operation": "getAll",
+        "options": {}
+      },
+      "name": "Get all products",
+      "type": "n8n-nodes-base.odoo",
+      "typeVersion": 1,
+      "position": [
+        640,
+        520
+      ],
+      "id": "8caf20a3-b642-43b9-b0f4-35c623b53ed3",
+      "credentials": {
+        "odooApi": {
+          "id": "3",
+          "name": "Odoo account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "userKey": "uawwx6mdirjph4uvyavagi6j58ruw1",
+        "message": "A new invoice has been created on Odoo. Don't forget to post it!",
+        "priority": 1,
+        "additionalFields": {
+          "title": "Invoice time!"
+        }
+      },
+      "id": "93eac750-0d94-4a79-877f-392d20e421c5",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1360,
+        660
+      ],
+      "credentials": {
+        "pushoverApi": {
+          "id": "4",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "fea64dd0-5ec2-42ad-8131-dd00b8ef9b48",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        980,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "aggregateItems",
+        "aggregate": "aggregateAllItemData"
+      },
+      "id": "cb1e4e75-76ec-44a7-b69d-66c9458b9c04",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "typeVersion": 2.1,
+      "position": [
+        1160,
+        660
+      ]
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2023-05-23T22:44:16.837Z",
+      "updatedAt": "2023-05-23T22:44:16.837Z",
+      "id": "1",
+      "name": "Work"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2023-05-31T19:07:04.000Z",
+  "versionId": "268402ae-8c70-468e-bdc8-0f275e9093d4"
+}
