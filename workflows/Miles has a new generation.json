@@ -1,0 +1,160 @@
+{
+  "active": true,
+  "connections": {
+    "Local File Trigger": {
+      "main": [
+        [
+          {
+            "node": "Read Binary File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Binary File": {
+      "main": [
+        [
+          {
+            "node": "Move Binary Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Move Binary Data": {
+      "main": [
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2022-07-22T19:45:03.591Z",
+  "id": "2",
+  "name": "Miles has a new generation",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Start",
+      "type": "n8n-nodes-base.start",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        300
+      ],
+      "id": "e7ef76af-2714-4289-96bc-04cc5b2ed699"
+    },
+    {
+      "parameters": {
+        "triggerOn": "file",
+        "path": "/host/tmp/current-generation",
+        "options": {
+          "followSymlinks": false
+        }
+      },
+      "name": "Local File Trigger",
+      "type": "n8n-nodes-base.localFileTrigger",
+      "typeVersion": 1,
+      "position": [
+        -700,
+        580
+      ],
+      "id": "490ef45a-16bf-479c-95ec-f1c34676f774"
+    },
+    {
+      "parameters": {
+        "fromEmail": "zero@leite.dev",
+        "toEmail": "sky@leite.dev",
+        "subject": "=Machine \"Miles\" has a new Nix generation",
+        "text": "=Machine Miles is now on generation {{$json[\"data\"]}}",
+        "html": "=",
+        "options": {}
+      },
+      "name": "Send Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        400
+      ],
+      "id": "348540e9-9941-44e4-9678-803b747437b0",
+      "credentials": {
+        "smtp": {
+          "id": "1",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "filePath": "/host/tmp/current-generation"
+      },
+      "name": "Read Binary File",
+      "type": "n8n-nodes-base.readBinaryFile",
+      "typeVersion": 1,
+      "position": [
+        -480,
+        580
+      ],
+      "id": "fe524ca4-0a3b-4454-87a8-5d78e840d78f"
+    },
+    {
+      "parameters": {
+        "setAllData": false,
+        "options": {
+          "keepSource": false
+        }
+      },
+      "name": "Move Binary Data",
+      "type": "n8n-nodes-base.moveBinaryData",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        580
+      ],
+      "id": "14f31952-0952-4e43-ad00-a3b9f78c5371"
+    },
+    {
+      "parameters": {
+        "userKey": "uawwx6mdirjph4uvyavagi6j58ruw1",
+        "message": "A new generation has been set",
+        "priority": 0,
+        "additionalFields": {
+          "title": "Miles"
+        }
+      },
+      "id": "c73ca57f-d243-4191-a8cb-f21ca4905154",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        580
+      ],
+      "credentials": {
+        "pushoverApi": {
+          "id": "4",
+          "name": "Pushover account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "saveDataErrorExecution": "all",
+    "saveDataSuccessExecution": "all",
+    "saveExecutionProgress": true,
+    "saveManualExecutions": true
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-06-01T23:18:05.000Z",
+  "versionId": "94050155-c5b2-42b1-8176-6293274b38b4"
+}
