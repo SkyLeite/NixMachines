@@ -108,7 +108,9 @@ in {
       enable = true;
       openFirewall = false;
       port = 8104;
-      settings = { Origins = "https://cockpit.${config.chaos.baseUrl}"; };
+      settings = {
+        WebService = { Origins = "https://cockpit.${config.chaos.baseUrl}"; };
+      };
     };
 
     home-assistant-oci.enable = true;
