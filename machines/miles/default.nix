@@ -54,6 +54,11 @@ in {
       enable = true;
       port = 8384;
     };
+
+    services.cockpit = {
+      enable = true;
+      port = config.services.cockpit.port;
+    };
   };
 
   services = {
@@ -98,6 +103,13 @@ in {
     };
 
     nocodb.enable = true;
+
+    cockpit = {
+      enable = true;
+      openFirewall = false;
+      port = 8104;
+      settings = { Origins = "https://cockpit.${config.chaos.baseUrl}"; };
+    };
 
     home-assistant-oci.enable = true;
 
