@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "n8n": {
       "main": [
@@ -212,7 +212,7 @@
       "credentials": {
         "githubApi": {
           "id": "11",
-          "name": "GitHub"
+          "name": "GitHub account"
         }
       },
       "continueOnFail": true
@@ -300,7 +300,7 @@
       "credentials": {
         "githubApi": {
           "id": "11",
-          "name": "GitHub"
+          "name": "GitHub account"
         }
       }
     },
@@ -324,7 +324,7 @@
       "credentials": {
         "githubApi": {
           "id": "11",
-          "name": "GitHub"
+          "name": "GitHub account"
         }
       }
     },
@@ -484,7 +484,7 @@
   "settings": {},
   "staticData": null,
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2023-06-01T23:11:35.000Z",
-  "versionId": "74de726c-8226-4e9e-ae8b-ae98c4b7d3b7"
+  "triggerCount": 1,
+  "updatedAt": "2023-06-01T23:17:43.000Z",
+  "versionId": "b9a4ffa5-27f3-42fe-8d80-eceb29a0016d"
 }
