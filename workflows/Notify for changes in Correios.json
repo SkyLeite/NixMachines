@@ -1,5 +1,5 @@
 {
-  "active": false,
+  "active": true,
   "connections": {
     "Schedule Trigger": {
       "main": [
@@ -38,6 +38,33 @@
       "main": [
         [
           {
+            "node": "Set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Rastrear": {
+      "main": [
+        [
+          {
+            "node": "NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "main": [
+        []
+      ]
+    },
+    "Set": {
+      "main": [
+        [
+          {
             "node": "Get all tracked codes",
             "type": "main",
             "index": 0
@@ -55,8 +82,8 @@
         "rule": {
           "interval": [
             {
-              "field": "hours",
-              "hoursInterval": 2
+              "field": "minutes",
+              "minutesInterval": 30
             }
           ]
         }
@@ -82,8 +109,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        680,
-        400
+        900,
+        460
       ],
       "credentials": {
         "nocoDb": {
@@ -102,8 +129,8 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 2.1,
       "position": [
-        940,
-        380
+        1120,
+        460
       ]
     },
     {
@@ -139,8 +166,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1200,
-        320
+        1360,
+        460
       ]
     },
     {
@@ -177,15 +204,75 @@
       "typeVersion": 4.1,
       "position": [
         440,
-        420
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "projectId": "p_nwjonkuzrfy5s1",
+        "table": "md_nm5z7n3cl7i36f",
+        "id": "={{ $node['Separate tracked codes'].json.Id }}",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "LastStatus",
+              "fieldValue": "={{ $json.objetos[0].eventos[0] }}"
+            },
+            {
+              "fieldName": "DeliveryEstimate",
+              "fieldValue": "={{ $json.objetos[0].dtPrevista }}"
+            }
+          ]
+        }
+      },
+      "id": "071d0285-f57f-4788-8740-71bf33dce39b",
+      "name": "NocoDB",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1600,
+        460
+      ],
+      "credentials": {
+        "nocoDb": {
+          "id": "9",
+          "name": "NocoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "correiosToken",
+              "value": "={{ $json.token }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "df0ea0cb-3340-4438-aa42-26c82a7ee965",
+      "name": "Set",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        660,
+        460
       ]
     }
   ],
   "pinData": {},
   "settings": {},
-  "staticData": null,
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrencyRules": []
+    }
+  },
   "tags": [],
-  "triggerCount": 0,
-  "updatedAt": "2023-06-01T23:07:57.000Z",
-  "versionId": "6a41866a-6237-4566-a98e-8eb783fa101b"
+  "triggerCount": 1,
+  "updatedAt": "2023-06-02T15:08:35.000Z",
+  "versionId": "3dc9b1c2-2611-473f-9d30-b3ecf01c1607"
 }
