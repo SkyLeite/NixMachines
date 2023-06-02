@@ -5,7 +5,7 @@
       "main": [
         [
           {
-            "node": "Get next classes",
+            "node": "Get driving html for csrf token",
             "type": "main",
             "index": 0
           }
@@ -44,6 +44,28 @@
           }
         ]
       ]
+    },
+    "Login to Drivin": {
+      "main": [
+        [
+          {
+            "node": "Get next classes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get driving html for csrf token": {
+      "main": [
+        [
+          {
+            "node": "Login to Drivin",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-06-01T16:37:10.581Z",
@@ -65,7 +87,7 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1,
       "position": [
-        180,
+        80,
         460
       ]
     },
@@ -136,8 +158,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        380,
-        460
+        720,
+        440
       ]
     },
     {
@@ -150,8 +172,8 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 2.1,
       "position": [
-        560,
-        460
+        900,
+        440
       ]
     },
     {
@@ -179,8 +201,8 @@
       "type": "n8n-nodes-base.filter",
       "typeVersion": 1,
       "position": [
-        740,
-        460
+        1140,
+        440
       ]
     },
     {
@@ -197,7 +219,170 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1,
       "position": [
-        920,
+        1360,
+        440
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "7",
+          "name": "Google Calendar account (@gmail.com)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://painel.teorico.com.br",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.5"
+            },
+            {
+              "name": "Origin",
+              "value": "https://painel.teorico.com.br"
+            },
+            {
+              "name": "DNT",
+              "value": "1"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Referer",
+              "value": "https://painel.teorico.com.br/"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "document"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "navigate"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-origin"
+            },
+            {
+              "name": "Sec-Fetch-User",
+              "value": "?1"
+            },
+            {
+              "name": "TE",
+              "value": "trailers"
+            },
+            {
+              "name": "cookie",
+              "value": ".AspNetCore.Antiforgery.FJ9O8a4-vZg=CfDJ8N3R_x2zoLtOjqduc3cDgxzgf8DZU33J8DkiXz0QnIOllIE7K960twn8SpK0c_r1sBCcD0eQRlGD8y1r8qubxy7a80nphMsap5vS6aRK85jxllZxiTeJV68PM9k-hIluE6b0yZzkHbLS2uEJC59ACIE;"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "form-urlencoded",
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "username",
+              "value": "08540614600"
+            },
+            {
+              "name": "password",
+              "value": "FPHHiniD4fppkm"
+            },
+            {
+              "name": "__RequestVerificationToken",
+              "value": "CfDJ8N3R_x2zoLtOjqduc3cDgxwq2xPGdsIbLnlpXOjZZAZetCJPCvYs_xL2LLXxQacXAk-UxFVunLAHlHk_knDeqEI-z10524u45RREMZRkabJKz6lStZ_5t0eyM4VruR7k5bFOMcMB1rI3XV3tkms_E9c"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "560cde72-2fdc-420f-bf61-dfecb0891eab",
+      "name": "Login to Drivin",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        680,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "url": "https://painel.teorico.com.br",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "User-Agent",
+              "value": "Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/112.0"
+            },
+            {
+              "name": "Accept",
+              "value": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8"
+            },
+            {
+              "name": "Accept-Language",
+              "value": "en-US,en;q=0.5"
+            },
+            {
+              "name": "Referer",
+              "value": "https://painel.teorico.com.br/dashboard"
+            },
+            {
+              "name": "DNT",
+              "value": "1"
+            },
+            {
+              "name": "Connection",
+              "value": "keep-alive"
+            },
+            {
+              "name": "Upgrade-Insecure-Requests",
+              "value": "1"
+            },
+            {
+              "name": "Sec-Fetch-Dest",
+              "value": "document"
+            },
+            {
+              "name": "Sec-Fetch-Mode",
+              "value": "navigate"
+            },
+            {
+              "name": "Sec-Fetch-Site",
+              "value": "same-origin"
+            },
+            {
+              "name": "TE",
+              "value": "trailers"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e3a519be-bb67-4875-836a-b8492082dd4f",
+      "name": "Get driving html for csrf token",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        300,
         460
       ]
     }
@@ -207,6 +392,6 @@
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2023-06-01T21:29:29.000Z",
-  "versionId": "844bd4f5-4185-4ed5-8475-ac55aa155348"
+  "updatedAt": "2023-06-02T14:53:46.000Z",
+  "versionId": "1cb9e1a1-a3ad-405a-81cc-a67bd2ff6fc4"
 }
