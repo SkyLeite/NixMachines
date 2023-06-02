@@ -113,6 +113,11 @@ in {
       };
     };
 
+    udisks2 = {
+      enable = true;
+      mountOnMedia = false;
+    };
+
     home-assistant-oci.enable = true;
 
     sshd.enable = true;
