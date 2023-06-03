@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "Rastrear",
+            "node": "Split In Batches",
             "type": "main",
             "index": 0
           }
@@ -38,7 +38,7 @@
       "main": [
         [
           {
-            "node": "Set",
+            "node": "Globals",
             "type": "main",
             "index": 0
           }
@@ -56,16 +56,33 @@
         ]
       ]
     },
-    "NocoDB": {
-      "main": [
-        []
-      ]
-    },
-    "Set": {
+    "Globals": {
       "main": [
         [
           {
             "node": "Get all tracked codes",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Rastrear",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
             "type": "main",
             "index": 0
           }
@@ -155,7 +172,7 @@
             },
             {
               "name": "app-check-token",
-              "value": "={{ $node['Gerar token Correios'].json.token }}"
+              "value": "={{$node[\"Globals\"].json[\"correiosToken\"]}}"
             }
           ]
         },
@@ -166,8 +183,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.1,
       "position": [
-        1360,
-        460
+        1640,
+        320
       ]
     },
     {
@@ -212,7 +229,7 @@
         "operation": "update",
         "projectId": "p_nwjonkuzrfy5s1",
         "table": "md_nm5z7n3cl7i36f",
-        "id": "={{ $node['Separate tracked codes'].json.Id }}",
+        "id": "={{ $node['Split In Batches'].json.Id }}",
         "fieldsUi": {
           "fieldValues": [
             {
@@ -231,8 +248,8 @@
       "type": "n8n-nodes-base.nocoDb",
       "typeVersion": 2,
       "position": [
-        1600,
-        460
+        1880,
+        320
       ],
       "credentials": {
         "nocoDb": {
@@ -255,12 +272,26 @@
         "options": {}
       },
       "id": "df0ea0cb-3340-4438-aa42-26c82a7ee965",
-      "name": "Set",
+      "name": "Globals",
       "type": "n8n-nodes-base.set",
       "typeVersion": 2,
       "position": [
         660,
         460
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "154a5225-9538-4760-b036-433662b5c9a4",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        1380,
+        320
       ]
     }
   ],
@@ -273,6 +304,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-02T15:08:35.000Z",
-  "versionId": "3dc9b1c2-2611-473f-9d30-b3ecf01c1607"
+  "updatedAt": "2023-06-02T16:46:09.000Z",
+  "versionId": "54cafb61-00f1-46e7-b9b0-11693a63fa08"
 }
