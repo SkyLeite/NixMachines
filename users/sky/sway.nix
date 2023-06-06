@@ -50,10 +50,17 @@ in {
       window = i3.config.window // {
         titlebar = true;
         border = 5;
-        commands = [{
-          command = "floating enable, sticky enable";
-          criteria = { title = " - Sharing Indicator$"; };
-        }];
+        commands = [
+          {
+            command = "floating enable, sticky enable";
+            criteria = { title = " - Sharing Indicator$"; };
+          }
+          {
+            command =
+              "border pixel 0, floating enable, fullscreen disable, move absolute position 0 0";
+            criteria = { app_id = "flameshot"; };
+          }
+        ];
       };
 
       workspaceOutputAssign = [{
