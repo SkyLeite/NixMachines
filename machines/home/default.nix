@@ -119,6 +119,8 @@ in {
     videoDrivers = [ "amdgpu" ];
   };
 
+  services.ratbagd.enable = true;
+
   services.greetd = {
     enable = true;
     vt = 1;
@@ -365,6 +367,7 @@ in {
     bitwarden-cli
     monitors.outputProfileScript
     waypipe
+    piper
   ];
 
   programs.zsh.enable = true;
