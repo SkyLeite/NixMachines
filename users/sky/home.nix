@@ -140,6 +140,7 @@ in {
     pkgs.yuzu-mainline
     pkgs.prusa-slicer
     pkgs.uxplay
+    pkgs.obsidian
 
     customXivLauncher
     gamescopeSteam
