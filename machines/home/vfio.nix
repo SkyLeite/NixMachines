@@ -20,30 +20,30 @@ in {
     lookingGlassDesktopItem
   ];
 
-  boot = {
-    kernelParams = [
-      "amd_iommu=on"
-      "pci=noats"
-      "pcie_acs_override=downstream,multifunction"
-    ];
-    kernelModules = [
-      "vendor-reset"
-      "vfio_virqfd"
-      "vfio_pci"
-      "vfio_iommu_type1"
-      "vfio"
-      # "amdgpu"
-    ];
-    extraModprobeConfig = "options vfio-pci ids=1002:699f,1002:aae0";
-    extraModulePackages = [
-      config.boot.kernelPackages.vendor-reset
-      config.boot.kernelPackages.cpupower
-    ];
+  # boot = {
+  #   kernelParams = [
+  #     "amd_iommu=on"
+  #     "pci=noats"
+  #     "pcie_acs_override=downstream,multifunction"
+  #   ];
+  #   kernelModules = [
+  #     "vendor-reset"
+  #     "vfio_virqfd"
+  #     "vfio_pci"
+  #     "vfio_iommu_type1"
+  #     "vfio"
+  #     # "amdgpu"
+  #   ];
+  #   extraModprobeConfig = "options vfio-pci ids=1002:699f,1002:aae0";
+  #   extraModulePackages = [
+  #     config.boot.kernelPackages.vendor-reset
+  #     config.boot.kernelPackages.cpupower
+  #   ];
 
-    postBootCommands = ''
-      echo 'device_specific' > /sys/bus/pci/devices/0000\:05\:00.0/reset_method
-    '';
-  };
+  #   postBootCommands = ''
+  #     echo 'device_specific' > /sys/bus/pci/devices/0000\:05\:00.0/reset_method
+  #   '';
+  # };
 
   systemd.tmpfiles.rules =
     [ "f /dev/shm/looking-glass 0660 alex qemu-libvirtd -" ];
