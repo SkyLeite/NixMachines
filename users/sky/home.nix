@@ -45,7 +45,7 @@ in {
   imports = [
     nix-colors.homeManagerModule
     hyprland.homeManagerModules.default
-    ./polybar
+    #./polybar
     ./variables.nix
     ./i3.nix
     ./sway.nix
