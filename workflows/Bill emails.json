@@ -1,0 +1,488 @@
+{
+  "active": true,
+  "connections": {
+    "New mail": {
+      "main": [
+        [
+          {
+            "node": "Get all bill sources",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get all bill sources": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If subject matches": {
+      "main": [
+        [
+          {
+            "node": "If needs to match substring",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If needs to match substring": {
+      "main": [
+        [
+          {
+            "node": "If substring matches",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If substring matches": {
+      "main": [
+        [
+          {
+            "node": "NocoDB",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Set bill source values",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set bill source values": {
+      "main": [
+        [
+          {
+            "node": "If subject matches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "main": [
+        [
+          {
+            "node": "Pushover",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pushover": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2023-06-17T00:42:08.113Z",
+  "id": "8",
+  "name": "Bill emails",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "id": "44eac454-db8a-413d-9db2-d6eda4163083",
+      "name": "New mail",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1,
+      "position": [
+        20,
+        460
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "12",
+          "name": "Gmail account (sky@leite.dev)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "projectId": "p_nwjonkuzrfy5s1",
+        "table": "md_objj7xefkn4tkr",
+        "returnAll": true,
+        "options": {}
+      },
+      "id": "91d3d9c7-6f09-4260-95ce-55d0ecfb4774",
+      "name": "Get all bill sources",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        280,
+        460
+      ],
+      "credentials": {
+        "nocoDb": {
+          "id": "9",
+          "name": "NocoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node['New mail'].json.subject }}",
+              "value2": "={{ $json.email_title }}"
+            }
+          ]
+        }
+      },
+      "id": "ff0d13fe-aa68-40a5-94f6-621abf476a84",
+      "name": "If subject matches",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        960,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.email_substring }}",
+              "operation": "isNotEmpty"
+            }
+          ]
+        }
+      },
+      "id": "e0440bf0-58f8-4fd2-8eb5-ef5db66b69e2",
+      "name": "If needs to match substring",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        240
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $node['New mail'].json.from.html }}",
+              "operation": "contains",
+              "value2": "={{ $node['Get all bill sources'].json.email_substring }}"
+            }
+          ]
+        }
+      },
+      "id": "6ff6c8a7-7d9c-41e4-b9c5-d4bd3c559168",
+      "name": "If substring matches",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        0
+      ]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "451dc23a-6faa-4998-a90b-8f083f2af973",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 2,
+      "position": [
+        500,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "projectId": "p_nwjonkuzrfy5s1",
+        "table": "md_j4yc5db3w61hqb",
+        "fieldsUi": {
+          "fieldValues": [
+            {
+              "fieldName": "Title",
+              "fieldValue": "={{ $node['Set bill source values'].json.title }}"
+            }
+          ]
+        }
+      },
+      "id": "1d5cc460-844f-4fd0-aa90-0c5fa12fb43a",
+      "name": "NocoDB",
+      "type": "n8n-nodes-base.nocoDb",
+      "typeVersion": 2,
+      "position": [
+        1700,
+        260
+      ],
+      "credentials": {
+        "nocoDb": {
+          "id": "9",
+          "name": "NocoDB account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "email_title",
+              "value": "={{ $json.email_title }}"
+            },
+            {
+              "name": "email_substring",
+              "value": "={{ $json.email_substring }}"
+            },
+            {
+              "name": "default_amount",
+              "value": "={{ $json.default_amount }}"
+            },
+            {
+              "name": "title",
+              "value": "={{ $json.title }}"
+            },
+            {
+              "name": "amount_regex",
+              "value": "={{ $json.amount_regex }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "48ec3d93-2f99-4ae5-94d3-51874ca72ffe",
+      "name": "Set bill source values",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        760,
+        440
+      ]
+    },
+    {
+      "parameters": {
+        "userKey": "uawwx6mdirjph4uvyavagi6j58ruw1",
+        "message": "=A new bill for {{ $json.Title }} has been identified",
+        "priority": 0,
+        "additionalFields": {
+          "title": "New bill"
+        }
+      },
+      "id": "4f4e7464-116d-48e5-9d26-5e9f42976af4",
+      "name": "Pushover",
+      "type": "n8n-nodes-base.pushover",
+      "typeVersion": 1,
+      "position": [
+        1920,
+        260
+      ],
+      "credentials": {
+        "pushoverApi": {
+          "id": "4",
+          "name": "Pushover account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## TODO \n\n* Add amount matching with Regex",
+        "height": 150.625,
+        "width": 380.625
+      },
+      "id": "475621c6-9c63-4e46-862d-067f3458dbbd",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -80,
+        20
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "options": {}
+      },
+      "id": "338f0df8-a084-46ff-a45e-a79463bc88fd",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1580,
+        780
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "nocoDb",
+        "options": {}
+      },
+      "id": "a1bf48fd-073d-45d7-8215-16c0731ba8ec",
+      "name": "HTTP Request1",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.1,
+      "position": [
+        1800,
+        780
+      ],
+      "credentials": {
+        "nocoDb": {
+          "id": "9",
+          "name": "NocoDB account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "New mail": [
+      {
+        "json": {
+          "id": "1885d34377f06e75",
+          "threadId": "1885d34377f06e75",
+          "labelIds": [
+            "CATEGORY_UPDATES"
+          ],
+          "sizeEstimate": 37909,
+          "headers": {
+            "delivered-to": "Delivered-To: sky@leite.dev",
+            "received": "Received: from <unknown> (<unknown> []) by 90c3f43bf678 with HTTP id\r\n 6471f8e2bed9403fb45a47cc; Sat, 27 May 2023 12:34:42 GMT",
+            "x-google-smtp-source": "X-Google-Smtp-Source: ACHHUZ6LqOyNpFlySKd5gpx5T0rJFPNUd5dlFmwRUf8qTcVXl0m68ecuMBPD204WUZXoyqwSJDMY",
+            "x-received": "X-Received: by 2002:a25:aa54:0:b0:ba7:8562:33b6 with SMTP id s78-20020a25aa54000000b00ba7856233b6mr5138720ybi.1.1685190882989;\r\n        Sat, 27 May 2023 05:34:42 -0700 (PDT)",
+            "arc-seal": "ARC-Seal: i=1; a=rsa-sha256; t=1685190882; cv=none;\r\n        d=google.com; s=arc-20160816;\r\n        b=Nso1cR3E8K4VFCohf4Jve/8monSSGMTLQuSEfLx/r/YsdBZdPwi9Y3qtRS68nRo1bi\r\n         cmak5viWCWMv944M/H3CqW6EV70y+9GNYTwU+CTnCAbAV8hFSJy5i3Kgh6pHag10g/eG\r\n         V8j0dwghMtuHS8kVhksVnHtiMkAz1/3LFfL66UyOSoImv72hTuYtLP0xQAuYEsZ4EnQy\r\n         m+Z4OXzaweIbE/4zE91pYKUQyeI8sKwy1goSB1fF5Ez9Xno591aKz8GLg8dGg3qPai7m\r\n         xLR9ZmyaOaavejh59BoNVUHyCfApudhHR9fpNwo56/MoaqcWFYpce1CkWTfgeFS9HnHu\r\n         ZEGw==",
+            "arc-message-signature": "ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;\r\n        h=content-transfer-encoding:message-id:to:from:subject:mime-version\r\n         :date:sender:dkim-signature;\r\n        bh=ZS8FaaKQMjG/PGJ/5QfszNEoq0SN49Jr7l09CraLr2o=;\r\n        b=KLJZv3a9LKnMdaOP6TlequvWGyI8bK05XjV0hGn8+4wuC+aOxiu0lBa6u7uvwBdjyK\r\n         7775aCoapkGJykq2TCiUCbdheOQ8DnABhuoDc33bBKAkqG4ew6cf2w2+pUu38mg8Ma3d\r\n         cQ3cf/+5nMg5615JO5LG7c+gjX49qSIa64O5cCLrNgB6sNfX2rAil5m6W0uVGO3zJ62W\r\n         8Pm7+KE6JTzpt7vwzksL0FwzWQkJjRK+3/cAqUuG0NlKEK/rYHJdWaekJ0ggbWVk23Qa\r\n         phkiQJYHWjAgjkIFeHXaI79Mz+6KPIUpMBZPRYqUcZ32kzPHcoPv/l4w46SbE6rvMAIz\r\n         +6aA==",
+            "arc-authentication-results": "ARC-Authentication-Results: i=1; mx.google.com;\r\n       dkim=pass header.i=@nubank.com.br header.s=mailgun header.b=ITB1SLPH;\r\n       spf=pass (google.com: domain of bounce+a061ae.cdeec-sky=leite.dev@nubank.com.br designates 159.135.225.14 as permitted sender) smtp.mailfrom=\"bounce+a061ae.cdeec-sky=leite.dev@nubank.com.br\";\r\n       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=nubank.com.br",
+            "return-path": "Return-Path: <bounce+a061ae.cdeec-sky=leite.dev@nubank.com.br>",
+            "received-spf": "Received-SPF: pass (google.com: domain of bounce+a061ae.cdeec-sky=leite.dev@nubank.com.br designates 159.135.225.14 as permitted sender) client-ip=159.135.225.14;",
+            "authentication-results": "Authentication-Results: mx.google.com;\r\n       dkim=pass header.i=@nubank.com.br header.s=mailgun header.b=ITB1SLPH;\r\n       spf=pass (google.com: domain of bounce+a061ae.cdeec-sky=leite.dev@nubank.com.br designates 159.135.225.14 as permitted sender) smtp.mailfrom=\"bounce+a061ae.cdeec-sky=leite.dev@nubank.com.br\";\r\n       dmarc=pass (p=REJECT sp=REJECT dis=NONE) header.from=nubank.com.br",
+            "dkim-signature": "DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=nubank.com.br;\r\n q=dns/txt; s=mailgun; t=1685190882; x=1685198082;\r\n h=Content-Transfer-Encoding: Content-Type: Message-Id: To: To: From: From:\r\n Subject: Subject: Mime-Version: Date: Sender: Sender;\r\n bh=ZS8FaaKQMjG/PGJ/5QfszNEoq0SN49Jr7l09CraLr2o=;\r\n b=ITB1SLPHThmSon3aqdcp0iZMpUu4lQSmnML0+F9nMVDIEzXdUMsmB1zwzXx5XYgOa8K25rlVkrEjg6O4VD9kYTaj+u88dT32w7IlAmO6gSDasfv4l1XObe+5fyoWLw1sHRLE/ge1y1evHcsRJObbX3aWzK5zKTE6nsRaFRk0rWB2FMsXe8FkSfQPhR7GyNHFfOyQtZqgfM9ZM24hO8cnA9J0FwigbgQxMk8qXwna+86pD6ehrqlPR2t/zgZyxwQKV94zybQTpKw5gwe0Mg5FNw7j1Zh5nAYCgXZIuOjoexsBiEOlC+n+9I9H71bWwpSEQ0rnAnDRJnvoxo5NBoVBmg==",
+            "x-mailgun-sending-ip": "X-Mailgun-Sending-Ip: 159.135.225.14",
+            "x-mailgun-sid": "X-Mailgun-Sid: WyI1ZDQwOSIsInNreUBsZWl0ZS5kZXYiLCJjZGVlYyJd",
+            "sender": "Sender: todomundo@nubank.com.br",
+            "date": "Date: Sat, 27 May 2023 12:34:42 +0000",
+            "mime-version": "Mime-Version: 1.0",
+            "subject": "Subject: Novos boletos emitidos no seu CPF",
+            "from": "From: Nubank <todomundo@nubank.com.br>",
+            "to": "To: Sky <sky@leite.dev>",
+            "x-mailgun-variables": "X-Mailgun-Variables: {\"nu-contact-id\": \"61c4b8d9-0022-4c00-908e-04c00e1e1451\", \"nu-external-id\":\r\n \"89dee691-a6af-3b67-b743-d0e8c08bffb0\", \"nu-prototype\": \"s12\",\r\n \"nu-template-name\":\r\n \"savings/barcode-engagement/dda-new-bill-multiple-email/v1\"}",
+            "message-id": "Message-Id: <20230527123442.e0faaacbfc0ff452@nubank.com.br>",
+            "content-type": "Content-Type: text/html; charset=\"utf-8\"",
+            "content-transfer-encoding": "Content-Transfer-Encoding: quoted-printable"
+          },
+          "html": "<!doctype html><html xmlns=\"http://www.w3.org/1999/xhtml\" xmlns:v=\"urn:schemas-microsoft-com:vml\" xmlns:o=\"urn:schemas-microsoft-com:office:office\"><head><title></title><!--[if !mso]><!-- --><meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\"><!--<![endif]--><meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><style type=\"text/css\">#outlook a { padding:0; }\n          body { margin:0;padding:0;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%; }\n          table, td { border-collapse:collapse;mso-table-lspace:0pt;mso-table-rspace:0pt; }\n          img { border:0;height:auto;line-height:100%; outline:none;text-decoration:none;-ms-interpolation-mode:bicubic; }\n          p { display:block;margin:13px 0; }</style><!--[if mso]>\n        <xml>\n        <o:OfficeDocumentSettings>\n          <o:AllowPNG/>\n          <o:PixelsPerInch>96</o:PixelsPerInch>\n        </o:OfficeDocumentSettings>\n        </xml>\n        <![endif]--><!--[if lte mso 11]>\n        <style type=\"text/css\">\n          .mj-outlook-group-fix { width:100% !important; }\n        </style>\n        <![endif]--><style type=\"text/css\">@media only screen and (min-width:480px) {\n        .mj-column-per-100 { width:100% !important; max-width: 100%; }\n.mj-column-per-35 { width:35% !important; max-width: 35%; }\n.mj-column-per-55 { width:55% !important; max-width: 55%; }\n      }</style><style type=\"text/css\">@media only screen and (max-width:480px) {\n      table.mj-full-width-mobile { width: 100% !important; }\n      td.mj-full-width-mobile { width: auto !important; }\n    }</style><style type=\"text/css\">.title-header div {\n        font-size: 34px !important;\n      }\n\n      .spacer-body {\n        height: 180px !important;\n      }\n\n      .name-text div {\n        font-size: 35px !important;\n      }\n\n      .body-title div {\n        font-size: 26px !important;\n      }\n\n      .body-normal div {\n        font-size: 16px !important;\n      }\n\n      .body-bullets div {\n        font-size: 22px !important;\n      }\n\n      .body-footer div {\n        font-size: 16px !important;\n      }\n\n      .body-legal div {\n        font-size: 12px !important;\n      }\n\n      .button-white a {\n        font-size: 14px !important;\n      }\n\n      .link-none {\n        text-decoration: none;\n        color: grey;\n      }\n\n      @media only screen and (max-width: 480px) {\n        .title-header div {\n          font-size: 23px !important;\n        }\n\n        .spacer-body div {\n          height: 90px !important;\n        }\n\n        .name-text div {\n          color: #fff !important;\n          font-size: 22px !important;\n        }\n\n        .body-title div {\n          font-size: 18px !important;\n        }\n\n        .body-normal div {\n          font-size: 14px !important; letter-spacing: 0.5px !important;\n        }\n\n        .body-bullets div {\n          font-size: 14px !important;\n        }\n\n        .body-footer div {\n          font-size: 13px !important;\n        }\n\n        .body-legal div {\n          font-size: 10px !important;\n        }\n\n        .button-white a {\n          font-size: 12px !important;\n        }\n      }</style><!-- PREVIEW TEXT in the email --></head><body style=\"background-color:#E5E5E5;\"><div style=\"display:none;font-size:1px;color:#ffffff;line-height:1px;max-height:0px;max-width:0px;opacity:0;overflow:hidden;\">O Buscador de Boletos identificou novos boletos no seu CPF</div><div style=\"background-color:#E5E5E5;\"><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:0px;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><v:rect style=\"width:600px;\" xmlns:v=\"urn:schemas-microsoft-com:vml\" fill=\"true\" stroke=\"false\"><v:fill origin=\"0.5, 0\" position=\"0.5, 0\" src=\"https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png\" type=\"tile\" /><v:textbox style=\"mso-fit-shape-to-text:true\" inset=\"0,0,0,0\"><![endif]--><div style=\"background:url(https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png) top center / 100% 100% no-repeat;margin:0px auto;max-width:600px;\"><div style=\"line-height:0;font-size:0;\"><table align=\"center\" background=\"https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:url(https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png) top center / 100% 100% no-repeat;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:left;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0;line-height:0;text-align:left;display:inline-block;width:100%;direction:ltr;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td style=\"align:left;vertical-align:middle;width:210px;\" ><![endif]--><div class=\"mj-column-per-35 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:35%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:middle;padding-right:3%;padding-left:10%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;padding-top:20px;padding-left:20px;word-break:break-word;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px;\"><tbody><tr><td style=\"width:80px;\"><img height=\"auto\" src=\"https://staging-cdn.nubank.com.br/engagement_machine/photos/logo.png\" style=\"border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;\" width=\"80\"></td></tr></tbody></table></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td><td style=\"align:left;vertical-align:middle;width:330px;\" ><![endif]--><div class=\"mj-column-per-55 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:middle;width:55%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:middle;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" class=\"name-text\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;padding-left:0px;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#555555;\"></div></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></div><!--[if mso | IE]></v:textbox></v:rect></td></tr></table></td></tr><![endif]--><!-- Email HEADER TITLE --><!--[if mso | IE]><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><v:rect style=\"width:600px;\" xmlns:v=\"urn:schemas-microsoft-com:vml\" fill=\"true\" stroke=\"false\"><v:fill origin=\"0.5, 0\" position=\"0.5, 0\" src=\"https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png\" type=\"tile\" /><v:textbox style=\"mso-fit-shape-to-text:true\" inset=\"0,0,0,0\"><![endif]--><div style=\"background:url(https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png) top center / 100% 100% no-repeat;margin:0px auto;max-width:600px;\"><div style=\"line-height:0;font-size:0;\"><table align=\"center\" background=\"https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:url(https://staging-cdn.nubank.com.br/engagement_machine/photos/fundo_v2.png) top center / 100% 100% no-repeat;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;padding-top:0px;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;word-break:break-word;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td height=\"40\" style=\"vertical-align:top;height:40px;\"><![endif]--><div style=\"height:40px;\">&nbsp;</div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr><tr><td align=\"left\" class=\"title-header\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#FFFFFF;\">Você tem novos boletos no seu CPF</div></td></tr><tr><td align=\"left\" style=\"font-size:0px;word-break:break-word;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td height=\"1\" style=\"vertical-align:top;height:1px;\"><![endif]--><div style=\"height:1px;\">&nbsp;</div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div></div><!--[if mso | IE]></v:textbox></v:rect></td></tr></table></td></tr><![endif]--><!-- TEXT BLOCK WITH BODY TITLE --><!--[if mso | IE]><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;word-break:break-word;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td height=\"30\" style=\"vertical-align:top;height:30px;\"><![endif]--><div style=\"height:30px;\">&nbsp;</div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr><tr><td align=\"left\" class=\"body-title\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#8A05BE;\">Olá, Sky<br></div></td></tr><tr><td align=\"left\" class=\"body-normal\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#555555;\">Seu <strong>Buscador de Boletos</strong> identificou novos boletos no seu CPF emitidos por <strong>PJBANK PAGAMENTOS S A</strong>.<br><br></div></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:20px 0;word-break:break-word;\"><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:594px;\" width=\"594\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:594px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:594px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;word-break:break-word;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td height=\"30\" style=\"vertical-align:top;height:30px;\"><![endif]--><div style=\"height:30px;\">&nbsp;</div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr><tr><td align=\"left\" class=\"body-normal\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#555555;\">Para pagar ou agendar todos os boletos (ou alguns deles) basta acessar seu Buscador de Boletos através da área do Assistente de Pagamentos, conforme imagem abaixo:<br><br><br><br></div></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr><tr><td align=\"left\" class=\"image\" style=\"font-size:0px;padding:0;word-break:break-word;\"><!--[if mso | IE]><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"image-outlook\" style=\"width:594px;\" width=\"594\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div class=\"image\" style=\"margin:0px auto;max-width:594px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"center\" class=\"\" style=\"\" ><![endif]--><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"border-collapse:collapse;border-spacing:0px;\" class=\"mj-full-width-mobile\"><tbody><tr><td style=\"width:500px;\" class=\"mj-full-width-mobile\"><img height=\"auto\" src=\"https://staging-cdn.nubank.com.br/savings/illust-dda.png\" style=\"border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:13px;\" width=\"500\"></td></tr></tbody></table><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr><![endif]--><!-- Footer. --><!--[if mso | IE]><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#FFFFFF;background-color:#FFFFFF;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#FFFFFF;background-color:#FFFFFF;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#E4E4E4;background-color:#E4E4E4;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#E4E4E4;background-color:#E4E4E4;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:0px;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#E4E4E4;background-color:#E4E4E4;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#E4E4E4;background-color:#E4E4E4;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" class=\"body-title\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#191919;\"><b>Abraços,<br>Equipe Nubank<br></b></div></td></tr><tr><td align=\"left\" class=\"body-footer\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#191919;\">Por favor, pedimos que você não responda esse e-mail, pois se trata de uma mensagem automática e não é possível dar continuidade com seu atendimento por aqui.</div></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#E4E4E4;background-color:#E4E4E4;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#E4E4E4;background-color:#E4E4E4;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" style=\"font-size:0px;padding:10px 25px;word-break:break-word;\"><!--[if mso | IE]><table align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" ><tr><td><![endif]--><table align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"float:none;display:inline-table;\"><tr><td style=\"padding:15px;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"border-radius:3px;width:30px;\"><tr><td style=\"font-size:0;height:30px;vertical-align:middle;width:30px;\"><a href=\"http://www.facebook.com/nubank\" target=\"_blank\"><img height=\"30\" src=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/facebook_60.png\" style=\"border-radius:3px;display:block;\" width=\"30\"></a></td></tr></table></td></tr></table><!--[if mso | IE]></td><td><![endif]--><table align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"float:none;display:inline-table;\"><tr><td style=\"padding:15px;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"border-radius:3px;width:30px;\"><tr><td style=\"font-size:0;height:30px;vertical-align:middle;width:30px;\"><a href=\"https://twitter.com/nubank\" target=\"_blank\"><img height=\"30\" src=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/twitter_60.png\" style=\"border-radius:3px;display:block;\" width=\"30\"></a></td></tr></table></td></tr></table><!--[if mso | IE]></td><td><![endif]--><table align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"float:none;display:inline-table;\"><tr><td style=\"padding:15px;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"border-radius:3px;width:30px;\"><tr><td style=\"font-size:0;height:30px;vertical-align:middle;width:30px;\"><a href=\"http://www.instagram.com/nubank\" target=\"_blank\"><img height=\"30\" src=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/instagram_60.png\" style=\"border-radius:3px;display:block;\" width=\"30\"></a></td></tr></table></td></tr></table><!--[if mso | IE]></td><td><![endif]--><table align=\"left\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"float:none;display:inline-table;\"><tr><td style=\"padding:15px;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"border-radius:3px;width:30px;\"><tr><td style=\"font-size:0;height:30px;vertical-align:middle;width:30px;\"><a href=\"https://www.youtube.com/channel/UCgsDX3hTwiPdtGHJjMFfDxg\" target=\"_blank\"><img height=\"30\" src=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/youtube_60.png\" style=\"border-radius:3px;display:block;\" width=\"30\"></a></td></tr></table></td></tr></table><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"background:#E4E4E4;background-color:#E4E4E4;margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"background:#E4E4E4;background-color:#E4E4E4;width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" class=\"body-footer\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#191919;\">Caso ainda tenha dúvidas, acesse <strong><a href=\"https://nuapp.nubank.com.br/bnVhcHA6Ly9udWhlbHA/dXRtX3NvdXJjZT1lbWFpbA==\" style=\"color: #191919;text-decoration: none\">Me Ajuda</a> </strong>diretamente no seu aplicativo.<br><br>Para emergências ligue para 0800 591 2117. Atendimentos são realizados 24 horas, todos os dias pelo chat ou telefone.</div></td></tr><tr><td align=\"left\" class=\"unsubscription-link-class\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#191919;\">Não deseja receber mais nossos nossos emails? <a href=\"https://webapp-proxy-webhooks.nubank.com.br/api/webhooks/email-unsubscribe/ABrz3ANA2tN4k7GKyGlpxtF_ciFncXN5DLN0fiXFCmFBYMNUGBFbyCvNbkjJsTZvmsyM50tDOnUBJl9UN3zUPqGOdFs0u3ppyXHkvt-6XJLscY_IgpU1sSCJ2IZQn093i4gLfNAz6G09yqZHKr2jEksryuDaMuKmfzz5C6qK2VspdeDl56v6U6Ms17J-EkuJPltG-jD7CDTTFmI5V0nmmiTOzpakvGeI54jNrEFIR-Rr2hlksfGXU4AEj8_xOsXtGNCdo1MY7lhZm5M8ibkFRNndGMLo4bX4NyMBBAf8ICh45pKTp4o7jXmdaZJXW3IkDh7vxcoKEKZp.ADBfDS54i5mjykaZb6nkist8u9tj1ynhTZSocPmk7_EA5_um2QHOaeGghkOcZnYVS1LA3PbKDrp0pnnL3juG3bieoR4UqYMyEsioy649Pw9M8OTol_XDVoi2roH6qvURrtXRNgu-I5kftgdAlHJj3vtJpUoOIPoEmrbBP-AxKmXpKcZdVQ\" style=\"text-decoration:none;color:#82269E;\" target=\"_blank\">clique aqui para se descadastrar. </a>.</div></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr><tr><td align=\"left\" class=\"\" width=\"600px\" ><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" class=\"\" style=\"width:600px;\" width=\"600\" ><tr><td style=\"line-height:0px;font-size:0px;mso-line-height-rule:exactly;\"><![endif]--><div style=\"margin:0px auto;max-width:600px;\"><table align=\"center\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" style=\"width:100%;\"><tbody><tr><td style=\"direction:ltr;font-size:0px;padding:20px 0;text-align:center;\"><!--[if mso | IE]><table role=\"presentation\" border=\"0\" cellpadding=\"0\" cellspacing=\"0\"><tr><td align=\"left\" class=\"\" style=\"vertical-align:top;width:600px;\" ><![endif]--><div class=\"mj-column-per-100 mj-outlook-group-fix\" style=\"font-size:0px;text-align:left;direction:ltr;display:inline-block;vertical-align:top;width:100%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tbody><tr><td style=\"vertical-align:top;padding-right:3%;padding-left:3%;\"><table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" role=\"presentation\" width=\"100%\"><tr><td align=\"left\" class=\"body-legal\" style=\"font-size:0px;padding:10px 25px;padding-top:2%;padding-bottom:2%;word-break:break-word;\"><div style=\"font-family:Helvetica;font-size:13px;font-style:normal;font-weight:normal;letter-spacing:1px;line-height:130%;text-align:left;color:#191919;\">Nu Pagamentos S.A - Instituição de Pagamento 18.236.120/0001-58<br>Rua Capote Valente, 39 - 05409-000- São Paulo - SP</div></td></tr></table></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table></td></tr></table><![endif]--></td></tr></tbody></table></div><!--[if mso | IE]></td></tr></table><![endif]--></div><img width=\"1px\" height=\"1px\" alt=\"\" src=\"http://email.nubank.com.br/o/eJwUy8GOgyAURuGn0d01F0TFBdu-xwV-OqSIRmln-vYTdycn-aILEQg9nJrtpFa2Vvc_zvICcPJhScpbHwQIdl5kFB2jKN9np1mPPOlF6dEYPYCTiASfAqdkJt0Zrm8v9TWEfRv82dc3hb02CY1ydLMKxtu4ErPWZAIzrWxBfCcUlJnUTfDXcFYpt7FrBOZVkcySaPTzQn4xI0WGDWx9Sp5vc5x729v3gLuUvkfDdhRpoCob3CWfXJ9Xpx9ezrBHEOpTnthQW6cfMQpV_JLPpdD2Li0fBYRNcun046P6012vb2e4IDcMEZ__AAAA___PqGZo\"></body></html>\n",
+          "text": "O Buscador de Boletos identificou novos boletos no seu CPF\n\n[https://staging-cdn.nubank.com.br/engagement_machine/photos/logo.png]\n\n\n\n \nVocê tem novos boletos no seu CPF\n \n\n \nOlá, Sky\n\nSeu Buscador de Boletos identificou novos boletos no seu CPF emitidos por PJBANK\nPAGAMENTOS S A.\n\n\n\n \nPara pagar ou agendar todos os boletos (ou alguns deles) basta acessar seu\nBuscador de Boletos através da área do Assistente de Pagamentos, conforme imagem\nabaixo:\n\n\n\n\n\n[https://staging-cdn.nubank.com.br/savings/illust-dda.png]\n\n\n\nAbraços,\nEquipe Nubank\n\nPor favor, pedimos que você não responda esse e-mail, pois se trata de uma\nmensagem automática e não é possível dar continuidade com seu atendimento por\naqui.\n\n[https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/facebook_60.png]http://www.facebook.com/nubank\n\n[https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/twitter_60.png]https://twitter.com/nubank\n\n[https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/instagram_60.png]http://www.instagram.com/nubank\n\n[https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/youtube_60.png]https://www.youtube.com/channel/UCgsDX3hTwiPdtGHJjMFfDxg\n\nCaso ainda tenha dúvidas, acesse Me Ajuda\n[https://nuapp.nubank.com.br/bnVhcHA6Ly9udWhlbHA/dXRtX3NvdXJjZT1lbWFpbA==]\ndiretamente no seu aplicativo.\n\nPara emergências ligue para 0800 591 2117. Atendimentos são realizados 24 horas,\ntodos os dias pelo chat ou telefone.\nNão deseja receber mais nossos nossos emails? clique aqui para se descadastrar.\n[https://webapp-proxy-webhooks.nubank.com.br/api/webhooks/email-unsubscribe/ABrz3ANA2tN4k7GKyGlpxtF_ciFncXN5DLN0fiXFCmFBYMNUGBFbyCvNbkjJsTZvmsyM50tDOnUBJl9UN3zUPqGOdFs0u3ppyXHkvt-6XJLscY_IgpU1sSCJ2IZQn093i4gLfNAz6G09yqZHKr2jEksryuDaMuKmfzz5C6qK2VspdeDl56v6U6Ms17J-EkuJPltG-jD7CDTTFmI5V0nmmiTOzpakvGeI54jNrEFIR-Rr2hlksfGXU4AEj8_xOsXtGNCdo1MY7lhZm5M8ibkFRNndGMLo4bX4NyMBBAf8ICh45pKTp4o7jXmdaZJXW3IkDh7vxcoKEKZp.ADBfDS54i5mjykaZb6nkist8u9tj1ynhTZSocPmk7_EA5_um2QHOaeGghkOcZnYVS1LA3PbKDrp0pnnL3juG3bieoR4UqYMyEsioy649Pw9M8OTol_XDVoi2roH6qvURrtXRNgu-I5kftgdAlHJj3vtJpUoOIPoEmrbBP-AxKmXpKcZdVQ].\n\nNu Pagamentos S.A - Instituição de Pagamento 18.236.120/0001-58\nRua Capote Valente, 39 - 05409-000- São Paulo - SP\n\n[http://email.nubank.com.br/o/eJwUy8GOgyAURuGn0d01F0TFBdu-xwV-OqSIRmln-vYTdycn-aILEQg9nJrtpFa2Vvc_zvICcPJhScpbHwQIdl5kFB2jKN9np1mPPOlF6dEYPYCTiASfAqdkJt0Zrm8v9TWEfRv82dc3hb02CY1ydLMKxtu4ErPWZAIzrWxBfCcUlJnUTfDXcFYpt7FrBOZVkcySaPTzQn4xI0WGDWx9Sp5vc5x729v3gLuUvkfDdhRpoCob3CWfXJ9Xpx9ezrBHEOpTnthQW6cfMQpV_JLPpdD2Li0fBYRNcun046P6012vb2e4IDcMEZ__AAAA___PqGZo]",
+          "textAsHtml": "<p>O Buscador de Boletos identificou novos boletos no seu CPF</p><p>[<a href=\"https://staging-cdn.nubank.com.br/engagement_machine/photos/logo.png\">https://staging-cdn.nubank.com.br/engagement_machine/photos/logo.png</a>]</p><p>&nbsp;<br/>Voc&ecirc; tem novos boletos no seu CPF<br/>&nbsp;</p><p>&nbsp;<br/>Ol&aacute;, Sky</p><p>Seu Buscador de Boletos identificou novos boletos no seu CPF emitidos por PJBANK<br/>PAGAMENTOS S A.</p><p>&nbsp;<br/>Para pagar ou agendar todos os boletos (ou alguns deles) basta acessar seu<br/>Buscador de Boletos atrav&eacute;s da &aacute;rea do Assistente de Pagamentos, conforme imagem<br/>abaixo:</p><p>[<a href=\"https://staging-cdn.nubank.com.br/savings/illust-dda.png\">https://staging-cdn.nubank.com.br/savings/illust-dda.png</a>]</p><p>Abra&ccedil;os,<br/>Equipe Nubank</p><p>Por favor, pedimos que voc&ecirc; n&atilde;o responda esse e-mail, pois se trata de uma<br/>mensagem autom&aacute;tica e n&atilde;o &eacute; poss&iacute;vel dar continuidade com seu atendimento por<br/>aqui.</p><p>[<a href=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/facebook_60.png\">https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/facebook_60.png</a>]<a href=\"http://www.facebook.com/nubank\">http://www.facebook.com/nubank</a></p><p>[<a href=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/twitter_60.png\">https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/twitter_60.png</a>]<a href=\"https://twitter.com/nubank\">https://twitter.com/nubank</a></p><p>[<a href=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/instagram_60.png\">https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/instagram_60.png</a>]<a href=\"http://www.instagram.com/nubank\">http://www.instagram.com/nubank</a></p><p>[<a href=\"https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/youtube_60.png\">https://s3.amazonaws.com/ss-usa/companies/MzawMDExMzS2AAA/uploads/Nubank/youtube_60.png</a>]<a href=\"https://www.youtube.com/channel/UCgsDX3hTwiPdtGHJjMFfDxg\">https://www.youtube.com/channel/UCgsDX3hTwiPdtGHJjMFfDxg</a></p><p>Caso ainda tenha d&uacute;vidas, acesse Me Ajuda<br/>[<a href=\"https://nuapp.nubank.com.br/bnVhcHA6Ly9udWhlbHA/dXRtX3NvdXJjZT1lbWFpbA==\">https://nuapp.nubank.com.br/bnVhcHA6Ly9udWhlbHA/dXRtX3NvdXJjZT1lbWFpbA==</a>]<br/>diretamente no seu aplicativo.</p><p>Para emerg&ecirc;ncias ligue para 0800 591 2117. Atendimentos s&atilde;o realizados 24 horas,<br/>todos os dias pelo chat ou telefone.<br/>N&atilde;o deseja receber mais nossos nossos emails? clique aqui para se descadastrar.<br/>[<a href=\"https://webapp-proxy-webhooks.nubank.com.br/api/webhooks/email-unsubscribe/ABrz3ANA2tN4k7GKyGlpxtF_ciFncXN5DLN0fiXFCmFBYMNUGBFbyCvNbkjJsTZvmsyM50tDOnUBJl9UN3zUPqGOdFs0u3ppyXHkvt-6XJLscY_IgpU1sSCJ2IZQn093i4gLfNAz6G09yqZHKr2jEksryuDaMuKmfzz5C6qK2VspdeDl56v6U6Ms17J-EkuJPltG-jD7CDTTFmI5V0nmmiTOzpakvGeI54jNrEFIR-Rr2hlksfGXU4AEj8_xOsXtGNCdo1MY7lhZm5M8ibkFRNndGMLo4bX4NyMBBAf8ICh45pKTp4o7jXmdaZJXW3IkDh7vxcoKEKZp.ADBfDS54i5mjykaZb6nkist8u9tj1ynhTZSocPmk7_EA5_um2QHOaeGghkOcZnYVS1LA3PbKDrp0pnnL3juG3bieoR4UqYMyEsioy649Pw9M8OTol_XDVoi2roH6qvURrtXRNgu-I5kftgdAlHJj3vtJpUoOIPoEmrbBP-AxKmXpKcZdVQ\">https://webapp-proxy-webhooks.nubank.com.br/api/webhooks/email-unsubscribe/ABrz3ANA2tN4k7GKyGlpxtF_ciFncXN5DLN0fiXFCmFBYMNUGBFbyCvNbkjJsTZvmsyM50tDOnUBJl9UN3zUPqGOdFs0u3ppyXHkvt-6XJLscY_IgpU1sSCJ2IZQn093i4gLfNAz6G09yqZHKr2jEksryuDaMuKmfzz5C6qK2VspdeDl56v6U6Ms17J-EkuJPltG-jD7CDTTFmI5V0nmmiTOzpakvGeI54jNrEFIR-Rr2hlksfGXU4AEj8_xOsXtGNCdo1MY7lhZm5M8ibkFRNndGMLo4bX4NyMBBAf8ICh45pKTp4o7jXmdaZJXW3IkDh7vxcoKEKZp.ADBfDS54i5mjykaZb6nkist8u9tj1ynhTZSocPmk7_EA5_um2QHOaeGghkOcZnYVS1LA3PbKDrp0pnnL3juG3bieoR4UqYMyEsioy649Pw9M8OTol_XDVoi2roH6qvURrtXRNgu-I5kftgdAlHJj3vtJpUoOIPoEmrbBP-AxKmXpKcZdVQ</a>].</p><p>Nu Pagamentos S.A - Institui&ccedil;&atilde;o de Pagamento 18.236.120/0001-58<br/>Rua Capote Valente, 39 - 05409-000- S&atilde;o Paulo - SP</p><p>[<a href=\"http://email.nubank.com.br/o/eJwUy8GOgyAURuGn0d01F0TFBdu-xwV-OqSIRmln-vYTdycn-aILEQg9nJrtpFa2Vvc_zvICcPJhScpbHwQIdl5kFB2jKN9np1mPPOlF6dEYPYCTiASfAqdkJt0Zrm8v9TWEfRv82dc3hb02CY1ydLMKxtu4ErPWZAIzrWxBfCcUlJnUTfDXcFYpt7FrBOZVkcySaPTzQn4xI0WGDWx9Sp5vc5x729v3gLuUvkfDdhRpoCob3CWfXJ9Xpx9ezrBHEOpTnthQW6cfMQpV_JLPpdD2Li0fBYRNcun046P6012vb2e4IDcMEZ__AAAA___PqGZo\">http://email.nubank.com.br/o/eJwUy8GOgyAURuGn0d01F0TFBdu-xwV-OqSIRmln-vYTdycn-aILEQg9nJrtpFa2Vvc_zvICcPJhScpbHwQIdl5kFB2jKN9np1mPPOlF6dEYPYCTiASfAqdkJt0Zrm8v9TWEfRv82dc3hb02CY1ydLMKxtu4ErPWZAIzrWxBfCcUlJnUTfDXcFYpt7FrBOZVkcySaPTzQn4xI0WGDWx9Sp5vc5x729v3gLuUvkfDdhRpoCob3CWfXJ9Xpx9ezrBHEOpTnthQW6cfMQpV_JLPpdD2Li0fBYRNcun046P6012vb2e4IDcMEZ__AAAA___PqGZo</a>]</p>",
+          "subject": "Novos boletos emitidos no seu CPF",
+          "date": "2023-05-27T12:34:42.000Z",
+          "to": {
+            "value": [
+              {
+                "address": "sky@leite.dev",
+                "name": "Sky"
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Sky</span> &lt;<a href=\"mailto:sky@leite.dev\" class=\"mp_address_email\">sky@leite.dev</a>&gt;</span>",
+            "text": "Sky <sky@leite.dev>"
+          },
+          "from": {
+            "value": [
+              {
+                "address": "todomundo@nubank.com.br",
+                "name": "Nubank"
+              }
+            ],
+            "html": "<span class=\"mp_address_group\"><span class=\"mp_address_name\">Nubank</span> &lt;<a href=\"mailto:todomundo@nubank.com.br\" class=\"mp_address_email\">todomundo@nubank.com.br</a>&gt;</span>",
+            "text": "Nubank <todomundo@nubank.com.br>"
+          },
+          "messageId": "<20230527123442.e0faaacbfc0ff452@nubank.com.br>"
+        },
+        "pairedItem": {
+          "item": 0
+        }
+      }
+    ]
+  },
+  "settings": {},
+  "staticData": {
+    "node:New mail": {
+      "possibleDuplicates": [
+        "188cc67510563e38"
+      ],
+      "lastTimeChecked": 1687056497
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2023-06-18T02:49:06.000Z",
+  "versionId": "b450391f-89a7-4277-956d-ba0b2724847a"
+}
