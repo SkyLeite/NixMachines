@@ -477,13 +477,13 @@
   "staticData": {
     "node:New mail": {
       "possibleDuplicates": [
-        "188d155783669181"
+        "188d42b626efdad4"
       ],
-      "lastTimeChecked": 1687139216
+      "lastTimeChecked": 1687186792
     }
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-19T01:47:52.000Z",
+  "updatedAt": "2023-06-19T15:00:52.000Z",
   "versionId": "65f0ec9a-9e8f-405d-b326-a666b3b2b1b0"
 }
