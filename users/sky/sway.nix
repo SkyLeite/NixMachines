@@ -60,6 +60,12 @@ in {
               "border pixel 0, floating enable, fullscreen disable, move absolute position 0 0";
             criteria = { app_id = "flameshot"; };
           }
+          {
+            command = "floating enable, focus, move position center";
+            criteria = {
+              app_id = "org.kde.polkit-kde-authentication-agent-1";
+            };
+          }
         ];
       };
 
