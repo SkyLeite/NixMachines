@@ -327,6 +327,7 @@ in {
     pam = {
       services = {
         swaylock = {
+          enableGnomeKeyring = true;
           text = ''
             auth include login
           '';
@@ -353,6 +354,8 @@ in {
       '';
     };
   };
+
+  services.gnome.gnome-keyring.enable = true;
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
