@@ -365,7 +365,6 @@ in {
     editorconfig-core-c
     fd
     git
-    gparted
     neovim
     nixfmt
     pciutils
@@ -390,6 +389,7 @@ in {
     piper
   ];
 
+  programs.partition-manager.enable = true;
   programs.zsh.enable = true;
   services.avahi = {
     nssmdns = true;
