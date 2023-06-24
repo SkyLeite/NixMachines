@@ -392,6 +392,11 @@ in {
     piper
   ];
 
+  qt = {
+    enable = true;
+    style = "adwaita";
+    platformTheme = "kde";
+  };
   programs.partition-manager.enable = true;
   programs.zsh.enable = true;
   services.avahi = {
