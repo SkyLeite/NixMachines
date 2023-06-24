@@ -377,11 +377,13 @@ in {
   };
 
   systemd.user.services.polkit-kde-authentication-agent-1 = {
-    description = "polkit-kde-authentication-agent-1";
-    wantedBy = [ "graphical-session.target" ];
-    wants = [ "graphical-session.target" ];
-    after = [ "graphical-session.target" ];
-    serviceConfig = {
+    Unit = {
+      Description = "polkit-kde-authentication-agent-1";
+      Wants = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
+    Install = { WantedBy = [ "graphical-session.target" ]; };
+    Service = {
       Type = "simple";
       ExecStart =
         "${pkgs.polkit-kde-agent}/libexec/polkit-kde-authentication-agent-1";
