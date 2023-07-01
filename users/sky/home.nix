@@ -141,6 +141,8 @@ in {
     pkgs.prusa-slicer
     pkgs.uxplay
     pkgs.obsidian
+    pkgs.unar
+    pkgs.p7zip
 
     customXivLauncher
     gamescopeSteam
