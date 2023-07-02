@@ -305,7 +305,6 @@ in {
     pavucontrol
     wget
     xsel
-    python38
     build-machine
     pass
     pinentry-curses
