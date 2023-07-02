@@ -4,10 +4,25 @@ with lib;
 
 let
   cfg = config.services.srb2kart;
-  optionsSubmodule = types.submodule {
+  configSubmodule = types.submodule {
     options = {
+      files = mkOption {
+        type = types.listOf (types.path);
+        description = "List of files to be used in the server";
+        default = [ ];
+      };
 
+      clientConfig = mkOption {
+        type = types.lines;
+        description = "Lines to be added to the config file";
+        default = "";
+      };
     };
+  };
+
+  defaultConfig = {
+    files = [ ];
+    clientConfig = "";
   };
 in {
   options = {
@@ -20,27 +35,50 @@ in {
 
       port = mkOption {
         type = types.int;
-        default = 9080;
+        default = 5029;
         description = "Port to run the server one";
       };
 
-      options = {
+      package = mkOption {
+        type = types.package;
+        description = "srb2kart package to use";
+        default = pkgs.srb2kart;
+      };
 
+      config = mkOption {
+        type = configSubmodule;
+        default = defaultConfig;
       };
     };
   };
 
   config = mkIf cfg.enable {
+
+    environment.etc.srb2kart = {
+      target = "srb2kart/.srb2kart/kartserv.cfg";
+      text = cfg.config.clientConfig;
+    };
+
     systemd.services.srb2kart = {
       enable = true;
+      wantedBy = [ "multi-user.target" ];
+
       unitConfig = {
         Requires = "network-online.target";
         After = "network-online.target";
       };
       serviceConfig = {
         Type = "exec";
-        ExecStart = "${pkgs.srb2kart}/bin/srb2kart -dedicated";
+        ExecStart = "${cfg.package}/bin/srb2kart -dedicated ${
+            if length cfg.config.files > 0 then
+              "-file ${toString cfg.config.files}"
+            else
+              ""
+          }";
       };
+      environment = { HOME = "/etc/srb2kart"; };
     };
+
+    networking = { firewall = { allowedTCPPorts = [ cfg.port ]; }; };
   };
 }
