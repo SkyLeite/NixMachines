@@ -12,6 +12,7 @@ in {
     ../../services/home-assistant.nix
     ../../services/nocodb.nix
     ../../modules/chaos-service.nix
+    ../../modules/srb2kart.nix
   ];
 
   boot = {
@@ -240,6 +241,8 @@ in {
   programs.bash.enableCompletion = true;
 
   services.pcscd.enable = true;
+
+  services.srb2kart = { enable = true; };
 
   services.syncthing = {
     enable = true;
