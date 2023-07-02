@@ -47,7 +47,7 @@ in {
 
     serviceToVirtualHost = (name: value:
       lib.nameValuePair (getServiceUrl name) ({
-        extraConfig = if value.caddyOptions then
+        extraConfig = if value.caddyOptions != "" then
           value.caddyOptions
         else ''
           reverse_proxy 127.0.0.1:${toString value.port}
