@@ -6,7 +6,14 @@ in {
 
   services.srb2kart = {
     enable = true;
-    config = { files = lib.filesystem.listFilesRecursive filesPath; };
+    config = {
+      files = lib.filesystem.listFilesRecursive filesPath;
+      clientConfig = ''
+        http_source "kart.zerolab.app"
+        advertise On
+        karteliminatelast No
+      '';
+    };
   };
 
   chaos.services.kart = {
