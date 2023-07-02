@@ -13,7 +13,7 @@ in {
     enable = true;
     port = 7483;
     caddyOptions = ''
-      root kart ${filesPath}
+      root * ${filesPath}
       file_server browse
     '';
   };
