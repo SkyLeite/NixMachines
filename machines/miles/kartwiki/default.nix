@@ -8,6 +8,7 @@ in {
     name = "SRB2Kart";
 
     passwordFile = "/run/keys/mediawiki-password";
+    passwordSender = "sky@leite.dev"; # lmao
 
     database = {
       user = "mediawiki";
