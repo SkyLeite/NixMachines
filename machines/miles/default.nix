@@ -13,6 +13,7 @@ in {
     ../../services/nocodb.nix
     ../../modules/chaos-service.nix
     ./srb2kart/default.nix
+    ./kartwiki/default.nix
   ];
 
   boot = {
@@ -94,6 +95,9 @@ in {
 
         local db n8n    trust
         host  db n8n    localhost trust
+
+        local mediawiki mediawiki    trust
+        host  mediawiki mediawiki    localhost trust
       '';
     };
 
