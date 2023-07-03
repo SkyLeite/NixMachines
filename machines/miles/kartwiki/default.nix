@@ -4,7 +4,7 @@ in {
   services.mediawiki = {
     enable = true;
 
-    url = "kartwiki.zerolab.app";
+    url = "https://kartwiki.zerolab.app";
     name = "SRB2Kart";
 
     passwordFile = "/run/keys/mediawiki-password";
