@@ -32,8 +32,7 @@ in {
       TinyMCE = pkgs.fetchzip {
         url =
           "https://github.com/wikimedia/mediawiki-extensions-TinyMCE/archive/refs/heads/master.zip";
-        sha256 =
-          "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
+        sha256 = "sha256-1y/B8FX+w7G6wJHYSLL0EIsZzTVEbfdh+dXuGzSk5i4=";
       };
     };
   };
