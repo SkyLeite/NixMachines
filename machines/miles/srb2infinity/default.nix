@@ -1,8 +1,7 @@
 { config, pkgs, lib, srb2pkgs, ... }:
 let filesPath = ./files;
 in {
-  imports =
-    [ ../../../modules/chaos-service.nix ../../../modules/srb2.nix ];
+  imports = [ ../../../modules/chaos-service.nix ../../../modules/srb2.nix ];
 
   services.srb2 = {
     enable = true;
@@ -11,10 +10,9 @@ in {
     config = {
       files = lib.filesystem.listFilesRecursive filesPath;
       clientConfig = ''
-        http_source "srb2infinity.zerolab.app"
-        advertise On
-        servername "Dr. Zap - discord.gg/invite/r-br"
-        server_contact "sky@leite.dev"
+        servername "[zap] SRB2Infinity"
+        allowjoin On
+        downloading On
       '';
     };
   };
