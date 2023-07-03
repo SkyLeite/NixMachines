@@ -68,7 +68,9 @@ in {
       };
       serviceConfig = {
         Type = "exec";
-        ExecStart = "${cfg.package}/bin/srb2 -dedicated ${
+        ExecStart = "${cfg.package}/bin/srb2 -dedicated -serverport ${
+            toString cfg.port
+          } -room 28 ${
             if length cfg.config.files > 0 then
               "-file ${toString cfg.config.files}"
             else
