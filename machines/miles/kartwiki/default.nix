@@ -16,9 +16,6 @@ in {
 
       type = "postgres";
 
-      host = "127.0.0.1";
-
-      socket = null;
       createLocally = false;
     };
 
