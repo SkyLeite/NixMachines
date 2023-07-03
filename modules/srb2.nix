@@ -26,11 +26,11 @@ let
   };
 in {
   options = {
-    services.srb2kart = {
+    services.srb2 = {
       enable = mkOption {
         type = types.bool;
         default = false;
-        description = "Enable SRB2Kart server";
+        description = "Enable SRB2 server";
       };
 
       port = mkOption {
@@ -41,7 +41,7 @@ in {
 
       package = mkOption {
         type = types.package;
-        description = "srb2kart package to use";
+        description = "srb2 package to use";
         default = pkgs.srb2;
       };
 
