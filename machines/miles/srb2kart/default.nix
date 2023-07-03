@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, srb2kartpkgs, ... }:
 let filesPath = ./files;
 in {
   imports =
@@ -6,6 +6,7 @@ in {
 
   services.srb2kart = {
     enable = true;
+    package = srb2kartpkgs.srb2kart;
     config = {
       files = lib.filesystem.listFilesRecursive filesPath;
       clientConfig = ''

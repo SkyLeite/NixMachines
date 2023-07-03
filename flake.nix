@@ -8,11 +8,14 @@
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
   inputs.hyprland.url = "github:hyprwm/Hyprland";
+  inputs.srb2nixpkgs.url = "github:MGlolenstine/nixpkgs/srb2kart";
 
-  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland, srb2nixpkgs
+    , ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      srb2kartpkgs = srb2nixpkgs.legacyPackages.${system};
       monitors = import ./machines/common/monitor-profiles.nix {
         inherit pkgs;
         inherit (nixpkgs) lib;
@@ -32,7 +35,7 @@
 
       nixosConfigurations.home = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit nixpkgs attrs monitors; };
+        specialArgs = { inherit nixpkgs attrs monitors srb2kartpkgs; };
         modules = [
           home-manager.nixosModules.home-manager
           {
@@ -52,7 +55,7 @@
 
       nixosConfigurations.miles = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit attrs; };
+        specialArgs = { inherit attrs srb2kartpkgs; };
         modules = [ ./machines/miles/default.nix ];
       };
     };

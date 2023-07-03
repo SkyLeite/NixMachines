@@ -23,11 +23,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1687969886,
-        "narHash": "sha256-tC2qFLmuM0PFaw0tMHVcFmzsG/351q09qa1EpuL2n1U=",
+        "lastModified": 1688302761,
+        "narHash": "sha256-YIYKeX3YfoAIg9DTe6cl1ga87rDCNDZugdGuqsvEN30=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "a7002d6bfca54742d5fc9b485a1879953b4585b9",
+        "rev": "c85d9137db45a1c9c161f4718b13cc3bd4cbd173",
         "type": "github"
       },
       "original": {
@@ -44,11 +44,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1687945216,
-        "narHash": "sha256-Bp9GOhYUaOeqWlDLjscAaZ93rL/2DpLLvEpw1xcGsFs=",
+        "lastModified": 1688295768,
+        "narHash": "sha256-MOBIh4g+UDM0Enqm/P9VBHzRCFTMktG+K+N2sXeByIw=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "990ad854bd1b17117e00e0b2dc26aefff5e30ed2",
+        "rev": "738ec900f4d5c5e2b00f90e71221ca380555b874",
         "type": "github"
       },
       "original": {
@@ -130,11 +130,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1687898314,
-        "narHash": "sha256-B4BHon3uMXQw8ZdbwxRK1BmxVOGBV4viipKpGaIlGwk=",
+        "lastModified": 1688231357,
+        "narHash": "sha256-ZOn16X5jZ6X5ror58gOJAxPfFLAQhZJ6nOUeS4tfFwo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e18dc963075ed115afb3e312b64643bf8fd4b474",
+        "rev": "645ff62e09d294a30de823cb568e9c6d68e92606",
         "type": "github"
       },
       "original": {
@@ -149,7 +149,24 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nix-colors": "nix-colors",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs_2",
+        "srb2nixpkgs": "srb2nixpkgs"
+      }
+    },
+    "srb2nixpkgs": {
+      "locked": {
+        "lastModified": 1685335181,
+        "narHash": "sha256-+HaxA4DHiGsjLB98JdtplZkLJQzVr2IV7USrV5pvP78=",
+        "owner": "MGlolenstine",
+        "repo": "nixpkgs",
+        "rev": "70315e6fac1af960254868d29b77e51d637d5471",
+        "type": "github"
+      },
+      "original": {
+        "owner": "MGlolenstine",
+        "ref": "srb2kart",
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "wlroots": {
