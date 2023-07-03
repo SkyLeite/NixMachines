@@ -17,7 +17,6 @@ in {
       type = "postgres";
 
       host = "127.0.0.1";
-      port = config.services.postgresql.port;
 
       socket = null;
       createLocally = false;
