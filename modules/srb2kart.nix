@@ -79,6 +79,11 @@ in {
       environment = { HOME = "/etc/srb2kart"; };
     };
 
-    networking = { firewall = { allowedTCPPorts = [ cfg.port ]; }; };
+    networking = {
+      firewall = {
+        allowedUDPPorts = [ cfg.port ];
+        allowedTCPPorts = [ cfg.port ];
+      };
+    };
   };
 }
