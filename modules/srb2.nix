@@ -54,7 +54,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.etc.srb2 = {
-      target = "srb2/.srb2/dconfig.cfg";
+      target = "srb2/.srb2/adedserv.cfg";
       text = cfg.config.clientConfig;
     };
 
@@ -70,7 +70,7 @@ in {
         Type = "exec";
         ExecStart = "${cfg.package}/bin/srb2 -dedicated -serverport ${
             toString cfg.port
-          } -room 28 -config /etc/srb2/.srb2/dconfig.cfg ${
+          } -room 28 ${
             if length cfg.config.files > 0 then
               "-file ${toString cfg.config.files}"
             else
