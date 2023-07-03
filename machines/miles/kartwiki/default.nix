@@ -20,6 +20,7 @@ in {
       port = config.services.postgresql.port;
 
       socket = null;
+      createLocally = false;
     };
 
     httpd.virtualHost = {
