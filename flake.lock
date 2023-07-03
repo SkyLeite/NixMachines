@@ -150,10 +150,11 @@
         "hyprland": "hyprland",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs_2",
+        "srb2knixpkgs": "srb2knixpkgs",
         "srb2nixpkgs": "srb2nixpkgs"
       }
     },
-    "srb2nixpkgs": {
+    "srb2knixpkgs": {
       "locked": {
         "lastModified": 1685335181,
         "narHash": "sha256-+HaxA4DHiGsjLB98JdtplZkLJQzVr2IV7USrV5pvP78=",
@@ -166,6 +167,22 @@
         "owner": "MGlolenstine",
         "ref": "srb2kart",
         "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "srb2nixpkgs": {
+      "locked": {
+        "lastModified": 1686161408,
+        "narHash": "sha256-+zLyuXX949OO4fQwa6AqTTHr8RSfBdHlMIq1AJuy+5I=",
+        "owner": "donovanglover",
+        "repo": "nixpkgs",
+        "rev": "97b52a7a806da410d171a755459fba17e39fcfed",
+        "type": "github"
+      },
+      "original": {
+        "owner": "donovanglover",
+        "repo": "nixpkgs",
+        "rev": "97b52a7a806da410d171a755459fba17e39fcfed",
         "type": "github"
       }
     },

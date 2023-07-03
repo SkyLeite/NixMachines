@@ -1,4 +1,4 @@
-{ config, pkgs, attrs, srb2kartpkgs, ... }:
+{ config, pkgs, attrs, srb2kartpkgs, srb2pkgs, ... }:
 
 let build-machine = (pkgs.callPackage ../common/build-machine.nix { });
 in {
@@ -14,6 +14,7 @@ in {
     ../../modules/chaos-service.nix
     ./srb2kart/default.nix
     ./kartwiki/default.nix
+    ./srb2infinity/default.nix
   ];
 
   boot = {
