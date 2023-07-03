@@ -54,7 +54,7 @@ in {
 
   config = mkIf cfg.enable {
     environment.etc.srb2 = {
-      target = "srb2/.srb2/config.cfg";
+      target = "srb2/.srb2/dconfig.cfg";
       text = cfg.config.clientConfig;
     };
 
