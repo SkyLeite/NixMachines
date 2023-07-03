@@ -58,7 +58,7 @@ in {
       text = cfg.config.clientConfig;
     };
 
-    systemd.services.srb2kart = {
+    systemd.services.srb2 = {
       enable = true;
       wantedBy = [ "multi-user.target" ];
 
