@@ -32,7 +32,7 @@ in {
   services.postgresql = {
     ensureDatabases = [ "mediawiki" ];
     ensureUsers = [{
-      name = "nocodb";
+      name = "mediawiki";
       ensurePermissions = {
         "DATABASE \"db\"" = "ALL PRIVILEGES";
         "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
