@@ -18,6 +18,8 @@ in {
 
       host = "localhost";
       port = config.services.postgresql.port;
+
+      socket = null;
     };
 
     httpd.virtualHost = {
