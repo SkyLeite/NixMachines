@@ -34,7 +34,7 @@ in {
     ensureUsers = [{
       name = "mediawiki";
       ensurePermissions = {
-        "DATABASE \"db\"" = "ALL PRIVILEGES";
+        "DATABASE \"mediawiki\"" = "ALL PRIVILEGES";
         "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
       };
       ensureClauses.login = true;
