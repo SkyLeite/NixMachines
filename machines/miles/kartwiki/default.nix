@@ -16,7 +16,7 @@ in {
 
       type = "postgres";
 
-      socket = "/run/postgresql/.s.PGSQL.5432";
+      socket = "/run/postgresql";
       createLocally = false;
     };
 
