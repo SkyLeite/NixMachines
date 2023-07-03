@@ -13,6 +13,8 @@ in {
         http_source "kart.zerolab.app"
         advertise On
         karteliminatelast No
+        servername "Dr. Zap - discord.gg/invite/r-br"
+        server_contact "sky@leite.dev"
       '';
     };
   };
