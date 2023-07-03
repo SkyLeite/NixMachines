@@ -35,6 +35,11 @@ in {
         sha256 = "sha256-1y/B8FX+w7G6wJHYSLL0EIsZzTVEbfdh+dXuGzSk5i4=";
       };
     };
+
+    extraConfig = ''
+      wfLoadExtension('TinyMCE');
+      $wgTinyMCEEnabled = true;
+    '';
   };
 
   services.phpfpm.settings = { log_level = "error"; };
