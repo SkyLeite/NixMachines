@@ -10,8 +10,6 @@ in {
     passwordFile = "/run/keys/mediawiki-password";
     passwordSender = "sky@leite.dev"; # lmao
 
-    poolConfig = { log_level = "error"; };
-
     database = {
       user = "mediawiki";
       name = "mediawiki";
@@ -30,6 +28,8 @@ in {
       }];
     };
   };
+
+  services.phpfpm.settings = { log_level = "error"; };
 
   services.postgresql = {
     ensureDatabases = [ "mediawiki" ];
