@@ -26,7 +26,7 @@ in {
 
         hm_motd_name "Dr. Zap"
         hm_motd_contact "\134discord.gg/invite/r-br"
-        hm_motd_tagline "Suco de múmia"
+        hm_motd_tagline "Suco de mumia"
 
         hm_restat On
         hm_restat_notify On
