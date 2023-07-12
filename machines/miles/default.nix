@@ -131,7 +131,7 @@ in {
     logind.lidSwitch = "ignore";
     logind.lidSwitchDocked = "ignore";
 
-    papermc.enable = false;
+    papermc.enable = true;
     funkwhale.enable = false;
 
     webhookCustom = {
