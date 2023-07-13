@@ -31,7 +31,7 @@ in {
     extensions = {
       TinyMCE = pkgs.fetchzip {
         url =
-          "https://github.com/wikimedia/mediawiki-extensions-TinyMCE/archive/refs/heads/master.zip";
+          "https://github.com/wikimedia/mediawiki-extensions-TinyMCE/archive/f2a3fbedd5dba81552de513716cd8697b8ff93fe.zip";
         sha256 = "sha256-+fAEcUwmEqqljsNevqNGNdhH+0h8Ku+EvJDMEjKCI/w=";
       };
     };
