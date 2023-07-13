@@ -4,12 +4,16 @@ with lib;
 
 let
   cfg = config.services.papermc;
-  papermc = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs: {
-    mcVersion = "1.20.1";
-    buildNum = "72";
+  mcVersion = "1.20.1";
+  buildNum = "72";
 
-    jar = previousAttrs.jar // {
-      sha256 = "sha256-1y/B8FX+w7G6wJHYSLL0EIsZzTVEbfdh+dXuGzSk5i4=";
+  papermc = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs: {
+    version = "1.20.1";
+
+    jar = pkgs.fetchurl {
+      url =
+        "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+      sha256 = "sha256-VEoqK/APcHRaYoa/w0ROSefUG3VvfeURAXOin3Icgtk=";
     };
   });
 in {
