@@ -6,7 +6,7 @@ let
   cfg = config.services.papermc;
   jar = ./paper-1.20.1-72.jar;
   run = pkgs.writeScriptBin "run-paper" ''
-    #!${bash}/bin/sh
+    #!${pkgs.bash}/bin/sh
     exec ${pkgs.jre}/bin/java \
       -jar ${jar} nogui \
       -Xms10G \
