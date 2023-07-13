@@ -6,6 +6,7 @@ let
   cfg = config.services.papermc;
   jar = ./paper-1.20.1-72.jar;
   run = pkgs.writeScriptBin "run-paper" ''
+    #!/usr/bin/env bash
     ${pkgs.jre}/bin/java \
       -jar ${jar} \
       -Xms10G \
