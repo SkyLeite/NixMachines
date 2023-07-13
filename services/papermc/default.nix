@@ -34,7 +34,7 @@ in {
   config = mkIf cfg.enable {
     networking = { firewall = { allowedTCPPorts = [ 25565 ]; }; };
 
-    systemd.services.papermc = let
+    systemd.services.minecraft = let
       format = pkgs.formats.yaml { };
       config = format.generate "papermc.yml" cfg.config;
     in {
