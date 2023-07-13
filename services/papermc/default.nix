@@ -6,9 +6,9 @@ let
   cfg = config.services.papermc;
   jar = ./paper-1.20.1-72.jar;
   run = pkgs.writeScriptBin "run-paper" ''
-    #!/usr/bin/env bash
-    ${pkgs.jre}/bin/java \
-      -jar ${jar} \
+    #!${bash}/bin/sh
+    exec ${pkgs.jre}/bin/java \
+      -jar ${jar} nogui \
       -Xms10G \
       -XX:+UseG1GC \
       -XX:+ParallelRefProcEnabled \
