@@ -7,7 +7,7 @@ in {
     ../../services/webhook.nix
     ../../services/dashy.nix
     ../../services/n8n.nix
-    ../../services/papermc.nix
+    ../../services/papermc/default.nix
     ../../services/funkwhale/default.nix
     ../../services/home-assistant.nix
     ../../services/nocodb.nix
