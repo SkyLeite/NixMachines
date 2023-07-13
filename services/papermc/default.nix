@@ -8,7 +8,6 @@ let
   run = pkgs.writeScriptBin "run-paper" ''
     #!${pkgs.bash}/bin/sh
     exec ${pkgs.jre}/bin/java \
-      -jar ${jar} nogui \
       -Xms10G \
       -XX:+UseG1GC \
       -XX:+ParallelRefProcEnabled \
@@ -29,7 +28,8 @@ let
       -XX:+PerfDisableSharedMem \
       -XX:MaxTenuringThreshold=1 \
       -Dusing.aikars.flags=https://mcflags.emc.gs \
-      -Daikars.new.flags=true
+      -Daikars.new.flags=true \
+      -jar ${jar} nogui
   '';
 in {
   options = {
