@@ -4,15 +4,13 @@ with lib;
 
 let
   cfg = config.services.papermc;
-  mcVersion = "1.20.1";
-  buildNum = "72";
 
   papermc = pkgs.papermc.overrideAttrs (finalAttrs: previousAttrs: {
     version = "1.20.1";
 
     jar = pkgs.fetchurl {
       url =
-        "https://papermc.io/api/v2/projects/paper/versions/${mcVersion}/builds/${buildNum}/downloads/paper-${mcVersion}-${buildNum}.jar";
+        "https://api.papermc.io/v2/projects/paper/versions/1.20.1/builds/72/downloads/paper-1.20.1-72.jar";
       sha256 = "sha256-VEoqK/APcHRaYoa/w0ROSefUG3VvfeURAXOin3Icgtk=";
     };
   });
