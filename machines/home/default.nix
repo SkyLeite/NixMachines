@@ -458,7 +458,6 @@ in {
 
     extraOptions = ''
       experimental-features = nix-command flakes
-      plugin-files = ${pkgs.nix-plugins}/lib/nix/plugins
     '';
   };
 
