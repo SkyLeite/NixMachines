@@ -8,12 +8,14 @@
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
   inputs.hyprland.url = "github:hyprwm/Hyprland";
+  inputs.hyprland-contrib.url = "github:hyprwm/contrib";
+  inputs.gbar.url = "github:scorpion-26/gBar";
   inputs.srb2knixpkgs.url = "github:MGlolenstine/nixpkgs/srb2kart";
   inputs.srb2nixpkgs.url =
     "github:donovanglover/nixpkgs/97b52a7a806da410d171a755459fba17e39fcfed";
 
-  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland, srb2knixpkgs
-    , srb2nixpkgs, ... }@attrs:
+  outputs = { self, nixpkgs, home-manager, nix-colors, hyprland
+    , hyprland-contrib, gbar, srb2knixpkgs, srb2nixpkgs, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
@@ -49,7 +51,7 @@
             # Optionally, use home-manager.extraSpecialArgs to pass
             # arguments to home.nix
             home-manager.extraSpecialArgs = {
-              inherit nix-colors hyprland monitors;
+              inherit nix-colors hyprland hyprland-contrib monitors gbar;
             };
           }
           ./machines/home/default.nix

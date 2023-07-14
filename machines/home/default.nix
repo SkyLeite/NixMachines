@@ -20,6 +20,15 @@ let
     id = "alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-mono";
   };
 
+  hyprlandLauncher = pkgs.writeShellScript "hyprlandLauncher" ''
+    export SDL_VIDEODRIVER=wayland
+    export _JAVA_AWT_WM_NONREPARENTING=1
+    export QT_QPA_PLATFORM=hyprland
+    export XDG_CURRENT_DESKTOP=hyprland
+    export XDG_SESSION_DESKTOP=hyprland
+    exec Hyprland $@
+  '';
+
   swayLauncher = pkgs.writeShellScript "swayLauncher" ''
     export SDL_VIDEODRIVER=wayland
     export _JAVA_AWT_WM_NONREPARENTING=1
@@ -89,6 +98,7 @@ in {
       source-han-sans-simplified-chinese
       source-han-sans-traditional-chinese
       ubuntu_font_family
+      nerdfonts
     ];
   };
 
@@ -145,6 +155,7 @@ in {
     text = ''
       ${swayLauncher}
       ${steamLauncher}
+      ${hyprlandLauncher}
     '';
   };
 

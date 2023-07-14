@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nix-colors, hyprland, ... }:
+{ config, pkgs, lib, nix-colors, hyprland, hyprland-contrib, gbar, ... }:
 
 let
   mod = "Mod4";
@@ -45,6 +45,7 @@ in {
   imports = [
     nix-colors.homeManagerModule
     hyprland.homeManagerModules.default
+    gbar.homeManagerModules.x86_64-linux.default
     #./polybar
     ./variables.nix
     ./i3.nix
@@ -55,6 +56,7 @@ in {
     ./scripts/gui.nix
     ./emacs/default.nix
     ./hyprland/default.nix
+    ./gbar/default.nix
     ./eww/default.nix
     ./packages/noisetorch.nix
   ];
