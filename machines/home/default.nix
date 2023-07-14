@@ -390,6 +390,7 @@ in {
     monitors.outputProfileScript
     waypipe
     piper
+    srb2pkgs.srb2
   ];
 
   qt = {
