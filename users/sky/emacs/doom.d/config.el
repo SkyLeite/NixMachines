@@ -121,9 +121,21 @@
   (require 'eglot-fsharp)
   (set-eglot-client! 'haskell-mode '("/nix/store/l4vfmlm894xpa17plhfwacycalqajcys-haskell-language-server-1.7.0.0/bin/haskell-language-server-9.0.2" "--lsp")))
 
-(after! lsp
+(after! lsp-mode
   (setq lsp-fsharp-use-dotnet-tool-for-fsac t)
   (setq lsp-clients-lua-language-server-bin "/nix/store/z2f0fiq74nmnqq9gw2xbp9n2b3fvbaz0-user-environment/bin/lua-language-server"))
+
+(after! lsp-ui
+  (setq lsp-ui-doc-max-height 40)
+  (setq lsp-ui-doc-include-signature t))
+
+;; (defun lsp-ui-doc-glance-or-focus ())
+
+(unbind-key "K" evil-normal-state-map)
+(map! :after lsp-mode
+      :map evil-normal-state-map
+      "K" #'lsp-ui-doc-glance)
+
 
 ;; (after! format-all-mode
 ;;   (advice-add 'format-all-buffer :around #'envrc-propagate-environment)
