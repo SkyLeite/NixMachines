@@ -7,7 +7,10 @@
     inputs.nixpkgs.follows = "nixpkgs";
   };
   inputs.nix-colors.url = "github:misterio77/nix-colors";
-  inputs.hyprland.url = "github:hyprwm/Hyprland";
+  inputs.hyprland = {
+    url = "github:hyprwm/Hyprland";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
   inputs.hyprland-contrib.url = "github:hyprwm/contrib";
   inputs.gbar.url = "github:scorpion-26/gBar";
   inputs.srb2knixpkgs.url = "github:MGlolenstine/nixpkgs/srb2kart";
