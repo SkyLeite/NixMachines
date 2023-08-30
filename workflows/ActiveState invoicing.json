@@ -162,6 +162,7 @@
           "item": [
             {
               "mode": "everyMonth",
+              "minute": 42,
               "dayOfMonth": 29
             }
           ]
@@ -429,7 +430,11 @@
     }
   ],
   "pinData": {},
-  "settings": {},
+  "settings": {
+    "timezone": "America/Sao_Paulo",
+    "saveManualExecutions": false,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
   "staticData": null,
   "tags": [
     {
@@ -440,6 +445,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-05-31T19:07:04.000Z",
-  "versionId": "268402ae-8c70-468e-bdc8-0f275e9093d4"
+  "updatedAt": "2023-08-29T17:40:34.000Z",
+  "versionId": "b962df97-8ad0-449c-a73d-b9415c9fe2ae"
 }
