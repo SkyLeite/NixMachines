@@ -10,7 +10,7 @@ in {
     config = {
       files = lib.filesystem.listFilesRecursive filesPath;
       clientConfig = ''
-        http_source "kart.zerolab.app"
+        http_source "https://kart.zerolab.app"
         advertise On
         karteliminatelast No
         kartspeed 2
