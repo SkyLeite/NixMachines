@@ -26,7 +26,7 @@ let
     export QT_QPA_PLATFORM=wayland
     export XDG_CURRENT_DESKTOP=hyprland
     export XDG_SESSION_DESKTOP=hyprland
-    exec Hyprland $@
+    exec dbus-run-session Hyprland $@
   '';
 
   swayLauncher = pkgs.writeShellScript "swayLauncher" ''
@@ -35,7 +35,7 @@ let
     export QT_QPA_PLATFORM=wayland
     export XDG_CURRENT_DESKTOP=sway
     export XDG_SESSION_DESKTOP=sway
-    exec ${pkgs.sway}/bin/sway $@
+    exec dbus-run-session ${pkgs.sway}/bin/sway $@
   '';
 
   steamLauncher = pkgs.writeShellScript "steamLauncher"
@@ -208,7 +208,7 @@ in {
 
     lxqt.enable = true;
 
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-wlr pkgs.xdg-desktop-portal-gtk ];
   };
   services.flatpak.enable = true;
 
