@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, nixpkgs, modulesPath, monitors, srb2pkgs, ... }:
+{ config, pkgs, lib, nixpkgs, modulesPath, monitors, srb2pkgs, nix-alien, ... }:
 
 let
   bluetoothExecStart =
@@ -402,6 +402,18 @@ in {
     waypipe
     piper
     srb2pkgs.srb2
+    nix-alien.packages."x86_64-linux".nix-alien
+    steamtinkerlaunch
+    runelite
+    (uxplay.overrideAttrs (prev: rec {
+      version = "1.66";
+      src = fetchFromGitHub {
+        owner = "FDH2";
+        repo = "UxPlay";
+        rev = "v1.66";
+        sha256 = "sha256-kIKBxkaFvwxWUkO7AAwehP9YPOci+u2g67hEWZ52UqE=";
+      };
+    }))
   ];
 
   qt = {
@@ -505,6 +517,8 @@ in {
   };
 
   nix.settings.trusted-users = [ "root" "sky" ];
+  environment.etc."nix/path/nixpkgs".source = nixpkgs;
+  nix.nixPath = [ "/etc/nix/path" ];
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -110,6 +110,7 @@ in {
     pkgs.shellcheck
     pkgs.shfmt
     pkgs.font-awesome
+    pkgs.font-awesome_5
     pkgs.pulsemixer
     pkgs.dfeet
     pkgs.comma
@@ -141,10 +142,10 @@ in {
     pkgs.yad
     pkgs.yuzu-mainline
     pkgs.prusa-slicer
-    pkgs.uxplay
     pkgs.obsidian
     pkgs.unar
     pkgs.p7zip
+    pkgs.srb2kart
 
     customXivLauncher
     gamescopeSteam
@@ -152,7 +153,10 @@ in {
   ];
 
   home = {
-    sessionPath = [ "$HOME/.local/ActiveState/StateTool/beta/bin" ];
+    sessionPath = [
+      "$HOME/.local/ActiveState/StateTool/beta/bin"
+      # "/mnt/hdd/projects/TheHomeRepot/third_party/bin"
+    ];
     sessionVariables = {
       DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
       EDITOR = "emacs";
@@ -376,6 +380,9 @@ in {
         "image/jpeg" = "org.xfce.ristretto.desktop";
         "image/gif" = "org.xfce.ristretto.desktop";
         "image/webp" = "firefox.desktop";
+        "application/zip" = "xarchiver.desktop";
+        "application/x-7z-compressed" = "xarchiver.desktop";
+        "application/vnd.rar" = "xarchiver.desktop";
       };
     };
   };

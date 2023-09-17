@@ -7,7 +7,7 @@ let
 in {
   wayland.windowManager.sway = {
     enable = true;
-    systemdIntegration = true;
+    systemd.enable = true;
     config = {
       modifier = i3.config.modifier;
       terminal = i3.config.terminal;
@@ -73,6 +73,12 @@ in {
       workspaceOutputAssign = [{
         output = monitors.monitorPorts.tv;
         workspace = "tv";
+      }];
+
+      bars = [{
+        position = "bottom";
+        statusCommand =
+          "${pkgs.i3status-rust}/bin/i3status-rs ~/.config/i3status-rust/config-main.toml";
       }];
 
       startup = [

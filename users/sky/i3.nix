@@ -247,17 +247,15 @@ in {
         blocks = [
           {
             block = "music";
-            player = "mopidy";
-            format = "{artist} - {title}";
-            max_width = 50;
-            dynamic_width = true;
+            player = "spotify";
+            format =
+              " $icon {$combo.str(max_w:60,rot_interval:0.5) $prev $play $next |}";
           }
           {
             block = "disk_space";
             path = "/";
+            format = " NVME $icon $available ";
             info_type = "available";
-            format = "{icon} {used}/{total} ({available} free)";
-            unit = "GB";
             interval = 60;
             warning = 20.0;
             alert = 10.0;
@@ -265,45 +263,29 @@ in {
           {
             block = "disk_space";
             path = "/mnt/hdd";
+            format = " HDD $icon $available ";
             info_type = "available";
-            format = "{icon} {used}/{total} ({available} free)";
-            unit = "GB";
             interval = 60;
             warning = 20.0;
             alert = 10.0;
           }
-          (let
-            qemuUri = "qemu:///system";
-            virsh = "${pkgs.libvirt}/bin/virsh -c ${qemuUri}";
-            vm = "win10";
-          in {
-            block = "toggle";
-            text = "Windows";
-            command_state = ''${virsh} domstate ${vm} | grep -v "shut off"'';
-            command_on = "${virsh} start ${vm}";
-            command_off = "${virsh} shutdown ${vm}";
-            interval = 5;
-          })
-          (let
-            qemuUri = "qemu:///system";
-            virsh = "${pkgs.libvirt}/bin/virsh -c ${qemuUri}";
-            vm = "work";
-          in {
-            block = "toggle";
-            text = "Work";
-            command_state = ''${virsh} domstate ${vm} | grep -v "shut off"'';
-            command_on = "${virsh} start ${vm}";
-            command_off = "${virsh} shutdown ${vm}";
-            interval = 5;
-          })
+          {
+            block = "cpu";
+            interval = 1;
+            format = " $icon $barchart $utilization ";
+          }
+          {
+            block = "memory";
+            format =
+              " $icon $mem_used.eng(prefix:M)/$mem_total.eng(prefix:M)($mem_total_used_percents.eng(w:2)) ";
+          }
+          { block = "amd_gpu"; }
           {
             block = "sound";
-            on_click = "pavucontrol --tab=3";
+            max_vol = 100;
+            headphones_indicator = true;
           }
-          {
-            block = "time";
-            on_click = "xdg-open https://calendar.google.com";
-          }
+          { block = "time"; }
         ];
       };
     };
