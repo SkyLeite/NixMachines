@@ -27,7 +27,7 @@
       "main": [
         [
           {
-            "node": "Format date",
+            "node": "Format payment reference",
             "type": "main",
             "index": 0
           }
@@ -139,6 +139,17 @@
           }
         ]
       ]
+    },
+    "Format payment reference": {
+      "main": [
+        [
+          {
+            "node": "Format date",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "createdAt": "2023-05-23T20:43:02.252Z",
@@ -207,7 +218,7 @@
       "type": "n8n-nodes-base.dateTime",
       "typeVersion": 1,
       "position": [
-        120,
+        140,
         120
       ],
       "id": "b4f125bc-fbcb-4f70-afbe-84ff2a45e6a8"
@@ -237,6 +248,10 @@
             {
               "fieldName": "commercial_partner_id",
               "fieldValue": "3"
+            },
+            {
+              "fieldName": "payment_reference",
+              "fieldValue": "={{ $json.payment_reference }}"
             }
           ]
         }
@@ -245,7 +260,7 @@
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        480,
+        880,
         340
       ],
       "id": "d1b71497-5d77-4d95-8ecb-891bbe35446a",
@@ -258,7 +273,7 @@
     },
     {
       "parameters": {
-        "value": "={{$json[\"due_date\"]}}",
+        "value": "={{ $node['Get due date'].json.due_date }}",
         "dataPropertyName": "due_date",
         "toFormat": "YYYY-MM-DD",
         "options": {}
@@ -267,14 +282,14 @@
       "type": "n8n-nodes-base.dateTime",
       "typeVersion": 1,
       "position": [
-        300,
+        460,
         120
       ],
       "id": "520ccb41-e66f-48d0-a831-4205f5093503"
     },
     {
       "parameters": {
-        "value": "={{$json[\"today\"]}}",
+        "value": "={{ $node['Get due date'].json.today }}",
         "dataPropertyName": "today",
         "toFormat": "YYYY-MM-DD",
         "options": {}
@@ -283,7 +298,7 @@
       "type": "n8n-nodes-base.dateTime",
       "typeVersion": 1,
       "position": [
-        480,
+        600,
         120
       ],
       "id": "7610cd95-11fa-4576-8bea-c9520fc643cb"
@@ -309,7 +324,7 @@
       "type": "n8n-nodes-base.function",
       "typeVersion": 1,
       "position": [
-        780,
+        1440,
         520
       ],
       "id": "8cd69a2a-4ea9-4dbc-b77b-7e81bfd5b627"
@@ -343,7 +358,7 @@
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        1280,
+        1940,
         280
       ],
       "id": "fe03df37-5097-4113-91de-5ff82649d9de",
@@ -365,7 +380,7 @@
       "type": "n8n-nodes-base.odoo",
       "typeVersion": 1,
       "position": [
-        640,
+        1300,
         520
       ],
       "id": "8caf20a3-b642-43b9-b0f4-35c623b53ed3",
@@ -390,7 +405,7 @@
       "type": "n8n-nodes-base.pushover",
       "typeVersion": 1,
       "position": [
-        1360,
+        2020,
         660
       ],
       "credentials": {
@@ -410,7 +425,7 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 2,
       "position": [
-        980,
+        1640,
         300
       ]
     },
@@ -424,8 +439,26 @@
       "type": "n8n-nodes-base.itemLists",
       "typeVersion": 2.1,
       "position": [
-        1160,
+        1820,
         660
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "formatDate",
+        "date": "={{ $json.today }}",
+        "format": "custom",
+        "customFormat": "MMMM yyyy",
+        "outputFieldName": "payment_reference",
+        "options": {}
+      },
+      "id": "c7d6cddf-32c1-403f-9843-fcd0c8378bfa",
+      "name": "Format payment reference",
+      "type": "n8n-nodes-base.dateTime",
+      "typeVersion": 2,
+      "position": [
+        300,
+        120
       ]
     }
   ],
@@ -445,6 +478,6 @@
     }
   ],
   "triggerCount": 1,
-  "updatedAt": "2023-08-29T17:40:34.000Z",
-  "versionId": "b962df97-8ad0-449c-a73d-b9415c9fe2ae"
+  "updatedAt": "2023-11-02T17:39:47.000Z",
+  "versionId": "d7896dcb-de13-4611-8c4a-0c08220b6766"
 }
