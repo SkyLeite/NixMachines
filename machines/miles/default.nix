@@ -8,7 +8,6 @@ in {
     ../../services/dashy.nix
     ../../services/n8n.nix
     ../../services/papermc/default.nix
-    ../../services/funkwhale/default.nix
     ../../services/home-assistant.nix
     ../../services/nocodb.nix
     ../../modules/chaos-service.nix
@@ -145,7 +144,6 @@ in {
     logind.lidSwitchDocked = "ignore";
 
     papermc.enable = true;
-    funkwhale.enable = false;
 
     webhookCustom = {
       enable = true;
