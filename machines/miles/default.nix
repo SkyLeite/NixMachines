@@ -249,8 +249,6 @@ in {
       port = 1414;
     };
 
-    environment.etc."nextcloud-admin-pass".text = "test123";
-
     # Nextcloud port
     nginx.virtualHosts."localhost".listen = [ { addr = "127.0.0.1"; port = 6528; } ];
     nextcloud = {
@@ -272,6 +270,8 @@ in {
       caching.redis = true;
     };
   };
+
+  environment.etc."nextcloud-admin-pass".text = "test123";
 
   virtualisation.docker.enable = true;
   virtualisation.oci-containers.backend = "podman";
