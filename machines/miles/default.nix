@@ -62,6 +62,11 @@ in {
       enable = true;
       port = config.services.cockpit.port;
     };
+
+    services.cloud = {
+      enable = true;
+      port = 6528;
+    };
   };
 
   services = {
@@ -81,6 +86,14 @@ in {
         }
         {
           name = "n8n";
+          ensurePermissions = {
+            "DATABASE \"db\"" = "ALL PRIVILEGES";
+            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          };
+          ensureClauses.login = true;
+        }
+        {
+          name = "nextcloud";
           ensurePermissions = {
             "DATABASE \"db\"" = "ALL PRIVILEGES";
             "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
@@ -236,6 +249,29 @@ in {
     octoprint = {
       enable = true;
       port = 1414;
+    };
+
+    environment.etc."nextcloud-admin-pass".text = "test123";
+
+    # Nextcloud port
+    nginx.virtualHosts."localhost".listen = [ { addr = "127.0.0.1"; port = 6528; } ];
+    nextcloud = {
+      enable = true;
+      package = pkgs.nextcloud27;
+      hostName = "cloud.leite.dev";
+      database.createLocally = true;
+      configureRedis = true;
+      https = true;
+      config = {
+        dbtype = "pgsql";
+        dbuser = "nextcloud";
+        dbname = "nextcloud";
+        adminpassFile = "/etc/nextcloud-admin-pass";
+        defaultPhoneRegion = "br";
+        overwriteProtocol = "https";
+      };
+      notify_push.enable = true;
+      caching.redis = true;
     };
   };
 
