@@ -265,7 +265,7 @@ in {
         adminpassFile = "/etc/nextcloud-admin-pass";
         defaultPhoneRegion = "br";
         overwriteProtocol = "https";
-        trusted_proxies = [
+        trustedProxies = [
           "127.0.0.1"
           "localhost"
         ];
