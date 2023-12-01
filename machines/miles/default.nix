@@ -313,6 +313,7 @@ in {
   time.timeZone = "Americas/Sao_Paulo";
 
   # Users
+  users.groups.sky = {};
   users.extraUsers.sky = {
     isNormalUser = true;
     createHome = true;
