@@ -1,11 +1,11 @@
-{ config, pkgs, lib, srb2pkgs, ... }:
+{ config, pkgs, lib, ... }:
 let filesPath = ./files;
 in {
   imports = [ ../../../modules/chaos-service.nix ../../../modules/srb2.nix ];
 
   services.srb2 = {
     enable = true;
-    package = srb2pkgs.srb2;
+    package = pkgs.srb2;
     port = 6767;
     config = {
       files = lib.filesystem.listFilesRecursive filesPath;

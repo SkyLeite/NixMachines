@@ -1,4 +1,4 @@
-{ config, pkgs, attrs, srb2kartpkgs, srb2pkgs, ... }:
+{ config, pkgs, attrs, ... }:
 
 let build-machine = (pkgs.callPackage ../common/build-machine.nix { });
 in {

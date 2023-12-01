@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, nixpkgs, modulesPath, monitors, srb2pkgs, nix-alien, ... }:
+{ config, pkgs, lib, nixpkgs, modulesPath, monitors, nix-alien, ... }:
 
 let
   bluetoothExecStart =
@@ -401,7 +401,7 @@ in {
     monitors.outputProfileScript
     waypipe
     piper
-    srb2pkgs.srb2
+    srb2
     nix-alien.packages."x86_64-linux".nix-alien
     steamtinkerlaunch
     runelite

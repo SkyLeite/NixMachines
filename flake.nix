@@ -13,18 +13,13 @@
   };
   inputs.hyprland-contrib.url = "github:hyprwm/contrib";
   inputs.gbar.url = "github:scorpion-26/gBar";
-  inputs.srb2knixpkgs.url = "github:MGlolenstine/nixpkgs/srb2kart";
-  inputs.srb2nixpkgs.url =
-    "github:donovanglover/nixpkgs/97b52a7a806da410d171a755459fba17e39fcfed";
   inputs.nix-alien.url = "github:thiagokokada/nix-alien";
 
   outputs = { self, nixpkgs, home-manager, nix-colors, hyprland
-    , hyprland-contrib, gbar, srb2knixpkgs, srb2nixpkgs, nix-alien, ... }@attrs:
+    , hyprland-contrib, gbar, nix-alien, ... }@attrs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      srb2kartpkgs = srb2knixpkgs.legacyPackages.${system};
-      srb2pkgs = srb2nixpkgs.legacyPackages.${system};
       monitors = import ./machines/common/monitor-profiles.nix {
         inherit pkgs;
         inherit (nixpkgs) lib;
@@ -45,7 +40,7 @@
       nixosConfigurations.home = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         specialArgs = {
-          inherit nixpkgs attrs monitors srb2kartpkgs srb2pkgs nix-alien;
+          inherit nixpkgs attrs monitors nix-alien;
         };
         modules = [
           home-manager.nixosModules.home-manager
@@ -66,7 +61,7 @@
 
       nixosConfigurations.miles = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit attrs srb2kartpkgs srb2pkgs; };
+        specialArgs = { inherit attrs; };
         modules = [ ./machines/miles/default.nix ];
       };
     };
