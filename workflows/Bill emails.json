@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "connections": {
     "New mail": {
       "main": [
@@ -484,6 +484,6 @@
   },
   "tags": [],
   "triggerCount": 1,
-  "updatedAt": "2023-06-19T20:17:36.000Z",
-  "versionId": "65f0ec9a-9e8f-405d-b326-a666b3b2b1b0"
+  "updatedAt": "2023-12-29T17:59:32.000Z",
+  "versionId": "db2c4ca9-fcd8-44d2-8919-ccaa650c2e2b"
 }
