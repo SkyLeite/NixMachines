@@ -22,7 +22,7 @@
 ;; accept. For example:
 ;;
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 15)
-     doom-variable-pitch-font (font-spec :family "Comic Sans MS" :size 13)) ;; haha funny
+      doom-variable-pitch-font (font-spec :family "Comic Sans MS" :size 13)) ;; haha funny
 ;;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
 ;; up, `M-x eval-region' to execute elisp code, and 'M-x doom/reload-font' to
@@ -82,6 +82,8 @@
 
 (use-package! ts)
 
+(defvar flymake-allowed-file-name-masks nil)
+
 (after! org
   (add-to-list 'org-capture-templates
                '("i" "Idea" entry (file+headline +org-capture-todo-file "Idea") "* TODO %? %(org-set-tags \"idea\")"))
@@ -123,7 +125,9 @@
 
 (after! lsp-mode
   (setq lsp-fsharp-use-dotnet-tool-for-fsac t)
-  (setq lsp-clients-lua-language-server-bin "/nix/store/z2f0fiq74nmnqq9gw2xbp9n2b3fvbaz0-user-environment/bin/lua-language-server"))
+  (setq lsp-clients-lua-language-server-bin "/etc/profiles/per-user/sky/bin/lua-language-server")
+  (add-hook 'csharp-tree-sitter-mode-hook #'lsp-deferred)
+  (add-hook 'csharp-mode-hook #'lsp-deferred))
 
 (after! lsp-ui
   (setq lsp-ui-doc-max-height 40)
@@ -135,6 +139,10 @@
 (map! :after lsp-mode
       :map evil-normal-state-map
       "K" #'lsp-ui-doc-glance)
+
+(after! apheleia
+  (setf (alist-get 'csharpie apheleia-formatters)
+        '("dotnet" "csharpie" "--skip-write" "--write-stdout" filepath)))
 
 
 ;; (after! format-all-mode
