@@ -250,7 +250,10 @@ in {
     };
 
     # Nextcloud port
-    nginx.virtualHosts."localhost".listen = [ { addr = "127.0.0.1"; port = 6528; } ];
+    nginx.virtualHosts."localhost".listen = [{
+      addr = "127.0.0.1";
+      port = 6528;
+    }];
     nextcloud = {
       enable = true;
       package = pkgs.nextcloud27;
@@ -265,10 +268,7 @@ in {
         adminpassFile = "/etc/nextcloud-admin-pass";
         defaultPhoneRegion = "br";
         overwriteProtocol = "https";
-        trustedProxies = [
-          "127.0.0.1"
-          "localhost"
-        ];
+        trustedProxies = [ "127.0.0.1" "localhost" ];
       };
       notify_push.enable = true;
       caching.redis = true;
@@ -318,7 +318,7 @@ in {
   time.timeZone = "Americas/Sao_Paulo";
 
   # Users
-  users.groups.sky = {};
+  users.groups.sky = { };
   users.extraUsers.sky = {
     isNormalUser = true;
     createHome = true;
