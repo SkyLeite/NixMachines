@@ -67,6 +67,10 @@ in {
               app_id = "org.kde.polkit-kde-authentication-agent-1";
             };
           }
+          {
+            command = "floating enable";
+            criteria = { title = "Process List"; };
+          }
         ];
       };
 
