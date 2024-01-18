@@ -110,7 +110,7 @@ in {
   home.packages = [ pkgs.swaynotificationcenter ];
 
   services.kanshi = {
-    enable = true;
+    enable = false;
     profiles = {
       default = {
         outputs = [
