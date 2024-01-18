@@ -245,7 +245,7 @@ in {
     };
 
     octoprint = {
-      enable = true;
+      enable = false;
       port = 1414;
     };
 
