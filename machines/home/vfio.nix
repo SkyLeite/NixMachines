@@ -14,9 +14,9 @@ in {
 
   environment.systemPackages = [
     pkgs.virt-manager
-    pkgs.looking-glass-client
+    # pkgs.looking-glass-client
     pkgs.swtpm
-    pkgs.win-virtio
+    # pkgs.win-virtio
     lookingGlassDesktopItem
   ];
 
