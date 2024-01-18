@@ -248,31 +248,6 @@ in {
       enable = false;
       port = 1414;
     };
-
-    # Nextcloud port
-    # nginx.virtualHosts."localhost".listen = [{
-    #   addr = "127.0.0.1";
-    #   port = 6528;
-    # }];
-    nextcloud = {
-      enable = false;
-      package = pkgs.nextcloud27;
-      hostName = "cloud.leite.dev";
-      database.createLocally = true;
-      configureRedis = true;
-      https = true;
-      config = {
-        dbtype = "pgsql";
-        dbuser = "nextcloud";
-        dbname = "nextcloud";
-        adminpassFile = "/etc/nextcloud-admin-pass";
-        defaultPhoneRegion = "br";
-        overwriteProtocol = "https";
-        trustedProxies = [ "127.0.0.1" "localhost" ];
-      };
-      notify_push.enable = true;
-      caching.redis = true;
-    };
   };
 
   environment.etc."nextcloud-admin-pass".text = "test123";
