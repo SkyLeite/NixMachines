@@ -28,18 +28,21 @@ let
       width = 5120;
       height = 1440;
       refreshRate = 239.761;
+      primary = true;
     };
 
     secondary = {
       width = 1920;
       height = 1080;
       refreshRate = 144;
+      primary = false;
     };
 
     tv = {
       width = 3840;
       height = 2160;
       refreshRate = 60;
+      primary = false;
     };
   };
 
@@ -101,7 +104,8 @@ let
       default = false;
       onActive = lib.concatStringsSep "&&" [
         "${pkgs.gtk3}/bin/gtk-launch --display=:0 'Steam (Gamescope 4k)'"
-        "${pkgs.wlrctl}/bin/wlrctl toplevel waitfor title:\"Steam Big Picture Mode\""
+        ''
+          ${pkgs.wlrctl}/bin/wlrctl toplevel waitfor title:"Steam Big Picture Mode"''
         "${pkgs.sway}/bin/swaymsg '[title=\"^Steam Big Picture Mode$\"] focus, move to workspace tv'"
       ];
       layout = {
@@ -167,6 +171,26 @@ let
       (lib.concatStringsSep "; ")
     ];
 
+  outputToXrandrFlags = outputName: output:
+    "--output ${outputName} --mode ${toString output.width}x${
+      toString output.height
+    } --pos ${toString output.position.x}x${
+      toString output.position.y
+    } --rotate normal";
+
+  layoutToXrandrFlags = layout:
+    lib.trivial.pipe layout [
+      (builtins.mapAttrs outputToXrandrFlags)
+      builtins.attrValues
+      (lib.concatStringsSep " ")
+    ];
+
+  profileToXrandrCommandCase = profile: ''
+    "${profile.name}")
+      xrandr ${layoutToXrandrFlags profile.layout}
+    ;;
+  '';
+
   profileToBashCase = profile: ''
     "${profile.name}")
       swaymsg "${layoutToSwayCommand profile.layout}" && sleep 2 && swaymsg "${
@@ -199,4 +223,21 @@ in {
 
     esac
   '';
+
+  outputArandrProfileScript = pkgs.writeShellScriptBin "arandrProfile" ''
+    case $1 in
+      ${
+        lib.trivial.pipe profiles [
+          (map profileToXrandrCommandCase)
+          (lib.concatStringsSep "\n")
+        ]
+      }
+
+      *)
+        echo "Profile $1 not found :("
+        ;;
+
+    esac
+  '';
+
 }
