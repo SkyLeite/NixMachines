@@ -12,7 +12,7 @@ let
     };
   };
 
-  coc-elixir = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  coc-elixir = pkgs.vimUtils.buildVimPlugin {
     pname = "coc-elixir";
     version = "latest";
     src = pkgs.fetchFromGitHub {
