@@ -250,10 +250,10 @@ in {
     };
 
     # Nextcloud port
-    nginx.virtualHosts."localhost".listen = [{
-      addr = "127.0.0.1";
-      port = 6528;
-    }];
+    # nginx.virtualHosts."localhost".listen = [{
+    #   addr = "127.0.0.1";
+    #   port = 6528;
+    # }];
     nextcloud = {
       enable = false;
       package = pkgs.nextcloud27;
