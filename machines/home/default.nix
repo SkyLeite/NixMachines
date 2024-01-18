@@ -35,7 +35,7 @@ let
     export QT_QPA_PLATFORM=wayland
     export XDG_CURRENT_DESKTOP=sway
     export XDG_SESSION_DESKTOP=sway
-    exec dbus-run-session ${pkgs.sway}/bin/sway $@
+    exec dbus-run-session -- ${pkgs.sway}/bin/sway $@
   '';
 
   steamLauncher = pkgs.writeShellScript "steamLauncher"
