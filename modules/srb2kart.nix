@@ -75,7 +75,8 @@ in {
       target = "srb2kart/.srb2kart/kartserv.cfg";
       text = cfg.config.clientConfig;
       user = "srb2kart";
-      mode = "copy";
+      group = "srb2kart";
+      mode = "0660";
     };
 
     systemd.services.srb2kart = {
