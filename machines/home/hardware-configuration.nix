@@ -52,7 +52,11 @@
     options = [ "ro" "user" "noauto" "unhide" "nofail" ];
   };
 
-  swapDevices = [ ];
+  swapDevices = [{
+    device = "/var/lib/swapfile";
+    size = 10 * 1024;
+    randomEncryption.enable = true;
+  }];
 
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
