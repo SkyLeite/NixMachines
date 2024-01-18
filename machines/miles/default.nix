@@ -279,7 +279,7 @@ in {
   environment.etc."syncthing" = {
     user = "syncthing";
     group = "syncthing";
-    mode = "0660";
+    mode = "0770";
   };
 
   virtualisation.docker.enable = true;

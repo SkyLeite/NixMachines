@@ -74,7 +74,7 @@ in {
     environment.etc.srb2 = {
       target = "srb2/.srb2/adedserv.cfg";
       text = cfg.config.clientConfig;
-      mode = "0660";
+      mode = "0770";
       user = "srb2";
       group = "srb2";
     };

@@ -76,7 +76,7 @@ in {
       text = cfg.config.clientConfig;
       user = "srb2kart";
       group = "srb2kart";
-      mode = "0660";
+      mode = "0770";
     };
 
     systemd.services.srb2kart = {
