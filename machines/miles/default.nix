@@ -251,11 +251,6 @@ in {
   };
 
   environment.etc."nextcloud-admin-pass".text = "test123";
-  environment.etc."syncthing" = {
-    user = "syncthing";
-    group = "syncthing";
-    mode = "0770";
-  };
 
   virtualisation.docker.enable = true;
   virtualisation.oci-containers.backend = "podman";
