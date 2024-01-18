@@ -39,7 +39,7 @@ let
   '';
 
   steamLauncher = pkgs.writeShellScript "steamLauncher"
-    "${pkgs.gamescope}/bin/gamescope -i -f -e -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
+    "${pkgs.gamescope}/bin/gamescope -w 1920 -h 1080 -r 60 -f -e --rt --adaptive-sync -O HDMI-A-1 -- ${pkgs.steam}/bin/steam -tenfoot -steamos -fulldesktopres";
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
