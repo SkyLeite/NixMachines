@@ -255,7 +255,7 @@ in {
       port = 6528;
     }];
     nextcloud = {
-      enable = true;
+      enable = false;
       package = pkgs.nextcloud27;
       hostName = "cloud.leite.dev";
       database.createLocally = true;
