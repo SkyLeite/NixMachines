@@ -17,6 +17,13 @@ in {
         servername "Dr. Zap - discord.gg/invite/r-br"
         server_contact "sky@leite.dev"
 
+        kartgametypepreference Race
+        kartvoterulechanges 0
+
+        st_enableskintracking 0
+        st_enablemapcounttracking 0
+        st_enablescorekeeper 0
+
         hm_specbomb On
         hm_specbomb_antisoftlock On
         hm_timelimit 5
