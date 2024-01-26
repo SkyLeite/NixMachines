@@ -44,8 +44,10 @@ in {
     enable = true;
     port = 7483;
     caddyOptions = ''
-      root * ${filesPath}
-      file_server browse
+      kart.zerolab.app:7483 {
+        root * ${filesPath}
+        file_server browse
+      }
     '';
   };
 }
