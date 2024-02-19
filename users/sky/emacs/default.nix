@@ -1,14 +1,7 @@
 { pkgs, config, lib, ... }:
 
 let
-  emacsPkg = pkgs.emacs.overrideAttrs (prev: {
-    src = pkgs.fetchFromGitHub {
-      owner = "emacs-lsp";
-      repo = "emacs";
-      rev = "f28010891665f1a2ebc9038a203e3ec870ce792c";
-      sha256 = "sha256-mnSG1MqUapaXyHHJRHv40cWUx1zRIwTM1O810ZJgRgc=";
-    };
-  });
+  emacsPkg = pkgs.emacs29-pgtk;
   emacsD = "${config.home.homeDirectory}/.emacs.d";
   emacsBinDirectory = "${emacsD}/bin";
   doomSyncCommand =

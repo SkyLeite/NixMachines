@@ -2,9 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, nixpkgs, modulesPath, monitors, nix-alien, ... }:
+{ config, pkgs, lib, nixpkgs, modulesPath, monitors, ... }:
 
 let
+  binaryninja = pkgs.callPackage ../../packages/binaryninja.nix { };
+  unnamed-sdvx-clone =
+    pkgs.callPackage ../../packages/unnamed-sdvx-clone.nix { };
+
   bluetoothExecStart =
     config.systemd.services.bluetooth.serviceConfig.ExecStart;
   usBr = pkgs.fetchFromGitHub {
@@ -20,15 +24,6 @@ let
     id = "alsa_input.usb-Burr-Brown_from_TI_USB_Audio_CODEC-00.analog-mono";
   };
 
-  hyprlandLauncher = pkgs.writeShellScript "hyprlandLauncher" ''
-    export SDL_VIDEODRIVER=wayland
-    export _JAVA_AWT_WM_NONREPARENTING=1
-    export QT_QPA_PLATFORM=wayland
-    export XDG_CURRENT_DESKTOP=hyprland
-    export XDG_SESSION_DESKTOP=hyprland
-    exec dbus-run-session Hyprland $@
-  '';
-
   swayLauncher = pkgs.writeShellScript "swayLauncher" ''
     export SDL_VIDEODRIVER=wayland
     export _JAVA_AWT_WM_NONREPARENTING=1
@@ -43,6 +38,7 @@ let
 in {
   nixpkgs.config.allowUnfree = true;
   nixpkgs.config.allowBroken = true;
+  nixpkgs.config.allowUnsupportedSystem = true;
 
   imports = [ # Include the results of the hardware scan.
     (import ./hardware-configuration.nix {
@@ -104,17 +100,17 @@ in {
 
   # Enable the X11 windowing system.
   services.xserver = {
-    enable = false;
-    autorun = false;
+    enable = true;
+    autorun = true;
     displayManager = {
-      sddm.enable = false;
+      sddm.enable = true;
       gdm = {
         enable = false;
         wayland = true;
       };
       sessionCommands = ''
         ${pkgs.xorg.xmodmap}/bin/xmodmap ${usBr}/us-br
-        autorandr -c
+        . "/etc/profiles/per-user/$USER/etc/profile.d/hm-session-vars.sh"
       '';
     };
     desktopManager = {
@@ -133,7 +129,7 @@ in {
   services.ratbagd.enable = true;
 
   services.greetd = {
-    enable = true;
+    enable = false;
     vt = 1;
     settings = {
       default_session = let
@@ -155,7 +151,6 @@ in {
     text = ''
       ${swayLauncher}
       ${steamLauncher}
-      ${hyprlandLauncher}
     '';
   };
 
@@ -236,7 +231,6 @@ in {
   programs.wireshark.enable = true;
   programs.nm-applet.enable = true;
   programs.noisetorch.enable = true;
-  programs.nix-ld.enable = true;
   programs.thunar = {
     enable = true;
     plugins = [ pkgs.xfce.thunar-archive-plugin ];
@@ -248,18 +242,6 @@ in {
 
   hardware.bluetooth = {
     enable = true;
-    settings = {
-      General = {
-        JustWorksRepairing = "always";
-        FastConnectable = true;
-        Class = "0x000100";
-      };
-
-      GATT = {
-        ReconnectIntervals = "1,1,2,3,5,8,13,21,34,55";
-        AutoEnable = true;
-      };
-    };
   };
   systemd.services.bluetooth.serviceConfig.ExecStart = [
     ""
@@ -315,6 +297,9 @@ in {
 
           # miles
           "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDFIbNWbPJ5TExvDqs9g0cMsvOOwsfY4PV2p4pIXyQn0x6E11ly2HbKfVFhA2sUhS95qIN/ZJmYe0M0YHP003NKe2cRopcnn0wzvHkti9aF+4bh05c7CLf9mc7ajEzbNQ1p7urmLNibWh/XXP+D3k/pnX9W2TzKAmT+fVmKOFIpg0Cja2i6aRpflwD3Yj+xAsTDLkf4MA/He4M+MFpDnKNqWUUQyY/w1wUNroFZe4lBL/CWLEfHYgfqLXnGFFHoQ9fkgU+W8T6GYoF4aaRrI18QQBxdXLrpyMWWg6zvMiJM78CIZfVKC7CwOgFjbvcpIcbbGRzu7f5MMhtXOlKeeuv75oSISltiVIfKDDPZbvtw6t+XVxCrwFLoeIyHrd4JNv82/lEejDq76j9gvuBCypZCGzuGrCNa0Y5l1zVfnrtFaiKtFmFeTA4nlFLEUvyRnB70kXdTyKI9qhCn+nyhBDt26RTOPSLwJpHvPRQTRA4Vem0Ibfzg0RERgfWBNeFRrOM= sky@miles"
+
+          # macbook
+          "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC4Ondo0g2WWONyepyYMewovFugnbH/sXdygmetCKRThPeBsxjbbs6jLBienVagWgl2Dbv1QnA4c12hzW69hC6oiScfqYTVGUOuNC4LosG5eC7aNuecW5dJR+0DKtzmBtsGS4kFYRpoc5Wfr66a7aevMpJAiFSxl2BcyVqq4Nuv4FtM26IPI/KNJYko6OvRhNpsawNUBchVu0y3nnFlNfY3xnSIdXIeBOQ4WrXxA0KiBTmOIOqQr1rIrlgd8mHDwqmgKjE8D4jFeMmajemppvLrnjXkH2lwTtXlV3QENAxDVPOlgY+znFBoU7F+LJ5w53fXNY68lRP9A0dD09rN2Bc2u4K59NPScFixBhIokwcRyp5Sobm40TX/bahGsjPKVJ5JBUBYmNbJ1tScA4bMu7q1hjTDCEUm91kNqhcNHTMHSMSt0ko8Quojfg5gFY25qzJ2dQr8ddaMfT66ggPwtfBByJ6sFwDUr9Om98yRYLjxL7HWlGBSVRH5iMjDDKu5ldM= sky"
         ];
       };
 
@@ -344,6 +329,12 @@ in {
           '';
         };
       };
+      loginLimits = [{
+        domain = "*";
+        item = "nofile";
+        type = "-";
+        value = "524288";
+      }];
     };
 
     polkit = {
@@ -382,11 +373,16 @@ in {
     neovim
     nixfmt
     pciutils
-    python3
+    (python311.withPackages (ps: with ps; [ pip beautifulsoup4 requests ]))
+    ghidra
     ripgrep
     wget
     xclip
     xorg.xkbcomp
+    simplescreenrecorder
+    flameshot
+    playerctl
+    curl
     pavucontrol
     ncpamixer
     pinentry-curses
@@ -399,21 +395,20 @@ in {
     tailscale
     bitwarden-cli
     monitors.outputProfileScript
+    monitors.outputArandrProfileScript
     waypipe
     piper
+    virt-viewer
     srb2
-    nix-alien.packages."x86_64-linux".nix-alien
     steamtinkerlaunch
     runelite
-    (uxplay.overrideAttrs (prev: rec {
-      version = "1.66";
-      src = fetchFromGitHub {
-        owner = "FDH2";
-        repo = "UxPlay";
-        rev = "v1.66";
-        sha256 = "sha256-kIKBxkaFvwxWUkO7AAwehP9YPOci+u2g67hEWZ52UqE=";
-      };
-    }))
+    appimage-run
+    binaryninja
+    unnamed-sdvx-clone
+    vesktop
+    gzdoom
+    blender-hip
+    uxplay
   ];
 
   qt = {
@@ -438,6 +433,29 @@ in {
     enable = true;
     pinentryFlavor = "curses";
     enableSSHSupport = true;
+  };
+
+  services.samba = {
+    enable = true;
+    securityType = "user";
+    extraConfig = ''
+      ntlm auth = true
+      allow insecure wide links = yes
+    '';
+    shares = {
+      public = {
+        path = "/home/sky/Public";
+        browseable = "yes";
+        writeable = "yes";
+        "read only" = "no";
+        "guest ok" = "yes";
+        "create mask" = "0644";
+        "directory mark" = "0755";
+        "guest account" = "sky";
+        "follow symlinks" = "yes";
+        "wide links" = "yes";
+      };
+    };
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -466,7 +484,6 @@ in {
   programs.adb.enable = true;
 
   # List services that you want to enable:
-  services.lorri.enable = false;
 
   # Enable the OpenSSH daemon.
   services.openssh = {

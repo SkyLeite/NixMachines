@@ -50,7 +50,7 @@ let
     "DP-1" = monitors.main;
     "DP-2" = monitors.secondary;
     "DP-3" = monitors.secondary;
-    "HDMI-A-1" = monitors.tv;
+    "HDMI-1" = monitors.tv;
   };
 
   monitorPorts = {

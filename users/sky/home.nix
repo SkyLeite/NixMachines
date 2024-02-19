@@ -1,4 +1,4 @@
-{ config, pkgs, lib, nix-colors, hyprland, hyprland-contrib, gbar, ... }:
+{ config, pkgs, lib, nix-colors, gbar, ... }:
 
 let
   mod = "Mod4";
@@ -44,7 +44,6 @@ let
 in {
   imports = [
     nix-colors.homeManagerModule
-    hyprland.homeManagerModules.default
     gbar.homeManagerModules.x86_64-linux.default
     #./polybar
     ./variables.nix
@@ -55,7 +54,6 @@ in {
     ./neovim.nix
     ./scripts/gui.nix
     ./emacs/default.nix
-    ./hyprland/default.nix
     ./gbar/default.nix
     ./eww/default.nix
     ./packages/noisetorch.nix
@@ -104,7 +102,7 @@ in {
     # my-nur.ncpamixer-git
     pkgs.dbeaver
     pkgs.strawberry
-    pkgs.vscode-with-extensions
+    pkgs.vscode.fhs
     pkgs.gnumake
     pkgs.source-code-pro
     pkgs.shellcheck
@@ -115,13 +113,12 @@ in {
     pkgs.dfeet
     pkgs.comma
     pkgs.hexchat
-    pkgs.wineWowPackages.staging
+    pkgs.wineWowPackages.unstableFull
     pkgs.winetricks
     pkgs.chromium
     pkgs.lutris
     pkgs.mpc_cli
     pkgs.gh
-    pkgs.soundkonverter
     pkgs.libunwind
     pkgs.ripgrep
     pkgs.sqlite
@@ -142,12 +139,13 @@ in {
     pkgs.yad
     pkgs.yuzu-mainline
     pkgs.prusa-slicer
-    pkgs.obsidian
+    # pkgs.obsidian
     pkgs.unar
     pkgs.p7zip
     pkgs.srb2kart
+    pkgs.cachix
 
-    customXivLauncher
+    # customXivLauncher
     gamescopeSteam
     gamescopeSteam4k
   ];
@@ -272,7 +270,7 @@ in {
     enableZshIntegration = true;
   };
 
-  programs.exa = {
+  programs.eza = {
     enable = true;
     enableAliases = true;
   };
@@ -322,7 +320,6 @@ in {
 
   services.syncthing = {
     enable = true;
-    tray.enable = true;
   };
 
   programs.ssh = {
@@ -361,6 +358,8 @@ in {
       enable = true;
       createDirectories = true;
     };
+
+    configFile."mimeapps.list".force = true;
 
     mimeApps = {
       enable = true;

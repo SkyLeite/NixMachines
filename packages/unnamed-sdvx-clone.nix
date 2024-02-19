@@ -1,31 +1,22 @@
 { stdenv, writeShellScriptBin, fetchFromGitHub, makeDesktopItem, cmake, freetype
 , libogg, libvorbis, SDL2, zlib, libpng, libjpeg, libarchive, libGL, mesa
-, openssl, libiconv, git, zlib-ng, libcpr, rapidjson, ... }:
-let
-  pkgs = import (builtins.fetchGit {
-    # Descriptive name to make the store path easier to identify
-    name = "my-old-revision";
-    url = "https://github.com/NixOS/nixpkgs/";
-    ref = "refs/heads/nixpkgs-unstable";
-    rev = "77294205ac81810f333e25da2eb876d348fd7edc";
-  }) { };
+, openssl, libiconv, git, zlib-ng, rapidjson, curl, libcpr, ... }:
 
-  curl_7_55 = pkgs.curlFull;
-in stdenv.mkDerivation {
+stdenv.mkDerivation {
   name = "Unnamed SDVX Clone";
 
   src = fetchFromGitHub {
-    owner = "Drewol";
+    owner = "SkyLeite";
     repo = "unnamed-sdvx-clone";
-    rev = "b244b4ba2d22b73622f08541d5b038b136c36614";
-    sha256 = "sha256-cTNyM+CfnEvxjfM9FKMgN8khLxUcU4H04BS3T4TiPhU=";
+    rev = "861fc14ab013cd88326192d834c523f03d004b32";
+    sha256 = "sha256-fh7DgWzAClT+nKqbAS4xkx76jxKg5mZmBdU2jO8AIOg=";
     fetchSubmodules = true;
   };
 
   nativeBuildInputs = [
     rapidjson
     cmake
-    curl_7_55
+    curl
     zlib-ng
     freetype
     libogg
@@ -45,27 +36,14 @@ in stdenv.mkDerivation {
   cmakeFlags = [
     "-DCMAKE_BUILD_TYPE=Release"
     "-DCPR_USE_SYSTEM_CURL=ON"
-    "-DCPR_FORCE_USE_SYSTEM_CURL=ON"
-    "-DUSC_GNU_WERROR=Off"
+    "-DUSE_SYSTEM_CPR=ON"
+    "-DCPR_INCLUDE_PATH=${libcpr}/include"
     "-DGIT_COMMIT=b244b4ba2d22b73622f08541d5b038b136c36614"
   ];
 
-  wrapperScript = writeShellScriptBin "usc-game-wrapped" ''
-    DATA_PATH=$HOME/.config/usc
-
-    mkdir -p $DATA_PATH
-
-    cp -r @out@/bin/audio $DATA_PATH
-    cp -r @out@/bin/fonts $DATA_PATH
-    cp -r @out@/bin/skins $DATA_PATH
-    cp -r @out@/bin/LightPlugins $DATA_PATH
-
-    @out@/bin/usc-game -gamedir="$DATA_PATH"
-  '';
-
   desktopItem = makeDesktopItem {
     name = "Unnamed SDVX Clone";
-    exec = "usc-game-wrapped";
+    exec = "usc-game";
     comment = "Unnamed SDVX Clone";
     desktopName = "Unnamed SDVX Clone";
     categories = [ "Game" ];
@@ -74,15 +52,11 @@ in stdenv.mkDerivation {
   installPhase = ''
     runHook preInstall
 
-    mkdir -p $out/bin
-
-    substituteAll $wrapperScript/bin/usc-game-wrapped $out/bin/usc-game-wrapped
-    chmod +x $out/bin/usc-game-wrapped
-
-    mkdir $out/share
+    mkdir -p $out/share
     ln -s "$desktopItem/share/applications" "$out/share/"
 
-    cp -r /build/source/bin $out
+    mkdir -p $out/bin
+    cp -r ../bin $out
 
     runHook postInstall
   '';
