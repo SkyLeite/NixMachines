@@ -66,7 +66,10 @@ in {
     interfaces.eno1.useDHCP = true;
     hosts = { };
     nameservers = [ "8.8.8.8" "8.8.4.4" ];
+    networkmanager.unmanaged = ["tailscale0" "docker0"];
   };
+
+  systemd.services.NetworkManager-wait-online.enable = false;
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
