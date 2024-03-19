@@ -139,7 +139,10 @@ in {
       enable = true;
       hostname = "ougon.zerolab.app";
       enableACME = false;
-      database.ignorePostgresqlVersion = true;
+      database = { 
+        createLocally = false;
+        ignorePostgresqlVersion = true; 
+      };
       admin = {
         username = "sky";
         fullName = "Sky Leite";
