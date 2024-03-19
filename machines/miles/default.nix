@@ -113,7 +113,7 @@ in {
           ensureClauses.login = true;
         }
       ];
-      ensureDatabases = [ "db" config.discourse.database.name ];
+      ensureDatabases = [ "db" config.services.discourse.database.name ];
       enableTCPIP = false;
       authentication = ''
         local db nocodb trust
@@ -125,8 +125,8 @@ in {
         local mediawiki mediawiki    trust
         host  mediawiki mediawiki    localhost trust
 
-        local ${config.discourse.database.name} ${config.discourse.database.username} trust
-        host  ${config.discourse.database.name} ${config.discourse.database.username} localhost trust
+        local ${config.services.discourse.database.name} ${config.services.discourse.database.username} trust
+        host  ${config.services.discourse.database.name} ${config.services.discourse.database.username} localhost trust
       '';
     };
 
