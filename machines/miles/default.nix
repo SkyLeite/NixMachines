@@ -140,6 +140,7 @@ in {
       hostname = "ougon.zerolab.app";
       enableACME = false;
       database = { 
+        host = "127.0.0.1";
         createLocally = false;
         ignorePostgresqlVersion = true; 
       };
