@@ -26,9 +26,6 @@ in
       startWithUserSession = true;
     };
 
-    home.packages = with pkgs.tree-sitter-grammars; [
-    ];
-
     programs.emacs = lib.mkIf cfg.enable {
       enable = true;
       package = cfg.package;
@@ -36,29 +33,55 @@ in
         magit
         which-key
         evil
-        apheleia
+	projectile
+	perspective
+	magit
+	format-all
+	modus-themes
+	neotree
+	envrc
+	popwin
+
+	# Helm
+	helm
+	helm-fuzzy
+
+	# Org Mode
+	org
+	org-modern
+	org-ql
+	orgit
+	helm-org
+	org-roam
+
+	# Company
+	company
+	company-quickhelp
+	company-quickhelp-terminal
 
         # Evil packages
         evil-surround
         evil-snipe
         evil-smartparens
+	evil-collection
+	evil-org
 
         # Language modes
         nix-ts-mode
 
-        pkgs.tree-sitter-grammars.tree-sitter-elm
-        pkgs.tree-sitter-grammars.tree-sitter-rust
-        pkgs.tree-sitter-grammars.tree-sitter-python
-        pkgs.tree-sitter-grammars.tree-sitter-go
-        pkgs.tree-sitter-grammars.tree-sitter-nix
-        pkgs.tree-sitter-grammars.tree-sitter-html
-        pkgs.tree-sitter-grammars.tree-sitter-css
-        pkgs.tree-sitter-grammars.tree-sitter-scss
-        pkgs.tree-sitter-grammars.tree-sitter-json
-        pkgs.tree-sitter-grammars.tree-sitter-yaml
-        pkgs.tree-sitter-grammars.tree-sitter-javascript
-        pkgs.tree-sitter-grammars.tree-sitter-typescript
+	treesit-grammars.with-all-grammars
+        pkgs.fd
       ];
+    };
+
+    home.packages = [
+      pkgs.bqn386
+    ];
+
+    fonts.fontconfig.enable = true;
+
+    xdg.configFile."emacs/init.el" = {
+      source = ./init.el;
     };
   };
 }

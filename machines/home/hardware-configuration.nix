@@ -63,5 +63,9 @@
 
   hardware.opengl.package = pkgs.mesa.drivers;
   hardware.opengl.package32 = pkgs.pkgsi686Linux.mesa.drivers;
-  hardware.opengl.extraPackages = [ pkgs.mesa.opencl ];
+  hardware.opengl.extraPackages = [ 
+    pkgs.mesa.opencl 
+    pkgs.rocmPackages.clr.icd
+    pkgs.clinfo
+  ];
 }

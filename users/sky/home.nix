@@ -53,7 +53,7 @@ in {
     ./tmux.nix
     ./neovim.nix
     ./scripts/gui.nix
-    ./emacs/default.nix
+    ./../../modules/skymacs/default.nix
     ./gbar/default.nix
     ./eww/default.nix
     ./packages/noisetorch.nix
@@ -157,7 +157,6 @@ in {
     ];
     sessionVariables = {
       DEFAULT_BROWSER = "${pkgs.firefox}/bin/firefox";
-      EDITOR = "emacs";
     };
   };
 
@@ -170,6 +169,8 @@ in {
       github.user = "SkyLeite";
     };
   };
+
+  programs.skymacs.enable = true;
 
   programs.firefox = {
     enable = true;

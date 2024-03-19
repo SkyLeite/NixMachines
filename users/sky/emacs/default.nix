@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 
 let
-  emacsPkg = pkgs.emacs29-pgtk;
+  emacsPkg = pkgs.emacs29;
   emacsD = "${config.home.homeDirectory}/.emacs.d";
   emacsBinDirectory = "${emacsD}/bin";
   doomSyncCommand =
