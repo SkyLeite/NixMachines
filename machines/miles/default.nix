@@ -66,6 +66,11 @@ in {
       enable = true;
       port = 6528;
     };
+
+    services.discourse = {
+      enable = config.services.discourse.enabled;
+      port = config.services.nginx.defaultHTTPListenPort;
+    };
   };
 
   services = {
@@ -99,8 +104,16 @@ in {
           };
           ensureClauses.login = true;
         }
+        {
+          name = config.services.discourse.database.username;
+          ensurePermissions = {
+            "DATABASE \"${config.services.discourse.database.name}\"" = "ALL PRIVILEGES";
+            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          };
+          ensureClauses.login = true;
+        }
       ];
-      ensureDatabases = [ "db" ];
+      ensureDatabases = [ "db" config.discourse.database.name ];
       enableTCPIP = false;
       authentication = ''
         local db nocodb trust
@@ -111,7 +124,25 @@ in {
 
         local mediawiki mediawiki    trust
         host  mediawiki mediawiki    localhost trust
+
+        local ${config.discourse.database.name} ${config.discourse.database.username} trust
+        host  ${config.discourse.database.name} ${config.discourse.database.username} localhost trust
       '';
+    };
+
+    nginx = {
+      enable = true;
+      defaultHTTPListenPort = 8080;
+    };
+
+    discourse = {
+      enable = true;
+      hostname = "ougon.zerolab.app";
+      admin = {
+        username = "sky";
+        fullName = "Sky Leite";
+        email = "sky@leite.dev";
+      };
     };
 
     openssh = {
