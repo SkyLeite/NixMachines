@@ -68,7 +68,7 @@ in {
     };
 
     services.discourse = {
-      enable = config.services.discourse.enabled;
+      enable = config.services.discourse.enable;
       port = config.services.nginx.defaultHTTPListenPort;
     };
   };
