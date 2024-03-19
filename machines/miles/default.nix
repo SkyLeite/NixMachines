@@ -138,6 +138,8 @@ in {
     discourse = {
       enable = true;
       hostname = "ougon.zerolab.app";
+      enableACME = false;
+      database.ignorePostgresqlVersion = true;
       admin = {
         username = "sky";
         fullName = "Sky Leite";
