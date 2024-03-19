@@ -144,6 +144,7 @@ in {
         username = "sky";
         fullName = "Sky Leite";
         email = "sky@leite.dev";
+        passwordFile = "/var/discoursepw";
       };
     };
 
