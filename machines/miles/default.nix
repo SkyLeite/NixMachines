@@ -141,6 +141,7 @@ in {
       enableACME = false;
       database = { 
         host = "127.0.0.1";
+        passwordFile = "/var/discoursedbpw";
         createLocally = false;
         ignorePostgresqlVersion = true; 
       };
