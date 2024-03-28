@@ -66,11 +66,6 @@ in {
       enable = true;
       port = 6528;
     };
-
-    services.discourse = {
-      enable = config.services.discourse.enable;
-      port = config.services.nginx.defaultHTTPListenPort;
-    };
   };
 
   services = {
@@ -104,16 +99,8 @@ in {
           };
           ensureClauses.login = true;
         }
-        {
-          name = config.services.discourse.database.username;
-          ensurePermissions = {
-            "DATABASE \"${config.services.discourse.database.name}\"" = "ALL PRIVILEGES";
-            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
-          };
-          ensureClauses.login = true;
-        }
       ];
-      ensureDatabases = [ "db" config.services.discourse.database.name ];
+      ensureDatabases = [ "db" ];
       enableTCPIP = false;
       authentication = ''
         local db nocodb trust
@@ -124,33 +111,12 @@ in {
 
         local mediawiki mediawiki    trust
         host  mediawiki mediawiki    localhost trust
-
-        local ${config.services.discourse.database.name} ${config.services.discourse.database.username} trust
-        host  ${config.services.discourse.database.name} ${config.services.discourse.database.username} localhost trust
       '';
     };
 
     nginx = {
       enable = true;
       defaultHTTPListenPort = 8080;
-    };
-
-    discourse = {
-      enable = true;
-      hostname = "ougon.zerolab.app";
-      enableACME = false;
-      database = { 
-        host = "127.0.0.1";
-        passwordFile = "/var/discoursedbpw";
-        createLocally = false;
-        ignorePostgresqlVersion = true; 
-      };
-      admin = {
-        username = "sky";
-        fullName = "Sky Leite";
-        email = "sky@leite.dev";
-        passwordFile = "/var/discoursepw";
-      };
     };
 
     openssh = {
