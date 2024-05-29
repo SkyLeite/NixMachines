@@ -88,7 +88,6 @@ in {
     enableDefaultPackages = true;
     fontconfig.enable = true;
     fontDir.enable = true;
-    enableGhostscriptFonts = true;
     packages = with pkgs; [
       corefonts
       noto-fonts-emoji
@@ -104,15 +103,11 @@ in {
   };
 
   # Enable the X11 windowing system.
+  services.displayManager.sddm.enable = true;
   services.xserver = {
     enable = true;
     autorun = true;
     displayManager = {
-      sddm.enable = true;
-      gdm = {
-        enable = false;
-        wayland = true;
-      };
       sessionCommands = ''
         ${pkgs.xorg.xmodmap}/bin/xmodmap ${usBr}/us-br
         ${monitors.outputArandrProfileScript}/bin/arandrProfile main
@@ -214,8 +209,8 @@ in {
   services.flatpak.enable = true;
 
   # Configure keymap in X11
-  services.xserver.layout = "us";
-  services.xserver.xkbVariant = "altgr-intl";
+  services.xserver.xkb.layout = "us";
+  services.xserver.xkb.variant = "altgr-intl";
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
@@ -469,7 +464,7 @@ in {
     fd
     git
     neovim
-    nixfmt
+    nixfmt-rfc-style
     pciutils
     (python311.withPackages (ps: with ps; [ pip beautifulsoup4 requests ]))
     ghidra
@@ -483,8 +478,6 @@ in {
     curl
     pavucontrol
     ncpamixer
-    pinentry-curses
-    pass
     unzip
     openssl
     ffmpeg
@@ -494,12 +487,8 @@ in {
     bitwarden-cli
     monitors.outputProfileScript
     monitors.outputArandrProfileScript
-    waypipe
-    piper
     virt-viewer
-    srb2
     steamtinkerlaunch
-    runelite
     appimage-run
     binaryninja
     unnamed-sdvx-clone
@@ -517,7 +506,7 @@ in {
   programs.partition-manager.enable = true;
   programs.zsh.enable = true;
   services.avahi = {
-    nssmdns = true;
+    nssmdns4 = true;
     enable = true;
     publish = {
       enable = true;
@@ -529,7 +518,7 @@ in {
   programs.mosh.enable = true;
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryPackage = pkgs.pinentry-curses;
     enableSSHSupport = true;
   };
 

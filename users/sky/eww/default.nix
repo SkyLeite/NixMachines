@@ -1,8 +1,8 @@
 { config, lib, pkgs, ... }: {
   programs.eww = {
-    enable = true;
+    enable = false;
     configDir = ./.;
-    package = pkgs.eww-wayland;
+    package = pkgs.eww;
   };
 
   xdg.dataFile."hydra" = {

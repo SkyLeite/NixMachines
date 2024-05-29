@@ -339,7 +339,6 @@ in {
   fonts = {
     fontconfig.enable = true;
     fontDir.enable = true;
-    enableGhostscriptFonts = true;
     fonts = with pkgs; [
       corefonts
       dejavu_fonts

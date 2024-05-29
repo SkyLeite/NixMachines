@@ -100,7 +100,7 @@ in {
     pkgs.pamixer
     pkgs.barrier
     # my-nur.ncpamixer-git
-    pkgs.dbeaver
+    pkgs.dbeaver-bin
     pkgs.strawberry
     pkgs.vscode.fhs
     pkgs.gnumake
@@ -110,7 +110,7 @@ in {
     pkgs.font-awesome
     pkgs.font-awesome_5
     pkgs.pulsemixer
-    pkgs.dfeet
+    pkgs.d-spy
     pkgs.comma
     pkgs.hexchat
     pkgs.wineWowPackages.unstableFull
@@ -137,13 +137,12 @@ in {
     pkgs.unixtools.xxd
     pkgs.xorg.xwininfo
     pkgs.yad
-    pkgs.yuzu-mainline
     pkgs.prusa-slicer
-    # pkgs.obsidian
     pkgs.unar
     pkgs.p7zip
     pkgs.srb2kart
     pkgs.cachix
+    pkgs.obsidian
 
     # customXivLauncher
     gamescopeSteam
@@ -231,7 +230,7 @@ in {
 
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     plugins = [ ];
     oh-my-zsh = {
@@ -271,10 +270,7 @@ in {
     enableZshIntegration = true;
   };
 
-  programs.eza = {
-    enable = true;
-    enableAliases = true;
-  };
+  programs.eza.enable = true;
 
   programs.rofi = {
     enable = true;

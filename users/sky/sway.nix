@@ -6,7 +6,7 @@ let
     "${pkgs.pulseaudio}/bin/pactl set-sink-mute alsa_output.pci-0000_0b_00.4.analog-stereo true && ${pkgs.swaylock-effects}/bin/swaylock -SK --effect-blur 5x10 --clock --indicator && ${pkgs.pulseaudio}/bin/pactl set-sink-mute alsa_output.pci-0000_0b_00.4.analog-stereo false";
 in {
   wayland.windowManager.sway = {
-    enable = true;
+    enable = false;
     systemd.enable = true;
     config = {
       modifier = i3.config.modifier;
