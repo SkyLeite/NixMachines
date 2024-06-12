@@ -27,7 +27,7 @@ let
     main = {
       width = 5120;
       height = 1440;
-      refreshRate = 239.761;
+      refreshRate = 239.76;
       primary = true;
     };
 
@@ -47,14 +47,14 @@ let
   };
 
   ports = {
-    "DP-1" = monitors.main;
-    "DP-2" = monitors.secondary;
-    "DP-3" = monitors.secondary;
-    "HDMI-1" = monitors.tv;
+    "DP-1" = monitors.secondary;
+    # "DP-2" = monitors.secondary;
+    "DP-3" = monitors.main;
+    "HDMI-1" = monitors.secondary;
   };
 
   monitorPorts = {
-    tv = "HDMI-A-1";
+    tv = "HDMI-1";
     main = "DP-1";
   };
 
@@ -63,37 +63,35 @@ let
       name = "main";
       default = true;
       layout = {
-        "DP-1" = monitors.main // {
+        "DP-1" = monitors.secondary // {
           enabled = true;
+          position = {
+            x = 2547;
+            y = 0;
+          };
+        };
+
+        "DP-2" = monitors.secondary // {
+          enabled = false;
+          position = {
+            x = 0;
+            y = 0;
+          };
+        };
+
+        "DP-3" = monitors.main // {
+          enabled = true;
+          refreshRate = 239.76;
           position = {
             x = 0;
             y = 1080;
           };
         };
 
-        "DP-2" = monitors.secondary // {
+        "HDMI-1" = monitors.secondary // {
           enabled = true;
           position = {
-            x = 0;
-            y = 0;
-          };
-        };
-
-        "DP-3" = monitors.secondary // {
-          enabled = true;
-          width = 1920;
-          height = 1080;
-          refreshRate = 144;
-          position = {
-            x = 1920;
-            y = 0;
-          };
-        };
-
-        "HDMI-A-1" = monitors.tv // {
-          enabled = false;
-          position = {
-            x = 0;
+            x = 627;
             y = 0;
           };
         };
@@ -133,7 +131,7 @@ let
           };
         };
 
-        "HDMI-A-1" = monitors.tv // {
+        "HDMI-1" = monitors.secondary // {
           enabled = true;
           position = {
             x = 0;
@@ -172,11 +170,7 @@ let
     ];
 
   outputToXrandrFlags = outputName: output:
-    "--output ${outputName} --mode ${toString output.width}x${
-      toString output.height
-    } --pos ${toString output.position.x}x${
-      toString output.position.y
-    } --rotate normal";
+    "--output ${outputName} ${if output.enabled then "--mode ${toString output.width}x${toString output.height} --pos ${toString output.position.x}x${toString output.position.y} --rotate normal" else "--off"}";
 
   layoutToXrandrFlags = layout:
     lib.trivial.pipe layout [
