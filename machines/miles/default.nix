@@ -72,8 +72,8 @@ in {
   services = {
     ddclient = {
       enable = true;
-      domains = [ "zerolab.app" "wildcard.zerolab.app" ];
-      username = "64oISIFodfYUxkM8";
+      domains = [ "wildcard.zerolab.app" ];
+      username = "6zcfcAO4Z65v9X3j";
       passwordFile = "/ddclient.password";
       protocol = "googledomains";
       ssl = false;
