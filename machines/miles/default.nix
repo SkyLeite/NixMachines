@@ -355,7 +355,7 @@ in {
   security.polkit.enable = true;
 
   nix = {
-    package = pkgs.nixUnstable;
+    package = pkgs.nixVersions.latest;
 
     settings = {
       substituters = [
