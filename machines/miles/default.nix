@@ -74,7 +74,7 @@ in {
       enable = true;
       domains = [ "zerolab.app" ];
       username = "64oISIFodfYUxkM8";
-      passwordFile = /srv/ddclient.password;
+      passwordFile = "/ddclient.password";
       server = "domains.google.com";
       ssl = true;
       use = "web";
