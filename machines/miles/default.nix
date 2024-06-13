@@ -77,27 +77,24 @@ in {
       ensureUsers = [
         {
           name = "nocodb";
-          ensurePermissions = {
-            "DATABASE \"db\"" = "ALL PRIVILEGES";
-            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          ensureClauses = {
+            login = true;
+            createdb = true;
           };
-          ensureClauses.login = true;
         }
         {
           name = "n8n";
-          ensurePermissions = {
-            "DATABASE \"db\"" = "ALL PRIVILEGES";
-            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          ensureClauses = {
+            login = true;
+            createdb = true;
           };
-          ensureClauses.login = true;
         }
         {
           name = "nextcloud";
-          ensurePermissions = {
-            "DATABASE \"db\"" = "ALL PRIVILEGES";
-            "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+          ensureClauses = {
+            login = true;
+            createdb = true;
           };
-          ensureClauses.login = true;
         }
       ];
       ensureDatabases = [ "db" ];

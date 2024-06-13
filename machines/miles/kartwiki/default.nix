@@ -48,11 +48,10 @@ in {
     ensureDatabases = [ "mediawiki" ];
     ensureUsers = [{
       name = "mediawiki";
-      ensurePermissions = {
-        "DATABASE \"mediawiki\"" = "ALL PRIVILEGES";
-        "ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+      ensureClauses = {
+        login = true;
+        createdb = true;
       };
-      ensureClauses.login = true;
     }];
   };
 
