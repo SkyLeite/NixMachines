@@ -48,7 +48,7 @@ in {
     baseUrl = "zerolab.app";
 
     services.octoprint = {
-      enable = true;
+      enable = false;
       port = config.services.octoprint.port;
     };
 
@@ -63,7 +63,7 @@ in {
     };
 
     services.cloud = {
-      enable = true;
+      enable = false;
       port = 6528;
     };
   };
@@ -148,7 +148,7 @@ in {
     logind.lidSwitch = "ignore";
     logind.lidSwitchDocked = "ignore";
 
-    papermc.enable = true;
+    papermc.enable = false;
 
     webhookCustom = {
       enable = true;
