@@ -284,7 +284,7 @@ in {
 
   programs.gnupg.agent = {
     enable = true;
-    pinentryFlavor = "curses";
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   time.timeZone = "Americas/Sao_Paulo";
