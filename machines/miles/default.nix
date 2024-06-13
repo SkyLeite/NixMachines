@@ -19,7 +19,8 @@ in {
   boot = {
     blacklistedKernelModules = [ ];
     kernelPackages = pkgs.linuxPackages_latest;
-    cleanTmpDir = true;
+
+    tmp.cleanOnBoot = true;
 
     loader = {
       systemd-boot.enable = true;
@@ -73,7 +74,9 @@ in {
 
     postgresql = {
       enable = true;
-      port = 5432;
+      settings = {
+        port = 5432;
+      };
       ensureUsers = [
         {
           name = "nocodb";
@@ -118,8 +121,10 @@ in {
 
     openssh = {
       enable = true;
-      passwordAuthentication = false;
-      permitRootLogin = "no";
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+      };
     };
 
     nocodb.enable = true;
@@ -268,16 +273,18 @@ in {
     overrideDevices = true;
     overrideFolders = true;
     openDefaultPorts = true;
-    devices = {
-      "sky-ipad" = {
-        id = "PAYYTNA-6PU2FTP-VY7ATRQ-GAX4AIW-5KD2IAQ-VDCBLNJ-VGJPTSE-OGFKOQ2";
+    settings = {
+      devices = {
+        "sky-ipad" = {
+          id = "PAYYTNA-6PU2FTP-VY7ATRQ-GAX4AIW-5KD2IAQ-VDCBLNJ-VGJPTSE-OGFKOQ2";
+        };
       };
-    };
-    folders = {
-      # Obsidian notes
-      "gyakq-yzxwg" = {
-        path = "/var/lib/syncthing/Obsidian";
-        devices = [ "sky-ipad" ];
+      folders = {
+# Obsidian notes
+        "gyakq-yzxwg" = {
+          path = "/var/lib/syncthing/Obsidian";
+          devices = [ "sky-ipad" ];
+        };
       };
     };
   };
@@ -336,7 +343,7 @@ in {
   fonts = {
     fontconfig.enable = true;
     fontDir.enable = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       corefonts
       dejavu_fonts
       inconsolata
