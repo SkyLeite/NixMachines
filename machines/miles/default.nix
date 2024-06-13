@@ -71,14 +71,9 @@ in {
 
   services = {
     ddclient = {
+      configFile = "/srv/ddclient/ddclient.conf";
       enable = true;
-      domains = [ "wildcard.zerolab.app" ];
-      username = "6zcfcAO4Z65v9X3j";
-      passwordFile = "/ddclient.password";
-      protocol = "googledomains";
-      ssl = false;
       verbose = true;
-      use = "web, web=http://checkip.dyndns.com/, web-skip='Current IP Address: '";
     };
 
     avahi.enable = true;
