@@ -77,9 +77,7 @@ in {
       passwordFile = "/ddclient.password";
       server = "domains.google.com";
       ssl = true;
-      use = "web";
-      usev4 = "webv4, webv4=http://checkip.dyndns.com/, webv4-skip='Current IP Address: '";
-      usev6 = "webv6, webv6=http://checkipv6.dyndns.com/, webv6-skip='Current IP Address: '";
+      use = "web, web=http://checkip.dyndns.com/, web-skip='Current IP Address: '";
     };
 
     avahi.enable = true;
