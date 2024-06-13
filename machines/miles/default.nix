@@ -75,7 +75,7 @@ in {
       domains = [ "zerolab.app" ];
       username = "64oISIFodfYUxkM8";
       passwordFile = "/ddclient.password";
-      server = "domains.google.com";
+      protocol = "googledomains";
       ssl = false;
       verbose = true;
       use = "web, web=http://checkip.dyndns.com/, web-skip='Current IP Address: '";
