@@ -76,7 +76,7 @@ in {
       username = "64oISIFodfYUxkM8";
       passwordFile = "/ddclient.password";
       server = "domains.google.com";
-      ssl = true;
+      ssl = false;
       use = "web, web=http://checkip.dyndns.com/, web-skip='Current IP Address: '";
     };
 
