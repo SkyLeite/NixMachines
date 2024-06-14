@@ -73,7 +73,7 @@ in {
             -v /srv/home-assistant/config:/config \
             -v /root/.ssh:/root/.ssh:ro \
             --network=host \
-            ghcr.io/home-assistant/home-assistant:stable
+            ghcr.io/home-assistant/home-assistant:2024.6
         '';
       };
     };
