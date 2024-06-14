@@ -57,7 +57,7 @@ in {
 
     serviceToDashyService = (name: service: {
       title = name;
-      url = "https://" + (getServiceUrl name);
+      url = getServiceUrl name;
     });
 
     enabledServices = lib.filterAttrs
