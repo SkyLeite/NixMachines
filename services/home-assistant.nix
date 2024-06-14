@@ -72,6 +72,7 @@ in {
             -e TZ=America/Sao_Paulo \
             -v /srv/home-assistant/config:/config \
             -v /root/.ssh:/root/.ssh:ro \
+            -v /run/dbus:/run/dbus:ro \
             --network=host \
             ghcr.io/home-assistant/home-assistant:2024.6
         '';
